@@ -2,9 +2,12 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-#------------------------
-# Unity Ignores Default
-#------------------------
+
+#-------------------------------------
+#Unity Ignores Default
+#-------------------------------------
+# Common Unity Platform excludes
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -60,16 +63,6 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-
-#============================
-# Unity : User-Defined
-#============================
-
-#Ignore User Settings Folder
-/[Uu]ser[Ss]ettings/
-
-#EditorUserSettings Ignore
-EditorUserSettings.asset
 
 #-------------------------------------
 #resharper : Rider Default Ignores
