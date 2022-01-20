@@ -8,6 +8,8 @@ public class PickUpTest : MonoBehaviour
     [SerializeField] Transform holdPos;
     [SerializeField] float moveForce = 250;
     [SerializeField] float drag = 10;
+    Vector3 curPosition;
+    Vector3 prevPosition;
 
     void Start()
     {
@@ -42,17 +44,19 @@ public class PickUpTest : MonoBehaviour
     }
 
     void MoveObject() {
-        if (Vector3.Distance(heldObject.transform.position, holdPos.position) > 0.1f) {
+        if (Vector3.Distance(heldObject.transform.position, holdPos.position) > 0.01f) {
             Vector3 moveDirection = (holdPos.position - heldObject.transform.position);
             heldObject.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
         }
+
+
     }
 
     public void ThrowObject() {
         Rigidbody rb = heldObject.GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.drag = 0;
-        rb.AddForce(rb.velocity);
+        rb.AddForce(holdPos.position - heldObject.transform.position * -300);
         rb.constraints = RigidbodyConstraints.None;
 
         rb.transform.parent = null;
