@@ -1,0 +1,74 @@
+{
+    "name": "ButtonsTest",
+    "maps": [
+        {
+            "name": "Button",
+            "id": "f30a44c3-a45d-4420-b2e5-df898574b03f",
+            "actions": [
+                {
+                    "name": "Hover",
+                    "type": "Value",
+                    "id": "ea900909-9fbc-4bf6-9e33-f333f6fca847",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "ee5deb12-7999-43f7-8790-d392ade8ede0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pick Up",
+                    "type": "Button",
+                    "id": "2ed84da3-2d2a-40ac-bb99-464ffbd6ca1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4cc6fa2f-707d-4b65-8cc8-85c6994474c2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hover",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78895b67-5e59-409c-8588-2d8098e72d00",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54c74f82-453c-47e2-bace-1b6f830ac546",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pick Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
