@@ -15,6 +15,11 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("PrototypeScene"); 
     }
 
+    public void CombinedTest()
+    {
+        SceneManager.LoadScene("PrototypeTest"); 
+    }
+
     public void MainMenu()
     {
         SceneManager.LoadScene("0_MainMenu"); 
