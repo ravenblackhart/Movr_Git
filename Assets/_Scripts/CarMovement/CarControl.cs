@@ -7,105 +7,67 @@ public class CarControl : MonoBehaviour
 {
     public enum Direction { Left, Right, Forward }
 
-    public List<AxleInfo> axleInfos; // the information about each individual axle
-    public float maxMotorTorque = 400; // maximum torque the motor can apply to wheel
-    public float maxSteeringAngle = 30; // maximum steer angle the wheel can have
-
-    public GameObject[] wheels = new GameObject[4];
-
-    public int Speed { get; set; }
-    public int TopSpeed { get; set; }
-    public bool IsMoving { get; set; }
+    [SerializeField]
+    private List<AxleInfo> _axleInfos; // the information about each individual axle
+    [SerializeField]
+    private float _maxMotorTorque = 200; // maximum torque the motor can apply to wheel
+    [SerializeField]
+    private float _maxSteeringAngle = 25; // maximum steer angle the wheel can have
 
 
+    [Range(-1, 1)]
+    [SerializeField]
+    private float _speed = 1;
+    [Range(-1, 1)]
+    [SerializeField]
+    private float _turn = 0;
+
+
+    [SerializeField]
+    private float _turnSpeedModifier = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Speed = 50;
-        IsMoving = true;
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (IsMoving)
-        {
-            //SpinWheels();
-        }
-    }
-
-    private float rotation = 0;
-
-    void SpinWheels()
-    {
-        foreach (GameObject wheel in wheels)
-        {
-            wheel.transform.eulerAngles = new Vector3(rotation, 0, 90);
-            rotation += Time.deltaTime * Speed;
-        }
-    }
-
-
-    public void Drive()
-    {
-
-    }
-
-    public void Brake()
-    {
-
-    }
-
-    public void Turn(Direction direction)
-    {
-
-    }
-
-    [Range(-1,1)]
-    public float speed = 1;
-    [Range(-1, 1)]
-    public float turn = 0;
 
     void FixedUpdate()
     {
-        if (Keyboard.current.wKey.isPressed && speed < 1)
+        if (Keyboard.current.wKey.isPressed && _speed < 1)
         {
-            speed += Time.deltaTime;
-        }
-        else if (Keyboard.current.sKey.isPressed && speed > -1)
-        {
-            if (speed > 0)
+            if (_speed < 0)
             {
-                speed = 0;
+                _speed = 0;
             }
-            speed -= Time.deltaTime;
+            _speed += Time.deltaTime;
         }
-        else if (Keyboard.current.aKey.isPressed && turn > -1)
+        else if (Keyboard.current.sKey.isPressed && _speed > -1)
         {
-            turn -= Time.deltaTime;
+            if (_speed > 0)
+            {
+                _speed = 0;
+            }
+            _speed -= Time.deltaTime;
         }
-        else if (Keyboard.current.dKey.isPressed && turn < 1)
+        else if (Keyboard.current.aKey.isPressed && _turn > -1)
         {
-            turn += Time.deltaTime;
+            _turn -= Time.deltaTime;
+        }
+        else if (Keyboard.current.dKey.isPressed && _turn < 1)
+        {
+            _turn += Time.deltaTime;
         }
         else if (!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
         {
-            turn = 0;
+            _turn = 0;
         }
-        //var inputMapper = new InputActionMap();
-        //var myInputAction = inputMapper.AddAction("Horizontal");
 
-        //myInputAction.AddCompositeBinding("Axis")
-        //.With("Negative", < Keyboard >/ a)
-        //.With("Positive", < Keyboard >/ d);
+        float motor = _maxMotorTorque * _speed;// Input.GetAxis("Vertical");
+        float steering = _maxSteeringAngle * _turn * _turnSpeedModifier;// Input.GetAxis("Horizontal");
 
-        //myInputAction.passThrough = true;
-
-        float motor =  maxMotorTorque * speed;// Input.GetAxis("Vertical");
-        float steering = maxSteeringAngle * turn;// Input.GetAxis("Horizontal");
-
-        foreach (AxleInfo axleInfo in axleInfos)
+        foreach (AxleInfo axleInfo in _axleInfos)
         {
             if (axleInfo.steering)
             {
@@ -122,7 +84,30 @@ public class CarControl : MonoBehaviour
         }
     }
 
-    // finds the corresponding visual wheel
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+
+    public void Drive()
+    {
+
+    }
+
+    public void Brake()
+    {
+
+    }
+
+    public void Turn()
+    {
+
+    }
+
+
+    // Finds the corresponding visual wheel and
     // correctly applies the transform
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
