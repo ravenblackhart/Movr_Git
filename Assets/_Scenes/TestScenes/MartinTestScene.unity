@@ -527,6 +527,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cameras
       objectReference: {fileID: 0}
+    - target: {fileID: 4865239375256054789, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
+      propertyPath: _transitionConditionValue
+      value: 160
+      objectReference: {fileID: 0}
     - target: {fileID: 5094683438464178196, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
       propertyPath: m_DefaultBlend.m_Time
       value: 1
@@ -535,6 +539,14 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1805933856}
+    - target: {fileID: 5094683438469231009, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
+      propertyPath: m_Transitions.m_BlendHint
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5094683438469231009, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
+      propertyPath: m_Transitions.m_InheritPosition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5094683439790456969, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
       propertyPath: m_HorizontalAxis.m_MaxValue
       value: 100
@@ -548,17 +560,25 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8500348971658795570, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
+      propertyPath: m_HorizontalAxis.m_MaxValue
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 8500348971658795570, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
       propertyPath: m_HorizontalAxis.m_MinValue
       value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 8878335253427496336, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
       propertyPath: _transitionConditionValue
-      value: 100
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8908395720053775430, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1805933856}
+    - target: {fileID: 8908395720053775430, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
+      propertyPath: m_Transitions.m_BlendHint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0863e009ab2fb0440bbb022c9261900f, type: 3}
 --- !u!4 &1241190352 stripped

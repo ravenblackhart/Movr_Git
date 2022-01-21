@@ -1559,7 +1559,7 @@ GameObject:
   - component: {fileID: 3881581832648605500}
   - component: {fileID: 3881581832648605502}
   m_Layer: 0
-  m_Name: CarTemp 2
+  m_Name: Car(new)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,7 +1616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69438546888114419e4f62668ab1729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axleInfos:
+  _axleInfos:
   - leftWheel: {fileID: 1774602838894475992}
     rightWheel: {fileID: 2806581493221175060}
     motor: 1
@@ -1625,15 +1625,11 @@ MonoBehaviour:
     rightWheel: {fileID: 2806581494034603734}
     motor: 1
     steering: 0
-  maxMotorTorque: 400
-  maxSteeringAngle: 30
-  wheels:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  speed: 0.01
+  _maxMotorTorque: 200
+  _maxSteeringAngle: 25
+  _speed: 0.75
   turn: 0
+  _turnSpeedModifier: 0.5
 --- !u!54 &3881581832648605502
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1799,10 +1795,77 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07299958
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.051272064
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5305786
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6903456
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.15304585
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6903456
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.15304585
+      objectReference: {fileID: 0}
+    - target: {fileID: 7976898382984207695, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -25
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7582121880058337903, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
 --- !u!4 &3223194380985235351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7582121879911894036, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
   m_PrefabInstance: {fileID: 5008580698575305603}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2340323588951538806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7347748670124132341, guid: 58fc989a0a21fa04b95ab258d06915ab, type: 3}
+  m_PrefabInstance: {fileID: 5008580698575305603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2143393635
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2340323588951538806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16
+  m_Center: {x: 0.0039803986, y: 1.1862511e-10, z: -4.4456983e-11}
+--- !u!114 &2143393640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2340323588951538806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf7a346321218f4b902f089b872fd14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxRange: 20
+  _carControl: {fileID: 3881581832648605500}
+  _maxSteerAngle: 200
+  _releaseSpeed: 300

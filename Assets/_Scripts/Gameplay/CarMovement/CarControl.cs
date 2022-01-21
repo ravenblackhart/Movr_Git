@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class CarControl : MonoBehaviour
 {
     public enum Direction { Left, Right, Forward }
-
+    [Header("How many axles will the car have, which will be steerable and motored")]
     [SerializeField]
     private List<AxleInfo> _axleInfos; // the information about each individual axle
     [SerializeField]
@@ -19,8 +19,7 @@ public class CarControl : MonoBehaviour
     [SerializeField]
     private float _speed = 1;
     [Range(-1, 1)]
-    [SerializeField]
-    private float _turn = 0;
+    public float turn = 0;
 
 
     [SerializeField]
@@ -51,21 +50,21 @@ public class CarControl : MonoBehaviour
             }
             _speed -= Time.deltaTime;
         }
-        else if (Keyboard.current.aKey.isPressed && _turn > -1)
-        {
-            _turn -= Time.deltaTime;
-        }
-        else if (Keyboard.current.dKey.isPressed && _turn < 1)
-        {
-            _turn += Time.deltaTime;
-        }
-        else if (!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
-        {
-            _turn = 0;
-        }
+        //else if (Keyboard.current.aKey.isPressed && _turn > -1)
+        //{
+        //    _turn -= Time.deltaTime;
+        //}
+        //else if (Keyboard.current.dKey.isPressed && _turn < 1)
+        //{
+        //    _turn += Time.deltaTime;
+        //}
+        //else if (!Keyboard.current.aKey.isPressed && !Keyboard.current.dKey.isPressed)
+        //{
+        //    _turn = 0;
+        //}
 
         float motor = _maxMotorTorque * _speed;// Input.GetAxis("Vertical");
-        float steering = _maxSteeringAngle * _turn * _turnSpeedModifier;// Input.GetAxis("Horizontal");
+        float steering = _maxSteeringAngle * turn * _turnSpeedModifier;// Input.GetAxis("Horizontal");
 
         foreach (AxleInfo axleInfo in _axleInfos)
         {
