@@ -15,7 +15,6 @@ public class CameraSwitcher : MonoBehaviour
     //Tillfälligt
     private CinemachineVirtualCamera _previousCamera;
     
-    
     private bool _lockedView = false;
 
     private enum View
