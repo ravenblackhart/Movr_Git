@@ -10,9 +10,18 @@ public class PickUpTest : MonoBehaviour
     [SerializeField] float moveForce = 250;
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
+    [SerializeField] float rotateSpeed = 0.002f;
+
     Vector3 curPosition;
     Vector3 prevPosition;
     InputAction rightClick;
+
+    float xAxisRotation;
+    float yAxisRotation;
+    CameraSwitcher cameraSwitcher;
+    float oldXRotation;
+    float oldYRotation;
+    bool rotating;
 
     void Start()
     {
@@ -23,14 +32,34 @@ public class PickUpTest : MonoBehaviour
                 holdPos = GameObject.Find("Hold Position").transform;
             }
         }
+
+        cameraSwitcher = GameObject.Find("CameraSwitcher").GetComponent<CameraSwitcher>();
     }
 
     void Update()
     {
         if (heldObject != null && Mouse.current.rightButton.isPressed) {
             RotateObject();
+            rotating = true;
         }
 
+        else {
+            rotating = false;
+        }
+
+        if (!rotating) {
+            oldXRotation = Mouse.current.position.x.ReadValue();
+            oldYRotation = Mouse.current.position.y.ReadValue();
+            cameraSwitcher.UseMeTemporarily(false);
+        }
+
+        else {
+            xAxisRotation = Mouse.current.position.x.ReadValue();
+            yAxisRotation = Mouse.current.position.y.ReadValue();
+            cameraSwitcher.UseMeTemporarily(true);
+        }
+
+        //worldPos = mainCam.WorldToScreenPoint(Mouse.current.position);
     }
 
     private void FixedUpdate() {
@@ -80,7 +109,8 @@ public class PickUpTest : MonoBehaviour
         heldObject = null;
     }
 
-    void RotateObject() {
-        heldObject.transform.Rotate(Vector3.right * 1f);
+    void RotateObject() {        
+        heldObject.transform.Rotate(Vector3.right, yAxisRotation * rotateSpeed - oldYRotation * rotateSpeed, Space.World);
+        heldObject.transform.Rotate(Vector3.down, xAxisRotation * rotateSpeed - oldXRotation * rotateSpeed, Space.World);
     }
 }

@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.ScriptableVariables;
+using ScriptableEvents;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Declarations
 
-    // Update is called once per frame
-    void Update()
+    [Header("Score")] 
+    [SerializeField] private IntVariable score;
+    [SerializeField] private ScriptableEventInt onScoreUpdate;
+    private int passengerResult; 
+
+    #endregion
+
+    private void ScoreUpdate()
     {
-        
+        score.ApplyChange(passengerResult);
+        onScoreUpdate.Raise(score.IntValue);
     }
 }
