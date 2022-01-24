@@ -7,23 +7,23 @@ public class TransformToParent : MonoBehaviour
 {
     [SerializeField] private Transform _parent;
 
-    private Vector3 _orgin;
+    private Vector3 _origin;
     private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
     
     private void Start()
     {
-        _orgin = transform.position;
-        StartCoroutine(LateFixedUpdate());
+        _origin = transform.position;
     }
 
     private void FixedUpdate()
     {
-        transform.position = _orgin;
+        transform.position = _origin;
+        StartCoroutine(LateFixedUpdate());
     }
     
     private IEnumerator LateFixedUpdate()
     {
-        transform.position = _parent.transform.position;
+        transform.position = _parent.position;
         yield return _waitForFixedUpdate;
     }
 }

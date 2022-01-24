@@ -11,7 +11,7 @@ public class PickUpTest : MonoBehaviour
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
     [SerializeField] float rotateSpeed = 0.002f;
-
+    
     Vector3 curPosition;
     Vector3 prevPosition;
     InputAction rightClick;
@@ -25,6 +25,8 @@ public class PickUpTest : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
 
         //PickupObject(cube);
         if (holdPos == null) {
@@ -64,8 +66,7 @@ public class PickUpTest : MonoBehaviour
 
     private void FixedUpdate() {
         if (heldObject != null) {
-            MoveObject();
-            
+            MoveObject();           
         }
     }
 
@@ -85,27 +86,39 @@ public class PickUpTest : MonoBehaviour
         objRb.drag = drag;
         //objRb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        objRb.transform.parent = holdPos;
+        /*objRb.transform.parent = holdPos;*/
+        //objRb.transform.parent = physicsParent;
         heldObject = obj;
     }
 
     void MoveObject() {
+        Rigidbody heldRb = heldObject.GetComponent<Rigidbody>();
+        Rigidbody rb = transform.GetComponentInParent<Rigidbody>();
+
         if (Vector3.Distance(heldObject.transform.position, holdPos.position) > 0.01f) {
             Vector3 moveDirection = (holdPos.position - heldObject.transform.position);
             heldObject.GetComponent<Rigidbody>().AddForce(moveDirection * moveForce);
+
+            // Can we add car's velocity?
+            
+            //heldRb.velocity = rb.velocity + moveDirection * moveForce;
         }
 
+        else {
+            //heldRb.velocity = rb.velocity;
+        }
 
     }
 
     public void ThrowObject() {
-        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-        rb.useGravity = true;
-        rb.drag = 0;
-        rb.AddForce(holdPos.position - heldObject.transform.position * -pushForce);
-        rb.constraints = RigidbodyConstraints.None;
+        Rigidbody heldRb = heldObject.GetComponent<Rigidbody>();
+        Rigidbody rb = transform.GetComponentInParent<Rigidbody>();
+        heldRb.useGravity = true;
+        heldRb.drag = 0;
+        heldRb.AddForce(holdPos.position - heldObject.transform.position * -pushForce);
+        heldRb.constraints = RigidbodyConstraints.None;
 
-        rb.transform.parent = null;
+        /*heldRb.transform.parent = null;*/
         heldObject = null;
     }
 
