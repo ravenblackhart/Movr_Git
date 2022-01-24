@@ -5,24 +5,29 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public void PauseGame()
+    {
+         
+    }
+
     public void TestSteer()
     {
-        SceneManager.LoadScene("CarMoveTesting"); 
+        SceneManager.LoadScene("CarMoveTesting");
     }
-    
+
     public void TestFPV()
     {
-        SceneManager.LoadScene("PrototypeScene"); 
+        SceneManager.LoadScene("PrototypeScene");
     }
 
     public void CombinedTest()
     {
-        SceneManager.LoadScene("PrototypeTest"); 
+        SceneManager.LoadScene("PrototypeTest");
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("0_MainMenu"); 
+        SceneManager.LoadScene("0_MainMenu");
     }
 
     public void QuitGame()
