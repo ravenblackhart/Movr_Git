@@ -4,35 +4,47 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerPickUp : MonoBehaviour {
+    
 
-    GameObject heldObject;
-
-    [SerializeField] Transform holdPos;
     [SerializeField] float moveForce = 250;
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
     [SerializeField] float rotateSpeed = 0.005f;
 
-    InputAction rightClick;
     CameraSwitcher cameraSwitcher;
     PlayerInput playerInput;
+    InputAction _primaryAction;
+    InputAction _secondaryAction;
     Vector2 mouseDelta;
-
-
+    Transform holdPos;
+    
+    GameObject heldObject;
+    
     private void Awake() {
         playerInput = GetComponent<PlayerInput>();
-        rightClick = playerInput.actions["SecondaryAction"];
+        cameraSwitcher = FindObjectOfType<CameraSwitcher>();
+        
+        _primaryAction = playerInput.actions["PrimaryAction"];
+        _secondaryAction = playerInput.actions["SecondaryAction"];
     }
 
     private void OnEnable() {
-        rightClick.Enable();
-        rightClick.performed += OnSecondaryAction;
+        _primaryAction.Enable();
+        _secondaryAction.Enable();
+        
+        _primaryAction.performed += OnPrimaryAction;
+        _secondaryAction.performed += OnSecondaryAction;
     }
 
     private void OnDisable() {
-        rightClick.Disable();
-        rightClick.performed -= OnSecondaryAction;
+        _primaryAction.Disable();
+        _secondaryAction.Disable();
+        
+        _primaryAction.performed -= OnPrimaryAction;
+        _secondaryAction.performed -= OnSecondaryAction;
     }
+
+    
 
     void Start() {
 
@@ -46,8 +58,6 @@ public class PlayerPickUp : MonoBehaviour {
                 holdPos = GameObject.Find("Hold Position").transform;
             }
         }
-
-        cameraSwitcher = GameObject.Find("CameraSwitcher").GetComponent<CameraSwitcher>();
     }
 
     void Update() {
@@ -65,18 +75,18 @@ public class PlayerPickUp : MonoBehaviour {
         //Keeps the object facing the player
         holdPos.transform.LookAt(transform.position);
     }
-
-    //Called from PhysicsObject
-    public void Interact(GameObject obj) {
-        if (heldObject == null) {
-            PickupObject(obj);
-        }
-
-        else {
+    
+    private void OnPrimaryAction(InputAction.CallbackContext context) {
+        if (heldObject != null) {
             ThrowObject();
         }
     }
-
+    private void OnSecondaryAction(InputAction.CallbackContext context) {
+        if (heldObject != null) {
+            StartCoroutine(RotationUpdate());
+        }
+    }
+    
     public void PickupObject(GameObject obj) {
         Rigidbody objRb = obj.GetComponent<Rigidbody>();
         objRb.useGravity = false;
@@ -108,21 +118,14 @@ public class PlayerPickUp : MonoBehaviour {
         heldObject.transform.RotateAround(holdPos.position, Vector3.down, mouseDelta.x * rotateSpeed);
         heldObject.transform.RotateAround(holdPos.position, -holdPos.transform.right, mouseDelta.y * rotateSpeed);
     }
-
-    private void OnSecondaryAction(InputAction.CallbackContext context) {
-        if (heldObject != null) {
-            StartCoroutine(RotationUpdate());
-        }
-    }
-
+    
     IEnumerator RotationUpdate() {
         cameraSwitcher.ToggleLock();
 
-        while (rightClick.ReadValue<float>() != 0) {
+        while (_secondaryAction.ReadValue<float>() != 0) {
             RotateObject();
             yield return null;
         }
-
         cameraSwitcher.ToggleLock();
     }
 

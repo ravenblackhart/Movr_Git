@@ -5,6 +5,7 @@ using _Scripts.ScriptableVariables;
 using ScriptableEvents;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -30,15 +31,29 @@ public class UIManager : MonoBehaviour
 
     #region Other Declarations
 
-    private float rating; 
+    private float rating = 5f; 
     
 
     #endregion
+
+    private void Awake()
+    {
+        throw new NotImplementedException();
+    }
 
     private void Start()
     {
         SetScoreText(score.IntValue.ToString()); 
     }
+
+    #region Testing
+
+    private void Update()
+    {
+        if (Keyboard.current.dKey.isPressed) PassengerPickUp();
+    }
+
+    #endregion
 
     public void PauseGame()
     {
@@ -53,7 +68,7 @@ public class UIManager : MonoBehaviour
 
     public void PassengerPickUp()
     {
-        
+        StartCoroutine(RatingCountDown()); 
     }
     
     private void SetScoreText(string text)
@@ -71,11 +86,17 @@ public class UIManager : MonoBehaviour
         passengerNameText.text = text; 
     }
 
-    private Enum RatingCountDown()
+    private IEnumerator RatingCountDown()
     {
-        rating -= (Time.deltaTime * 0.2f);
-        ratingDisplay.fillAmount = rating * 0.2f; 
-        return null; 
+        Debug.Log("Hello!");
+        while (rating > 0f)
+        {
+            Debug.Log("am a thing");
+            ratingDisplay.fillAmount = rating * 0.2f;
+            rating -= (Time.deltaTime * 0.5f);
+            yield return null; 
+        }
+        
     }
 
     #region Protoype
