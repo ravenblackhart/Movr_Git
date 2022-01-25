@@ -13,6 +13,24 @@ public class CustomerObject : ScriptableObject
 
     public CustomerTask[] taskPool;
 
+    [TextArea]
+    public string startRideDialog;
+
+    [TextArea]
+    public string endRideDialogHappy;
+
+    [TextArea]
+    public string endRideDialogAngry;
+
+    [TextArea]
+    public string specialEventDialog;
+
+    [TextArea]
+    public string[] generalDialog;
+
+    [TextArea]
+    public string[] crashDialog;
+
     [System.Serializable]
     public class CustomerTask
     {

@@ -34,8 +34,8 @@ public class AudioManager2 : MonoBehaviour
 
     private void Start()
     {
-        _clip = GetComponent<AudioSource>();
-        _clip.Play();
+        //_clip = GetComponent<AudioSource>();
+        //_clip.Play();
     }
 
     public void Play(string name)

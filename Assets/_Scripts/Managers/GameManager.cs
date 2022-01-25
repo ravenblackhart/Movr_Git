@@ -1,23 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
-using _Scripts.ScriptableVariables;
-using ScriptableEvents;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    #region Declarations
+    public CustomerObject[] customerPool;
 
-    [Header("Score")] 
-    [SerializeField] private IntVariable score;
-    [SerializeField] private ScriptableEventInt onScoreUpdate;
-    private int passengerResult; 
+    public CustomerPickup[] pickupPool;
 
-    #endregion
+    public CustomerDropoff[] dropoffPool;
 
-    private void ScoreUpdate()
+    [System.NonSerialized]
+    public CustomerObject currentCustomer;
+
+    [System.NonSerialized]
+    public bool carDriving = true;
+
+    #region References
+
+    [Header("Interactable References")]
+
+    public Transform car;
+    public Transform steeringWheel;
+
+    [Header("System References")]
+
+    public Transform customerSitGoal;
+
+    #endregion References
+
+    // Start
+    void Start()
     {
-        score.ApplyChange(passengerResult);
-        onScoreUpdate.Raise(score.IntValue);
+        if (instance != null && instance )
+        {
+            Destroy(gameObject);
+        }
+
+        instance = this;
     }
+
+    // Update
+    void Update()
+    {
+        //
+    }
+
+    // OnValidate
+    void OnValidate()
+    {
+        name = "GameManager";
+    }
+
+    // Reset
+    void Reset()
+    {
+        name = "GameManager";
+    }
+
+    public static GameManager instance;
 }

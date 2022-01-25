@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.ScriptableVariables;
@@ -5,22 +6,32 @@ using ScriptableEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     #region Inspector
 
-    [Header("Text Fields")]
+    [Header("Display Fields")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI passengerNameText;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private Image ratingDisplay; 
 
     [Header("Data")] 
     [SerializeField] private IntVariable score;
     [SerializeField] private CustomerObject customer;
+    [SerializeField] private FloatVariable startingRating; 
 
     [Header("Events")] 
     [SerializeField] private ScriptableEventInt scoreUpdate; 
+
+    #endregion
+
+    #region Other Declarations
+
+    private float rating; 
+    
 
     #endregion
 
@@ -39,6 +50,11 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void PassengerPickUp()
+    {
+        
+    }
     
     private void SetScoreText(string text)
     {
@@ -53,6 +69,13 @@ public class UIManager : MonoBehaviour
     private void SetPassengerNameText(string text)
     {
         passengerNameText.text = text; 
+    }
+
+    private Enum RatingCountDown()
+    {
+        rating -= (Time.deltaTime * 0.2f);
+        ratingDisplay.fillAmount = rating * 0.2f; 
+        return null; 
     }
 
     #region Protoype
