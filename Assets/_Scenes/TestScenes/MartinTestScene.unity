@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 90245973}
   - component: {fileID: 90245975}
   - component: {fileID: 90245974}
+  - component: {fileID: 90245976}
   m_Layer: 5
   m_Name: CrossHair
   m_TagString: Untagged
@@ -198,6 +199,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90245972}
   m_CullTransparentMesh: 1
+--- !u!114 &90245976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90245972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6b79390fb4d6847be5a17158fb8fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCrosshair: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  pickupsCrosshair: {fileID: 21300000, guid: 87b2750febc2617409d7826d43b822c9, type: 3}
+  interactCrosshair: {fileID: 21300000, guid: 59d99276aef2338459e0c63c3a2addb7, type: 3}
+  imageRenderer: {fileID: 90245974}
 --- !u!1 &102295861
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,6 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvent: {fileID: 11400000, guid: ed8d42100cb531a4293d821402f50793, type: 2}
+  crossHair: {fileID: 90245976}
 --- !u!135 &1046832897
 SphereCollider:
   m_ObjectHideFlags: 0

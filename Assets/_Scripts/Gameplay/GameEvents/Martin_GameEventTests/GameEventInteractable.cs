@@ -6,9 +6,11 @@ public class GameEventInteractable : MonoBehaviour, IInteractable
     
     private float _maxRange = 50f;
     public float MaxRange => _maxRange;
+
+    [SerializeField] private CrossHair crossHair; 
     public void OnStartHover()
     {
-
+        crossHair.UpdateCrosshair(this.gameObject);
     }
 
     public void OnInteract()
@@ -18,6 +20,6 @@ public class GameEventInteractable : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
-
+        crossHair.ResetCrosshair();
     }
 }
