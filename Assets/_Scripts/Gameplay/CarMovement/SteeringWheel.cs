@@ -15,18 +15,19 @@ public class SteeringWheel : MonoBehaviour, IInteractable
 
     public void OnStartHover()
     {
-        print("Started Hover");
+        //print("Started Hover");
     }
 
     public void OnInteract()
     {
         GetComponent<Renderer>().material.color = Color.green;
-        _steering = true;
+        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnEndHover()
     {
-        print("Ended Hover");
+        //print("Ended Hover");
     }
 
     //////////////////////// interface stuff end
@@ -34,9 +35,6 @@ public class SteeringWheel : MonoBehaviour, IInteractable
     private Vector3 _mousePosition;
     private Camera _mainCamera;
 
-
-    [SerializeField]
-    private CarControl _carControl;
 
     //public Transform tempPos;
 
@@ -56,7 +54,7 @@ public class SteeringWheel : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
-        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _mainCamera = Camera.main;
         //SteeringActivated();
     }
 
@@ -70,9 +68,9 @@ public class SteeringWheel : MonoBehaviour, IInteractable
 
         var mousePos = Mouse.current.position.ReadValue();
 
-        _carControl.turn = _wheelAngle * 0.5f;
+        //_carControl.turn = _wheelAngle * 0.5f;
         //transform.localEulerAngles += new Vector3(_wheelAngle * 5f, 0, 0);
-        transform.localEulerAngles = new Vector3(_xAngle += _wheelAngle, 90, -25);
+        //transform.localEulerAngles = new Vector3(_xAngle += _wheelAngle, 90, -25);
         //Debug.Log(transform.localRotation);
         // uselt: transform.localRotation = new Quaternion(_xAngle += _wheelAngle * 5f * Time.deltaTime, transform.localRotation.y, transform.localRotation.x, 0);
 
@@ -98,8 +96,8 @@ public class SteeringWheel : MonoBehaviour, IInteractable
         //_mousePosition = context.ReadValue<Vector2>();
     }
 
-    public void SteeringActivated()
+    public void RotateSteeringWheel(float direction)
     {
-        _steering = true;
+        
     }
 }

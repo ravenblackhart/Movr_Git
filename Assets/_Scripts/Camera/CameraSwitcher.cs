@@ -67,7 +67,7 @@ public class CameraSwitcher : MonoBehaviour
                 break;
             
             case View.Locked :
-                if (!_lockedView)
+                if (_lockedView)
                 {
                     return true;
                 }
@@ -105,7 +105,23 @@ public class CameraSwitcher : MonoBehaviour
             _activePov = vCam.GetCinemachineComponent<CinemachinePOV>();
         }
     }
-
+    
+    public void ToggleLock()
+    {
+        if (!_lockedView)
+        {
+            _previousView = _currentView;
+            _currentView = View.Locked;
+        }
+        else
+        {
+            _currentView = _previousView;
+            SetCamera();
+        }
+        _lockedView = !_lockedView;
+    }
+    
+    //To be deleted
     public void UseMeTemporarily(bool sendTrueIfYouWantLockedView )
     {
         if (sendTrueIfYouWantLockedView)
@@ -118,18 +134,5 @@ public class CameraSwitcher : MonoBehaviour
             if (_previousCamera != null)
                 _previousCamera.MoveToTopOfPrioritySubqueue();
         }
-    }
-    
-    public void ToggleLock()
-    {
-        if (!_lockedView)
-        {
-            _previousView = _currentView;
-            _currentView = View.Locked;
-        }
-        else
-            _currentView = _previousView;
-        
-        _lockedView = !_lockedView;
     }
 }

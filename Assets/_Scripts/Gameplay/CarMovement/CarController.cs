@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CarControl : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public enum Direction { Left, Right, Forward }
     [Header("How many axles will the car have, which will be steerable and motored")]
@@ -16,8 +16,7 @@ public class CarControl : MonoBehaviour
 
 
     [Range(-1, 1)]
-    [SerializeField]
-    private float _speed = 1;
+    public float _speed = 1;
     [Range(-1, 1)]
     public float turn = 0;
 
@@ -34,22 +33,22 @@ public class CarControl : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Keyboard.current.wKey.isPressed && _speed < 1)
-        {
-            if (_speed < 0)
-            {
-                _speed = 0;
-            }
-            _speed += Time.deltaTime;
-        }
-        else if (Keyboard.current.sKey.isPressed && _speed > -1)
-        {
-            if (_speed > 0)
-            {
-                _speed = 0;
-            }
-            _speed -= Time.deltaTime;
-        }
+        //if (Keyboard.current.wKey.isPressed && _speed < 1)
+        //{
+        //    if (_speed < 0)
+        //    {
+        //        _speed = 0;
+        //    }
+        //    _speed += Time.deltaTime;
+        //}
+        //else if (Keyboard.current.sKey.isPressed && _speed > -1)
+        //{
+        //    if (_speed > 0)
+        //    {
+        //        _speed = 0;
+        //    }
+        //    _speed -= Time.deltaTime;
+        //}
         //else if (Keyboard.current.aKey.isPressed && _turn > -1)
         //{
         //    _turn -= Time.deltaTime;
@@ -90,23 +89,9 @@ public class CarControl : MonoBehaviour
     }
 
 
-    public void Drive()
-    {
-
-    }
-
-    public void Brake()
-    {
-
-    }
-
-    public void Turn()
-    {
-
-    }
 
 
-    // Finds the corresponding visual wheel and
+    // Finds the corresponding visual wheel and, behövs detta?
     // correctly applies the transform
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {

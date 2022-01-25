@@ -6471,10 +6471,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2143393640, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881581832648605500, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
+      propertyPath: _maxMotorTorque
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320922591389287195, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
+      propertyPath: xspeddd
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 5008580698320113346, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
       propertyPath: holdPos
       value: 
       objectReference: {fileID: 909101804}
+    - target: {fileID: 5613902889379344764, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
+      propertyPath: _maxMotorTorque
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5975549829893923096, guid: fbce9f6c7b9c3f04faf75b70d7dfacc9, type: 3}
       propertyPath: m_Name
       value: Car(new)
