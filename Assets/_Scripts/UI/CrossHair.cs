@@ -19,13 +19,22 @@ public class CrossHair : MonoBehaviour
 
     public void UpdateCrosshair(GameObject other)
     {
-        if (other.gameObject.CompareTag("Interact")) imageRenderer.sprite = interactCrosshair;
+        if (other.gameObject.CompareTag("Interact"))
+        {
+            imageRenderer.sprite = interactCrosshair;
+            imageRenderer.SetNativeSize();
+        }
 
-        if (other.gameObject.CompareTag("Pickup")) imageRenderer.sprite = pickupsCrosshair; 
+        if (other.gameObject.CompareTag("Pickup"))
+        {
+            imageRenderer.sprite = pickupsCrosshair;
+            imageRenderer.SetNativeSize();
+        } 
     }
 
     public void ResetCrosshair()
     {
         imageRenderer.sprite = defaultCrosshair; 
+        imageRenderer.SetNativeSize();
     }
 }

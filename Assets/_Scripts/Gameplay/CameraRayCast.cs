@@ -46,12 +46,14 @@ public class CameraRayCast : MonoBehaviour
     private void RayCastCheckInteractable()
     {
         RaycastHit hit;
-        
+
+              
         // Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         
         if (Physics.Raycast(ray, out hit, _castRange))
         {
+            Debug.DrawLine(ray.origin, hit.point, Color.red);
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
             if (interactable != null)

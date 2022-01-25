@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TransformToParent : MonoBehaviour
@@ -23,7 +21,7 @@ public class TransformToParent : MonoBehaviour
     
     private IEnumerator LateFixedUpdate()
     {
-        transform.position = _parent.position;
         yield return _waitForFixedUpdate;
+        transform.position = _parent.position;
     }
 }
