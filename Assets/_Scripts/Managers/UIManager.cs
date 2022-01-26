@@ -11,6 +11,27 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance = null;
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<UIManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject();
+                    go.name = "UIManager";
+                    instance = go.AddComponent<UIManager>(); 
+                }
+            }
+
+            return instance; 
+        }
+    }
+
     #region Inspector
 
     [Header("Display Fields")]
@@ -38,7 +59,14 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        throw new NotImplementedException();
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this; 
+        }
     }
 
     private void Start()
