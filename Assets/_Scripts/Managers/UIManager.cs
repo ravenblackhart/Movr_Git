@@ -6,8 +6,10 @@ using ScriptableEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class UIManager : MonoBehaviour
 {
@@ -111,13 +113,13 @@ public class UIManager : MonoBehaviour
         if (pauseMenu.enabled == false)
         {
             pauseMenu.enabled = true; 
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
         }
 
         else
         {
             pauseMenu.enabled = false; 
-            Time.timeScale = 1; 
+            Time.timeScale = 1f; 
         }
         
     }
@@ -189,7 +191,7 @@ public class UIManager : MonoBehaviour
 
     public void CombinedTest()
     {
-        SceneManager.LoadScene("PrototypeTest");
+        SceneManager.LoadScene(1);
     }
 
 
