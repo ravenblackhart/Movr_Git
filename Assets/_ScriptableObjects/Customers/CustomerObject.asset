@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: CustomerObject
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 0
+  hasGlasses: 0
+  taskPool:
+  - taskType: 2
+    timeLimit: 20
+    mainTaskPrompt: 
+    alternateTaskPrompt: 
+    taskCompletionResponse: 
+    taskFailureResponse: 
+    specialTaskDialog:
+    - no I need it da cup
+  tempPreference: 0
+  volumePreference: 0
+  musicPreference: 0
+  musicPreferenceOther: 0
+  startRideDialogHappy: 
+  startRideDialogAngry: 
+  endRideDialogHappy: 
+  endRideDialogAngry: 
+  specialEventDialog: 
+  generalDialog:
+  - 
+  - 
+  - 
+  crashDialog:
+  - 
+  - 
+  - 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CustomerPickup : MonoBehaviour
 {
-    [SerializeField] Trigger trigger;
+    public Trigger trigger;
 
     GameManager gameManager;
 
@@ -18,21 +18,5 @@ public class CustomerPickup : MonoBehaviour
     void OnCarEnterTrigger()
     {
         //
-    }
-
-    IEnumerator Fade()
-    {
-        gameManager.carDriving = false;
-
-        yield return new WaitForSeconds(1f);
-
-        for (float f = 0f; f < 1f; f += Time.deltaTime)
-        {
-            //
-
-            yield return null;
-        }
-
-        gameManager.carDriving = true;
     }
 }

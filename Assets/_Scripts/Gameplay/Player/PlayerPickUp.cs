@@ -80,7 +80,6 @@ public class PlayerPickUp : MonoBehaviour {
     }
     
     private void OnPrimaryAction(InputAction.CallbackContext context) {
-        print("clicked");
         if (_gameObjectInHand != null) {
             ThrowObject();
         }
