@@ -10,6 +10,7 @@ public class PlayerPickUp : MonoBehaviour {
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
     [SerializeField] float rotateSpeed = 0.005f;
+    [SerializeField] float sideThrowForce = 10;
 
     CameraSwitcher _cameraSwitcher;
     PlayerInput _playerInput;
@@ -118,8 +119,12 @@ public class PlayerPickUp : MonoBehaviour {
 
         _rbInHand.useGravity = true;
         _rbInHand.drag = 0;
-
         _rbInHand.transform.parent = _previousParent;
+
+        //Need to make it check the cameras movement rather than the delta but kinda works for now
+        _rbInHand.AddForce(-_holdPos.forward * pushForce +
+            _holdPos.up * Mathf.Clamp(_mouseDelta.y * sideThrowForce, -200, 200) +
+            -_holdPos.right * Mathf.Clamp(_mouseDelta.x * sideThrowForce, -200, 200));
 
         _rbInHand = null;
         _gameObjectInHand = null;
