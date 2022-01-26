@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Lever : MonoBehaviour, IInteractable
@@ -7,22 +6,22 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     [SerializeField] private float _dragSpeed = 0.01f;
 
-    private float _currentLeverPosition;
+    [Range(0.0f, 10.0f)] 
+    [SerializeField] private float _leverValue;
+    
     private float _moveDirection;
-
-    private Vector3 _position;
-    private float _min;
-    private float _max;
+    private Vector2 _position;
+    
+    public float MaxRange => _maxRange;
     public float MoveDirection
-    {
-        get => _moveDirection;
+    { 
         set 
         {
             _moveDirection = value;
-            UpdatePosition();
+            UpdateLeverValue();
         }
     }
-    public float MaxRange => _maxRange;
+
     public void OnStartHover()
     {
     }
@@ -36,17 +35,16 @@ public class Lever : MonoBehaviour, IInteractable
     {
     }
 
-    private void UpdatePosition()
+    private void UpdateLeverValue()
     {
-        _currentLeverPosition += _moveDirection * _dragSpeed;
-        _currentLeverPosition = Mathf.Clamp(_currentLeverPosition,-1, 1);
-        //
-        // transform.position =
-        //     Vector3.MoveTowards(transform.position, Vector3.one * _currentLeverPosition, Time.deltaTime);
+        _leverValue += _moveDirection * _dragSpeed;
+        _leverValue = Mathf.Clamp(_leverValue,0, 10);
+        
+        UpdateLeverPosition();
     }
-    
-    // private void Update()
-    // {
-    //     print(_currentLeverPosition);
-    // }
+
+    private void UpdateLeverPosition()
+    {
+        transform.position = new Vector3(_leverValue * _dragSpeed, transform.position.y, transform.position.z);
+    }
 }

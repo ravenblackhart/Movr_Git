@@ -11,7 +11,7 @@ public class Button : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        //_onInteractEvent.Raise();
+        _onInteractEvent.Raise();
     }
 
     public void OnEndHover()
