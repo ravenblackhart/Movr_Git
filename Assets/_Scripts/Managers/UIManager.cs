@@ -24,7 +24,12 @@ public class UIManager : MonoBehaviour
                 {
                     GameObject go = new GameObject();
                     go.name = "UIManager";
-                    instance = go.AddComponent<UIManager>(); 
+                    instance = go.AddComponent<UIManager>();
+
+                    if (SceneManager.GetActiveScene().buildIndex == 1)
+                    {
+                        go.AddComponent<RadialTimer>(); 
+                    }
                 }
             }
 
@@ -34,6 +39,9 @@ public class UIManager : MonoBehaviour
 
     #region Inspector
 
+    [Header("Panels")] 
+    [SerializeField] private Canvas pauseMenu; 
+    
     [Header("Display Fields")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI passengerNameText;
@@ -56,7 +64,7 @@ public class UIManager : MonoBehaviour
     
 
     #endregion
-
+    #region Defaults
     private void Awake()
     {
         if (instance != null)
@@ -67,26 +75,53 @@ public class UIManager : MonoBehaviour
         {
             instance = this; 
         }
+        
     }
+    
 
     private void Start()
     {
-        SetScoreText(score.IntValue.ToString()); 
+        pauseMenu.enabled = false; 
+        SetScoreText(score.IntValue.ToString());
     }
-
-    #region Testing
 
     private void Update()
     {
-        if (Keyboard.current.dKey.isPressed) PassengerPickUp();
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            PauseGame();
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            // Test Scripts
+            if (Keyboard.current.dKey.isPressed) PassengerPickUp();
+        }
+        
     }
 
     #endregion
-
+    
+    
     public void PauseGame()
     {
-        if (Time.timeScale != 0) Time.timeScale = 0;
-        else Time.timeScale = 1; 
+        if (pauseMenu.enabled == false)
+        {
+            pauseMenu.enabled = true; 
+            Time.timeScale = 0;
+        }
+
+        else
+        {
+            pauseMenu.enabled = false; 
+            Time.timeScale = 1; 
+        }
+        
+    }
+
+    public void Restart()
+    {
+        
     }
 
     public void QuitGame()
@@ -97,6 +132,11 @@ public class UIManager : MonoBehaviour
     public void PassengerPickUp()
     {
         StartCoroutine(RatingCountDown()); 
+    }
+
+    public void TaskCountDown()
+    {
+        StartCoroutine(RadialTimer()); 
     }
     
     private void SetScoreText(string text)
@@ -116,15 +156,18 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator RatingCountDown()
     {
-        Debug.Log("Hello!");
         while (rating > 0f)
         {
-            Debug.Log("am a thing");
             ratingDisplay.fillAmount = rating * 0.2f;
             rating -= (Time.deltaTime * 0.5f);
             yield return null; 
         }
         
+    }
+
+    private IEnumerator RadialTimer()
+    {
+        yield return null; 
     }
 
     #region Protoype
@@ -144,11 +187,17 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene("PrototypeTest");
     }
 
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("0_MainMenu");
-    }
+
     #endregion
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(1); 
+    }
 
 }
