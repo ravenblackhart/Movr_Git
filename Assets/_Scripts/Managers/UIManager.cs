@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
                     go.name = "UIManager";
                     instance = go.AddComponent<UIManager>();
 
-                    if (SceneManager.GetActiveScene().buildIndex == 1)
+                    if (SceneManager.GetActiveScene().buildIndex == 1 && go.GetComponent<RadialTimer>()== null)
                     {
                         go.AddComponent<RadialTimer>(); 
                     }
@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     #region Inspector
 
     [Header("Panels")] 
+    [SerializeField] private Canvas readyPanel;
     [SerializeField] private Canvas pauseMenu; 
     
     [Header("Display Fields")]
@@ -83,19 +84,21 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.enabled = false; 
         SetScoreText(score.IntValue.ToString());
+
+        readyPanel.enabled = true;
+       
     }
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
-            PauseGame();
-        }
+        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true) readyPanel.enabled = false; 
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
 
+        
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             // Test Scripts
-            if (Keyboard.current.dKey.isPressed) PassengerPickUp();
+            if (Keyboard.current.dKey.isPressed) PassengerPickUp(rating);
         }
         
     }
@@ -119,9 +122,10 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void Restart()
+    public void PlayGame()
     {
-        
+        Debug.Log("Let's Play");
+        SceneManager.LoadScene(1); 
     }
 
     public void QuitGame()
@@ -129,9 +133,9 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void PassengerPickUp()
+    public void PassengerPickUp(float baseRating)
     {
-        StartCoroutine(RatingCountDown()); 
+        StartCoroutine(RatingCountDown(baseRating)); 
     }
 
     public void TaskCountDown()
@@ -144,18 +148,19 @@ public class UIManager : MonoBehaviour
         scoreText.text = text; 
     }
 
-    private void SetDialogueText(string text)
+    public void SetDialogueText(string text)
     {
         dialogueText.text = text; 
     }
 
-    private void SetPassengerNameText(string text)
+    public void SetPassengerName(string text)
     {
         passengerNameText.text = text; 
     }
 
-    private IEnumerator RatingCountDown()
+    private IEnumerator RatingCountDown(float baseRating)
     {
+        rating = baseRating; 
         while (rating > 0f)
         {
             ratingDisplay.fillAmount = rating * 0.2f;
@@ -192,12 +197,9 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        Debug.Log("heading to Main Menu");
         SceneManager.LoadScene(0);
     }
-
-    public void PlayGame()
-    {
-        SceneManager.LoadScene(1); 
-    }
+    
 
 }
