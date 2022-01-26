@@ -23,5 +23,6 @@ public class TransformToParent : MonoBehaviour
     {
         yield return _waitForFixedUpdate;
         transform.position = _parent.position;
+        transform.rotation = _parent.rotation;
     }
 }
