@@ -14,7 +14,8 @@ public class Lever : MonoBehaviour, IInteractable
     
     public float MaxRange => _maxRange;
     public float MoveDirection
-    { 
+    {
+        get => _maxRange;
         set 
         {
             _moveDirection = value;
