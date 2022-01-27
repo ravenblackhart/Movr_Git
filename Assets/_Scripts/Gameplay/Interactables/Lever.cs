@@ -7,9 +7,8 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     
     [SerializeField] private float _dragSpeed = 0.01f;
-    
-    [Range(-1f, 1f)] 
-    [SerializeField] private float _leverValue;
+
+    [Range(0, 1f)] [SerializeField] private float _leverValue;
     
     [SerializeField] private Transform _orgin;
     [SerializeField] private Transform _startPoint;
@@ -25,9 +24,15 @@ public class Lever : MonoBehaviour, IInteractable
         {
             _moveDirection = value;
             UpdateLeverValue();
+            UpdateLeverPosition();
         }
     }
-    
+
+    private void Start()
+    {
+        _leverValue = 0;
+    }
+
     public void OnStartHover()
     {
     }
@@ -43,15 +48,13 @@ public class Lever : MonoBehaviour, IInteractable
 
     private void UpdateLeverValue()
     {
-        _leverValue += _moveDirection * _dragSpeed * Time.deltaTime;
-        _leverValue = Mathf.Clamp(_leverValue,-1, 1);
-
-        UpdateLeverPosition();
+        _leverValue += (_moveDirection * _dragSpeed) * Time.deltaTime;
+        _leverValue = Mathf.Clamp(_leverValue,0, 1);
     }
 
     private void UpdateLeverPosition()
-    { 
+    {
         _orgin.position = Vector3.Lerp(_startPoint.transform.position, _endPoint.transform.position, _leverValue);
-        _orgin.rotation = Quaternion.Lerp(_endPoint.rotation, _startPoint.rotation, _leverValue);
+        _orgin.rotation = Quaternion.Slerp(_startPoint.rotation, _endPoint.rotation, _leverValue);
     }
 }
