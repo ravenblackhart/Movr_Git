@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// [DefaultExecutionOrder(-1)] //0 default
 public class TransformToParent : MonoBehaviour
 {
     [SerializeField] private Transform _parent;

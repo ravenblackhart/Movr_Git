@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.ScriptableVariables;
+using JetBrains.Annotations;
 using ScriptableEvents;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
+[System.Serializable]
+public class MyEvent : UnityEvent<GameObject>
+{
+}
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance = null;
@@ -42,29 +46,60 @@ public class UIManager : MonoBehaviour
     #region Inspector
 
     [Header("Panels")] 
-    [SerializeField] private Canvas readyPanel;
-    [SerializeField] private Canvas pauseMenu; 
+    [SerializeField] [CanBeNull] private Canvas settingsPanel;
+    [SerializeField] [CanBeNull] private Canvas leaderboardPanel; 
+    [SerializeField] [CanBeNull] private Canvas creditsPanel;
+    [SerializeField] [CanBeNull] private Canvas readyPanel;
+    [SerializeField] [CanBeNull] private Canvas pauseMenu;
+
+    [Header("Display Fields - Menu")] 
+    [SerializeField] [CanBeNull] private TMP_InputField setUID;
+    [SerializeField] [CanBeNull] private TextMeshProUGUI saveMessage;
+    [SerializeField] [CanBeNull] private Transform leaderTable;
     
-    [Header("Display Fields")]
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI passengerNameText;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private Image ratingDisplay; 
+    [Header("Display Fields - Game")]
+    [SerializeField] [CanBeNull] private TextMeshProUGUI scoreText;
+    [SerializeField] [CanBeNull] private TextMeshProUGUI passengerNameText;
+    [SerializeField] [CanBeNull] private TextMeshProUGUI dialogueText;
+    [SerializeField] [CanBeNull] private Image ratingDisplay; 
 
     [Header("Data")] 
-    [SerializeField] private IntVariable score;
-    [SerializeField] private CustomerObject customer;
-    [SerializeField] private FloatVariable startingRating; 
+    [SerializeField] [CanBeNull] private IntVariable score;
+    [SerializeField] [CanBeNull] private CustomerObject customer;
+    [SerializeField] [CanBeNull] private FloatVariable startingRating; 
 
     [Header("Events")] 
     [SerializeField] private ScriptableEventInt scoreUpdate; 
+    
+    
 
     #endregion
 
     #region Other Declarations
 
+    //Gameplay Data
     private float rating = 5f; 
     
+    //Script Internal
+    
+    private float posXIn = 0f;
+    private float posYIn = 120f;
+
+    private float posXOut = 0f;
+    private float posYOut = 1175f;
+
+    private float elapsedAnimDuration = 0;
+    private float percentAnim;
+    private float timeOffset = 5f;
+    private bool gameOn = false;
+    
+    private Vector2 startPosition;
+    private Vector2 targetPosition;
+
+    private bool animatePanel = false;
+    private RectTransform animTarget;
+
+    private PlayFabManager playFab;
 
     #endregion
     #region Defaults
@@ -84,11 +119,20 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        pauseMenu.enabled = false; 
-        SetScoreText(score.IntValue.ToString());
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            settingsPanel.enabled = false;
+            leaderboardPanel.enabled = false; 
+            creditsPanel.enabled = false;
+        }
+        
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            pauseMenu.enabled = false; 
+            SetScoreText(score.IntValue.ToString());
 
-        readyPanel.enabled = true;
-       
+            readyPanel.enabled = true;
+        }
     }
 
     private void Update()
@@ -106,7 +150,23 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
+    #region Main Menu UI Functions
+
+    public void OpenPanel(Canvas panel)
+    {
+        panel.enabled = true;
+        
+    }
+
+    public void ClosePanel(Canvas panel)
+    {
+        panel.enabled = false; 
+
+    }
     
+
+    #endregion
     
     public void PauseGame()
     {
