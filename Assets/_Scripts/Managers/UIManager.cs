@@ -137,7 +137,11 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true) readyPanel.enabled = false; 
+        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true)
+        {
+            readyPanel.enabled = false;
+            Time.timeScale = 1f; 
+        } 
         if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
 
         
@@ -178,8 +182,9 @@ public class UIManager : MonoBehaviour
 
         else
         {
-            pauseMenu.enabled = false; 
             Time.timeScale = 1f; 
+            pauseMenu.enabled = false; 
+            
         }
         
     }

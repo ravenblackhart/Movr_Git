@@ -13,6 +13,12 @@ public class CustomerObject : ScriptableObject
 
     public CustomerTask[] taskPool;
 
+    [Tooltip("The minimum interval between tasks.")]
+    public float taskTimeMin;
+
+    [Tooltip("The maximum interval between tasks.")]
+    public float taskTimeMax;
+
     public SettingPreference tempPreference;
 
     public SettingPreference volumePreference;

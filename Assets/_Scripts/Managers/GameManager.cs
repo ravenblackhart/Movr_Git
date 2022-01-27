@@ -20,14 +20,9 @@ public class GameManager : MonoBehaviour
     public CustomerDropoff currentDropoff;
 
     [System.NonSerialized]
-    public CustomerTask currentTask;
-
-    [System.NonSerialized]
     public CustomerController customer;
 
     int customerIndex;
-
-    Task taskInstance;
 
     [System.NonSerialized]
     public bool carDriving = true;
@@ -90,8 +85,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CustomerCoroutine()
     {
+        // Create Customer
         customer = Instantiate(customerPrefab, currentPickup.transform.position, currentPickup.transform.rotation).GetComponent<CustomerController>();
 
+        // Pickup Customer
         currentPickup.trigger.EnableTrigger();
 
         yield return CustomClasses.WaitUntilEvent(currentPickup.trigger.triggerEvent);
@@ -125,12 +122,80 @@ public class GameManager : MonoBehaviour
 
         currentDropoff.trigger.EnableTrigger();
 
-        yield return CustomClasses.WaitUntilEvent(currentDropoff.trigger.triggerEvent);
+        // Handle Tasks
+        List<CustomerTask> tasksPool = new List<CustomerTask>();
 
+        CustomerTask currentCustomerTask = null;
+        Task currentTask = null;
+
+        float taskTimerTotal = 0;
+        float taskTimer = 0;
+
+        while (true)
+        {
+            if (currentDropoff.trigger.queryEvent.Query())
+            {
+                currentTask?.CancelTask(this);
+
+                break;
+            }
+
+            taskTimer -= Time.deltaTime;
+
+            if (currentTask == null && currentCustomer.taskPool.Length > 0)
+            {
+                if (tasksPool.Count == 0)
+                {
+                    tasksPool.AddRange(currentCustomer.taskPool);
+                }
+
+                var taskIndex = Random.Range(0, tasksPool.Count);
+
+                while (tasksPool.Count > 0)
+                {
+                    currentCustomerTask = tasksPool[taskIndex];
+                    tasksPool.RemoveAt(taskIndex);
+
+                    currentTask = Task.CreateTask(currentCustomerTask.taskType);
+
+                    if (!currentTask.CheckValid(this))
+                    {
+                        currentTask = null;
+                    }
+                    else
+                    {
+                        taskTimerTotal = currentCustomerTask.timeLimit;
+                        taskTimer = taskTimerTotal;
+
+                        currentTask.StartTask(this);
+
+                        break;
+                    }
+                }
+            }
+
+            if (currentTask != null)
+            {
+                currentTask.UpdateTask(this);
+
+                if (currentTask.completedTaskEvent.Query())
+                {
+                    currentTask = null;
+                }
+                else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
+                {
+                    currentTask = null;
+                }
+            }
+
+            yield return null;
+        }
+
+        // Dropoff Customer
         carDriving = false;
 
         yield return new WaitForSeconds(1f);
-
+        
         for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
         {
             yield return null;

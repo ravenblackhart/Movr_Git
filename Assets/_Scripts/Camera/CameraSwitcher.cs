@@ -46,26 +46,26 @@ public class CameraSwitcher : MonoBehaviour
     {
         switch (_currentView)
         {
-            case View.Front :
-                //Front to back transition condition
-                if (_activePov != null)
-                    if (_activePov.m_HorizontalAxis.Value >= _activePov.m_HorizontalAxis.m_MaxValue)
-                    {
-                        _currentView = View.Back;
-                        return true;
-                    }
-                break;
-            
-            case View.Back :
-                //Back to front transition condition
-                if (_activePov != null)
-                    if (_activePov.m_HorizontalAxis.Value <= _activePov.m_HorizontalAxis.m_MinValue)
-                    {
-                        _currentView = View.Front;
-                        return true;
-                    }
-                break;
-            
+            // case View.Front :
+            //     //Front to back transition condition
+            //     if (_activePov != null)
+            //         if (_activePov.m_HorizontalAxis.Value >= _activePov.m_HorizontalAxis.m_MaxValue)
+            //         {
+            //             _currentView = View.Back;
+            //             return true;
+            //         }
+            //     break;
+            //
+            // case View.Back :
+            //     //Back to front transition condition
+            //     if (_activePov != null)
+            //         if (_activePov.m_HorizontalAxis.Value <= _activePov.m_HorizontalAxis.m_MinValue)
+            //         {
+            //             _currentView = View.Front;
+            //             return true;
+            //         }
+            //     break;
+            //
             case View.Locked :
                 if (_lockedView)
                 {

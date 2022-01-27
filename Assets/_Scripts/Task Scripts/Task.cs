@@ -21,7 +21,12 @@ public class Task
         //
     }
 
-    UnityEvent completedTaskEvent, failedTaskEvent;
+    public virtual bool CheckValid(GameManager gameManager)
+    {
+        return true;
+    }
+
+    public CustomClasses.QueryEvent completedTaskEvent, failedTaskEvent;
 
     public static Task CreateTask(TaskType taskType)
     {
@@ -35,7 +40,7 @@ public class Task
 
 public enum TaskType
 {
-    None,
+    Default,
     ChangeMusic,
     OpenWindow,
     GiveWater,
