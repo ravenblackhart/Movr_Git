@@ -1277,7 +1277,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 120}
+  m_SizeDelta: {x: 450, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &463750260811328295
 CanvasRenderer:
@@ -1307,7 +1307,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Any Key
+  m_text: "Press F key to test rating countdown\nPress G key to test radial timer\nPress
+    Esc Key to pause \n\nPress Any Key to close this panel"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc3e4099f0daec34fa5f054f60a6320a, type: 2}
   m_sharedMaterial: {fileID: 6519055408678069883, guid: cc3e4099f0daec34fa5f054f60a6320a, type: 2}
@@ -1334,8 +1335,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42
-  m_fontSizeBase: 42
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

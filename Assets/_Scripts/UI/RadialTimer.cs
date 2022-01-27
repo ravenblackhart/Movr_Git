@@ -26,7 +26,7 @@ public class RadialTimer : MonoBehaviour
     
     public void Update()
     {
-        if (Keyboard.current.aKey.isPressed)
+        if (Keyboard.current.gKey.isPressed)
         {
             shouldUpdate = false; 
             indicatorTimer -= (Time.deltaTime * passengerDelay);
