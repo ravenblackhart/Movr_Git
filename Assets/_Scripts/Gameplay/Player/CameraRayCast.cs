@@ -54,6 +54,7 @@ public class CameraRayCast : MonoBehaviour
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            print(hit.transform.name);
 
             if (interactable != null)
             {
