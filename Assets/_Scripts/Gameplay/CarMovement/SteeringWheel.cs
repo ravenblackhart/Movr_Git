@@ -4,33 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class SteeringWheel : MonoBehaviour, IInteractable
+public class SteeringWheel : MonoBehaviour
 {
-    /// <summary>
-    /// Interface stuff:
-    /// </summary>
-
-    [SerializeField] private float _maxRange = 20;
-    public float MaxRange => _maxRange;
-
-    public void OnStartHover()
-    {
-        //print("Started Hover");
-    }
-
-    public void OnInteract()
-    {
-        GetComponent<Renderer>().material.color = Color.green;
-        Cursor.visible = true;
-        //Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    public void OnEndHover()
-    {
-        //print("Ended Hover");
-    }
-
-    //////////////////////// interface stuff end
+    
 
     private Vector3 _mousePosition;
     private Camera _mainCamera;
@@ -39,15 +15,9 @@ public class SteeringWheel : MonoBehaviour, IInteractable
     //public Transform tempPos;
 
     private bool _steering = false;
-    //[SerializeField]
-    //private RectTransform _wheel;
-    [SerializeField]
-    private float _maxSteerAngle = 200f;
-    [SerializeField]
-    private float _releaseSpeed = 300f;
 
     private float _wheelAngle = 0f;
-    private float _xAngle = 0f;
+    private float _zAngle = 0f;
     private float _lastWheelAngle = 0f;
     private Vector3 center;
 
@@ -70,18 +40,18 @@ public class SteeringWheel : MonoBehaviour, IInteractable
 
         //_carControl.turn = _wheelAngle * 0.5f;
         //transform.localEulerAngles += new Vector3(_wheelAngle * 5f, 0, 0);
-        //transform.localEulerAngles = new Vector3(_xAngle += _wheelAngle, 90, -25);
+        transform.localEulerAngles = new Vector3(-10, 0, _zAngle += _wheelAngle);
         //Debug.Log(transform.localRotation);
-        // uselt: transform.localRotation = new Quaternion(_xAngle += _wheelAngle * 5f * Time.deltaTime, transform.localRotation.y, transform.localRotation.x, 0);
+        // uselt: transform.localRotation = new Quaternion(_zAngle += _wheelAngle * 5f * Time.deltaTime, transform.localRotation.y, transform.localRotation.x, 0);
 
         // uselt2: transform.Rotate(tempPos.position, _wheelAngle * 50f * Time.deltaTime);
         // usellllttllt 3: transform.Rotate(transform.position, _wheelAngle * 50f * Time.deltaTime);
 
-        if (_steering && Keyboard.current.aKey.isPressed && _wheelAngle > -1)
+        if (Keyboard.current.aKey.isPressed && _wheelAngle > -1)
         {
             _wheelAngle -= Time.deltaTime;
         }
-        else if (_steering && Keyboard.current.dKey.isPressed && _wheelAngle < 1)
+        else if (Keyboard.current.dKey.isPressed && _wheelAngle < 1)
         {
             _wheelAngle += Time.deltaTime;
         }

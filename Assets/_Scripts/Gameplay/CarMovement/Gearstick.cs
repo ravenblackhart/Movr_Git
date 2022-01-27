@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Gearstick : MonoBehaviour, IInteractable
 {
@@ -19,6 +20,7 @@ public class Gearstick : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         MoveStick();
+        _carController.Braking();
         _forward = !_forward;
     }
 
@@ -31,7 +33,7 @@ public class Gearstick : MonoBehaviour, IInteractable
 
 
     [SerializeField]
-    private CarController _carControl;
+    private CarController _carController;
 
     private bool _forward = true;
 
@@ -71,7 +73,7 @@ public class Gearstick : MonoBehaviour, IInteractable
         }
         else
         {
-            xAngle = -90;
+            xAngle = -70;
         }
         transform.localEulerAngles = new Vector3(xAngle, 0, 0);
     }
@@ -79,6 +81,6 @@ public class Gearstick : MonoBehaviour, IInteractable
     private void ChangeDirectionSpeed(float newValue)
     {
         _direction = newValue;
-        _carControl._speed = _direction;
+        _carController.speed = _direction;
     }
 }
