@@ -16,7 +16,7 @@ MonoBehaviour:
   hasHat: 0
   hasGlasses: 0
   taskPool:
-  - taskType: 0
+  - taskType: 3
     timeLimit: 20
     mainTaskPrompt: Could you please pass me some water?
     alternateTaskPrompt: 
@@ -28,9 +28,13 @@ MonoBehaviour:
     alternateTaskPrompt: 
     taskCompletionResponse: Thank you!
     taskFailureResponse: Asshole!
-  startRideDialog: 
-  endRideDialogHappy: 
-  endRideDialogAngry: 
+  startRideDialog: Hello!
+  endRideDialogHappy: Thanks for the ride.
+  endRideDialogAngry: Never drive again you peice of shit!
+  specialEventDialog: 
   generalDialog:
   - 
-  crashDialog: []
+  crashDialog:
+  - Hope you have insurance.
+  - Eyes on the road!
+  - Are you drunk?

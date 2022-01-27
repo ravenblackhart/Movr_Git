@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class CustomerDropoff : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Trigger trigger;
+
+    GameManager gameManager;
+
     void Start()
     {
-        
+        trigger.triggerEvent.AddListener(OnCarExitTrigger);
+
+        gameManager = GameManager.instance;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCarExitTrigger()
     {
-        
+        //
     }
 }

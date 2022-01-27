@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1717905292600517334}
   - component: {fileID: 1312252341}
   - component: {fileID: 1312252342}
-  - component: {fileID: 1312252344}
+  - component: {fileID: 1768305221761114628}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _castRange: 50
---- !u!114 &1312252344
+--- !u!114 &1768305221761114628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,12 +98,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1717905292600517335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da19a05d986f47f41aea10693b45055a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f76e8807cc06474aae04adf57e9472b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   holdPos: {fileID: 0}
   moveForce: 250
+  pushForce: 100
   drag: 10
+  rotateSpeed: 0.005
 --- !u!1 &1717905293194862204
 GameObject:
   m_ObjectHideFlags: 0

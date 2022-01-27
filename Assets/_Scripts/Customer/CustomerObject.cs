@@ -13,8 +13,18 @@ public class CustomerObject : ScriptableObject
 
     public CustomerTask[] taskPool;
 
+    public SettingPreference tempPreference;
+
+    public SettingPreference volumePreference;
+
+    public MusicPreference musicPreference;
+    public MusicPreference musicPreferenceOther;
+
     [TextArea]
-    public string startRideDialog;
+    public string startRideDialogHappy;
+
+    [TextArea]
+    public string startRideDialogAngry;
 
     [TextArea]
     public string endRideDialogHappy;
@@ -30,20 +40,38 @@ public class CustomerObject : ScriptableObject
 
     [TextArea]
     public string[] crashDialog;
+}
 
-    [System.Serializable]
-    public class CustomerTask
-    {
-        public TaskType taskType;
+[System.Serializable]
+public class CustomerTask
+{
+    public TaskType taskType;
 
-        public float timeLimit = 20f;
+    public float timeLimit = 20f;
 
-        [TextArea]
-        public string
-            mainTaskPrompt,
-            alternateTaskPrompt,
+    [TextArea]
+    public string
+        mainTaskPrompt,
+        alternateTaskPrompt,
 
-            taskCompletionResponse,
-            taskFailureResponse;
-    }
+        taskCompletionResponse,
+        taskFailureResponse;
+
+    [TextArea]
+    public string[] specialTaskDialog;
+}
+
+public enum MusicPreference
+{
+    Jazz,
+    Tech,
+    Pop,
+    Rock,
+}
+
+public enum SettingPreference
+{
+    None,
+    High,
+    Low,
 }

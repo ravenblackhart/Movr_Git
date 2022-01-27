@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1051434665639890835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1051434665639890837}
+  - component: {fileID: 1051434665639890834}
+  - component: {fileID: 844283853}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1051434665639890837
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051434665639890835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1051434665639890834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051434665639890835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c27eff890030ba4583e35344d2bea60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readyPanel: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  scoreText: {fileID: 0}
+  passengerNameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  ratingDisplay: {fileID: 0}
+  score: {fileID: 11400000, guid: b32622cbf21450642b83f3f56d63b373, type: 2}
+  customer: {fileID: 0}
+  startingRating: {fileID: 0}
+  scoreUpdate: {fileID: 0}
+--- !u!114 &844283853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051434665639890835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d72a7cdd345dd644a2f8f33da81a7d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorTimer: 1
+  maxIndicatorTimer: 1
+  radialIndicatorUI: {fileID: 0}
+  color1:
+    serializedVersion: 2
+    rgba: 4278233889
+  color2:
+    serializedVersion: 2
+    rgba: 4278229192
+  color3:
+    serializedVersion: 2
+    rgba: 4278190260
+  myEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  shouldUpdate: 0

@@ -14,17 +14,17 @@ public class RadialTimer : MonoBehaviour
     [SerializeField] private float maxIndicatorTimer = 1.0f;
 
     [SerializeField] private Image radialIndicatorUI;
-    [SerializeField] private Color32 color1; 
-    [SerializeField] private Color32 color2;
-    [SerializeField] private Color32 color3;
+    [SerializeField] private Color32 color1 = Color.green;
+    [SerializeField] private Color32 color2 = Color.yellow;
+    [SerializeField] private Color32 color3 = Color.red; 
 
     [SerializeField] private UnityEvent myEvent = null;
 
-    private bool shouldUpdate = false;
+    public bool shouldUpdate = false;
     private float passengerDelay = 0.3f; 
     
     
-    void Update()
+    public void Update()
     {
         if (Keyboard.current.aKey.isPressed)
         {

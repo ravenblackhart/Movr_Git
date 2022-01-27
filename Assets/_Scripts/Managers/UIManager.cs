@@ -6,13 +6,45 @@ using ScriptableEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance = null;
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<UIManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject();
+                    go.name = "UIManager";
+                    instance = go.AddComponent<UIManager>();
+
+                    if (SceneManager.GetActiveScene().buildIndex == 1 && go.GetComponent<RadialTimer>()== null)
+                    {
+                        go.AddComponent<RadialTimer>(); 
+                    }
+                }
+            }
+
+            return instance; 
+        }
+    }
+
     #region Inspector
 
+    [Header("Panels")] 
+    [SerializeField] private Canvas readyPanel;
+    [SerializeField] private Canvas pauseMenu; 
+    
     [Header("Display Fields")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI passengerNameText;
@@ -35,30 +67,67 @@ public class UIManager : MonoBehaviour
     
 
     #endregion
-
+    #region Defaults
     private void Awake()
     {
-        throw new NotImplementedException();
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this; 
+        }
+        
     }
+    
 
     private void Start()
     {
-        SetScoreText(score.IntValue.ToString()); 
-    }
+        pauseMenu.enabled = false; 
+        SetScoreText(score.IntValue.ToString());
 
-    #region Testing
+        readyPanel.enabled = true;
+       
+    }
 
     private void Update()
     {
-        if (Keyboard.current.dKey.isPressed) PassengerPickUp();
+        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true) readyPanel.enabled = false; 
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
+
+        
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            // Test Scripts
+            if (Keyboard.current.dKey.isPressed) PassengerPickUp(rating);
+        }
+        
     }
 
     #endregion
-
+    
+    
     public void PauseGame()
     {
-        if (Time.timeScale != 0) Time.timeScale = 0;
-        else Time.timeScale = 1; 
+        if (pauseMenu.enabled == false)
+        {
+            pauseMenu.enabled = true; 
+            Time.timeScale = 0f;
+        }
+
+        else
+        {
+            pauseMenu.enabled = false; 
+            Time.timeScale = 1f; 
+        }
+        
+    }
+
+    public void PlayGame()
+    {
+        Debug.Log("Let's Play");
+        SceneManager.LoadScene(1); 
     }
 
     public void QuitGame()
@@ -66,9 +135,14 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void PassengerPickUp()
+    public void PassengerPickUp(float baseRating)
     {
-        StartCoroutine(RatingCountDown()); 
+        StartCoroutine(RatingCountDown(baseRating)); 
+    }
+
+    public void TaskCountDown()
+    {
+        StartCoroutine(RadialTimer()); 
     }
     
     private void SetScoreText(string text)
@@ -76,27 +150,31 @@ public class UIManager : MonoBehaviour
         scoreText.text = text; 
     }
 
-    private void SetDialogueText(string text)
+    public void SetDialogueText(string text)
     {
         dialogueText.text = text; 
     }
 
-    private void SetPassengerNameText(string text)
+    public void SetPassengerName(string text)
     {
         passengerNameText.text = text; 
     }
 
-    private IEnumerator RatingCountDown()
+    private IEnumerator RatingCountDown(float baseRating)
     {
-        Debug.Log("Hello!");
+        rating = baseRating; 
         while (rating > 0f)
         {
-            Debug.Log("am a thing");
             ratingDisplay.fillAmount = rating * 0.2f;
             rating -= (Time.deltaTime * 0.5f);
             yield return null; 
         }
         
+    }
+
+    private IEnumerator RadialTimer()
+    {
+        yield return null; 
     }
 
     #region Protoype
@@ -113,14 +191,17 @@ public class UIManager : MonoBehaviour
 
     public void CombinedTest()
     {
-        SceneManager.LoadScene("PrototypeTest");
+        SceneManager.LoadScene(1);
     }
+
+
+    #endregion
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("0_MainMenu");
+        Debug.Log("heading to Main Menu");
+        SceneManager.LoadScene(0);
     }
-    #endregion
-
+    
 
 }
