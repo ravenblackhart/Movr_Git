@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Lever : MonoBehaviour, IInteractable
@@ -6,13 +7,15 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     
     [SerializeField] private float _dragSpeed = 0.01f;
-    [SerializeField] private bool _shouldRotate;
     
-    [Range(0.0f, 10.0f)] 
+    [Range(-1f, 1f)] 
     [SerializeField] private float _leverValue;
     
+    [SerializeField] private Transform _orgin;
+    [SerializeField] private Transform _startPoint;
+    [SerializeField] private Transform _endPoint;
+
     private float _moveDirection;
-    private Vector2 _position;
     
     public float MaxRange => _maxRange;
     public float MoveDirection
@@ -24,7 +27,7 @@ public class Lever : MonoBehaviour, IInteractable
             UpdateLeverValue();
         }
     }
-
+    
     public void OnStartHover()
     {
     }
@@ -41,13 +44,14 @@ public class Lever : MonoBehaviour, IInteractable
     private void UpdateLeverValue()
     {
         _leverValue += _moveDirection * _dragSpeed;
-        _leverValue = Mathf.Clamp(_leverValue,0, 10);
-        
+        _leverValue = Mathf.Clamp(_leverValue,-1, 1);
+
         UpdateLeverPosition();
     }
 
     private void UpdateLeverPosition()
-    {
-        transform.position = new Vector3(_leverValue * _dragSpeed, transform.position.y, transform.position.z);
+    { 
+        _orgin.position = Vector3.Lerp(_startPoint.transform.position, _endPoint.transform.position, _leverValue);
+        _orgin.rotation = Quaternion.Lerp(_endPoint.rotation, _startPoint.rotation, _leverValue);
     }
 }
