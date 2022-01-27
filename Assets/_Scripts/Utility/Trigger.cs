@@ -7,6 +7,8 @@ public class Trigger : MonoBehaviour
 {
     public UnityEvent triggerEvent;
 
+    public CustomClasses.QueryEvent queryEvent;
+
     Collider collider;
 
     void Start()
@@ -14,13 +16,17 @@ public class Trigger : MonoBehaviour
         collider = GetComponent<Collider>();
 
         collider.isTrigger = true;
+
+        DisableTrigger();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other == GameManager.instance.car)
+        if (other.transform == GameManager.instance.car)
         {
             triggerEvent.Invoke();
+
+            queryEvent.Invoke();
 
             DisableTrigger();
         }
