@@ -38,4 +38,22 @@ public class RadioController : MonoBehaviour
         radioAudioSource.Stop();
     }
 
+    public void NextTrack()
+    {
+        trackIndex++; 
+        UpdateTrack(trackIndex);
+    }
+    
+    public void PrevTrack()
+    {
+        trackIndex--; 
+        UpdateTrack(trackIndex);
+    }
+
+    private void UpdateTrack(int index)
+    {
+        radioAudioSource.clip = audioTracks[index].TrackAudioClip;
+        trackNameField.text = audioTracks[index].name;
+    }
+
 }
