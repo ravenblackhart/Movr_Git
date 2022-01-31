@@ -20,8 +20,10 @@ public class Gearstick : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         MoveStick();
-        _carController.Braking();
+        _carController.speed = 0;
+        _carController.Braking(0.2f);
         _forward = !_forward;
+        //Debug.Log(_carController.speed + " fwrd: " + _forward);
     }
 
     public void OnEndHover()
@@ -38,7 +40,7 @@ public class Gearstick : MonoBehaviour, IInteractable
     private bool _forward = true;
 
     // Direction of vehicle, positive (1) is forward, negative is reverse 
-    private float _direction = 1;
+    private float _vehicleDirection = 1;
 
     [Range(-1, -0.1f)]
     [SerializeField]
@@ -52,18 +54,18 @@ public class Gearstick : MonoBehaviour, IInteractable
     {
         if (_carController == null)
         {
-            _carController = GameObject.Find(_carNameWithCarController).GetComponent<CarController>();
+            _carController = FindObjectOfType<CarController>();// GameObject.Find(_carNameWithCarController).GetComponent<CarController>();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_direction > _reverseGearStrength && !_forward)
+        if (_vehicleDirection > _reverseGearStrength && !_forward)
         {
             ChangeDirectionSpeed(_reverseGearStrength);
         }
-        else if (_forward && _direction < 0)
+        else if (_forward && _vehicleDirection < 0)
         {
             ChangeDirectionSpeed(1);
         }
@@ -85,7 +87,7 @@ public class Gearstick : MonoBehaviour, IInteractable
 
     private void ChangeDirectionSpeed(float newValue)
     {
-        _direction = newValue;
-        _carController.speed = _direction;
+        _vehicleDirection = newValue;
+        _carController.speed = _vehicleDirection;
     }
 }

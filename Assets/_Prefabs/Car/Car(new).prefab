@@ -1668,7 +1668,6 @@ GameObject:
   - component: {fileID: 5613902889379344764}
   - component: {fileID: 3881581832648605501}
   - component: {fileID: 3881581832648605502}
-  - component: {fileID: 4320922591389287195}
   m_Layer: 0
   m_Name: Car(new)
   m_TagString: Untagged
@@ -1760,36 +1759,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4320922591389287195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5975549829893923096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bbe3aa3430365e4b96fca56540ff7dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mouseClick:
-    m_Name: Mouse Click
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 006c3299-21fc-4e2a-ba03-3155bfdfe4fe
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 97216b7c-4a1e-46a5-a1d4-ba592c8bbff0
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Mouse Click
-      m_Flags: 0
-    m_Flags: 0
-  _steeringWheelTag: SteeringWheel
 --- !u!1 &7211580330767242762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2213,14 +2182,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9e1e6aa4153dd34ebc76bec253d749b, type: 3}
---- !u!4 &5932705639387918649 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1717905293194862147, guid: a9e1e6aa4153dd34ebc76bec253d749b, type: 3}
-  m_PrefabInstance: {fileID: 5008580697209237370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5932705638927781292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1717905292600517334, guid: a9e1e6aa4153dd34ebc76bec253d749b, type: 3}
+  m_PrefabInstance: {fileID: 5008580697209237370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5932705639387918649 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1717905293194862147, guid: a9e1e6aa4153dd34ebc76bec253d749b, type: 3}
   m_PrefabInstance: {fileID: 5008580697209237370}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5008580698575305603
