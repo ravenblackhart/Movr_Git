@@ -59,8 +59,6 @@ public class UIManager : MonoBehaviour
     
     [Header("Display Fields - Game")]
     [SerializeField] [CanBeNull] private TextMeshProUGUI scoreText;
-    [SerializeField] [CanBeNull] private TextMeshProUGUI passengerNameText;
-    [SerializeField] [CanBeNull] private TextMeshProUGUI dialogueText;
     [SerializeField] [CanBeNull] private Image ratingDisplay; 
 
     [Header("Data")] 
@@ -191,7 +189,6 @@ public class UIManager : MonoBehaviour
 
     public void PlayGame()
     {
-        Debug.Log("Let's Play");
         SceneManager.LoadScene(1); 
     }
 
@@ -215,16 +212,6 @@ public class UIManager : MonoBehaviour
         scoreText.text = text; 
     }
 
-    public void SetDialogueText(string text)
-    {
-        dialogueText.text = text; 
-    }
-
-    public void SetPassengerName(string text)
-    {
-        passengerNameText.text = text; 
-    }
-
     private IEnumerator RatingCountDown(float baseRating)
     {
         rating = baseRating; 
@@ -241,30 +228,10 @@ public class UIManager : MonoBehaviour
     {
         yield return null; 
     }
-
-    #region Protoype
     
-    public void TestSteer()
-    {
-        SceneManager.LoadScene("CarMoveTesting");
-    }
-
-    public void TestFPV()
-    {
-        SceneManager.LoadScene("PrototypeScene");
-    }
-
-    public void CombinedTest()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-
-    #endregion
 
     public void MainMenu()
     {
-        Debug.Log("heading to Main Menu");
         SceneManager.LoadScene(0);
     }
     

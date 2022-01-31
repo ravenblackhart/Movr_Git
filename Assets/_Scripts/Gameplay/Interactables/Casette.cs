@@ -18,9 +18,9 @@ public class Casette : MonoBehaviour
     }
 
     private void Update() {
-        if (_onTrigger) {
-            
-        }
+                 if (_onTrigger) {
+                     
+                 }
     }
 
     private void FixedUpdate() {
@@ -42,20 +42,20 @@ public class Casette : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.CompareTag("CassetteTrigger")) {
-            _onTrigger = true;
-            trigger = other.transform;
-            _playerPickUp.hoverObj = trigger;
-            _playerPickUp.hoverDistance = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("CassetteTrigger")) {
-            _onTrigger = false;
-            trigger = null;
-            _playerPickUp.hoverDistance = false;
-        }
-    }
+    // private void OnTriggerStay(Collider other) {
+    //     if (other.CompareTag("CassetteTrigger")) {
+    //         _onTrigger = true;
+    //         trigger = other.transform;
+    //         _playerPickUp.hoverObj = trigger;
+    //         _playerPickUp.hoverDistance = true;
+    //     }
+    // }
+    //
+    // private void OnTriggerExit(Collider other) {
+    //     if (other.CompareTag("CassetteTrigger")) {
+    //         _onTrigger = false;
+    //         trigger = null;
+    //         _playerPickUp.hoverDistance = false;
+    //     }
+    
 }

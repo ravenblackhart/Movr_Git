@@ -20,13 +20,10 @@ public class PlayerPickUp : MonoBehaviour {
     Transform _holdPos;
     
     GameObject _gameObjectInHand;
+    private PhysicsObject _physicsObjectInHand;
     private Rigidbody _rbInHand;
     
     Transform _previousParent;
-
-    public bool hover = false;
-    public bool hoverDistance = true;
-    public Transform hoverObj;
 
     private void Awake() {
         _playerInput = GetComponent<PlayerInput>();
@@ -51,9 +48,7 @@ public class PlayerPickUp : MonoBehaviour {
         _primaryAction.performed -= OnPrimaryAction;
         _secondaryAction.performed -= OnSecondaryAction;
     }
-
     
-
     void Start() {
 
         //Temporary 
@@ -76,16 +71,12 @@ public class PlayerPickUp : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        if (_gameObjectInHand != null) {          
+        if (_gameObjectInHand != null && !_physicsObjectInHand.OnSnapTrigger) {          
             MoveObject();
         }
-
-        if (hover) {
-            Hover(hoverObj);
-        }
-
+        
         //Keeps the object facing the player
-        _holdPos.transform.LookAt(transform.position);
+        _holdPos.transform.LookAt(transform.GetChild(0).position);
     }
     
     private void OnPrimaryAction(InputAction.CallbackContext context) {
@@ -105,11 +96,8 @@ public class PlayerPickUp : MonoBehaviour {
         if (_gameObjectInHand == null)
         {
             _rbInHand = obj.GetComponent<Rigidbody>();
-
-            if (obj.GetComponent<Casette>() != null && obj.GetComponent<Casette>().locked) {
-                obj.GetComponent<Casette>().locked = false;
-            }
-
+            _physicsObjectInHand = obj.GetComponent<PhysicsObject>();
+            
             _previousParent = obj.transform.parent;
             _rbInHand.useGravity = false;
             _rbInHand.drag = drag;
@@ -120,72 +108,27 @@ public class PlayerPickUp : MonoBehaviour {
         }
     }
 
-    void MoveObject() {
-        if (hoverDistance) {
-            if (Vector3.Distance(hoverObj.transform.position, _holdPos.position) > 0.2f) {
-                _gameObjectInHand.transform.parent = _holdPos;
-                hover = false;
-            }
-
-            else {
-                hover = true;
-            }
-        }
-
-        if (!hover) {
-            if (Vector3.Distance(_gameObjectInHand.transform.position, _holdPos.position) > 0.01f) {
-                Vector3 moveDirection = (_holdPos.position - _gameObjectInHand.transform.position);
-                _rbInHand.AddForce(moveDirection * moveForce);
-            }
-        }
-    }
-
-    public void ThrowObject() {
-        if (hover) {
-            /*_rbInHand.useGravity = true;
-            _rbInHand.drag = 0;
-            _rbInHand.transform.parent = _previousParent;
-
-            _rbInHand = null;
-            _gameObjectInHand = null;
-            hover = false;*/
-
-            _gameObjectInHand.GetComponent<Casette>().locked = true;
-            _rbInHand.transform.parent = hoverObj.GetChild(0);
-            _gameObjectInHand = null;
-            _rbInHand = null;
-            hover = false;
-        }
-
-        else {
-            _rbInHand.useGravity = true;
-            _rbInHand.drag = 0;
-            _rbInHand.transform.parent = _previousParent;
-
-            //Need to make it check the cameras movement rather than the delta but kinda works for now
-            _rbInHand.AddForce(-_holdPos.forward * pushForce +
-                _holdPos.up * Mathf.Clamp(_mouseDelta.y * sideThrowForce, -200, 200) +
-                -_holdPos.right * Mathf.Clamp(_mouseDelta.x * sideThrowForce, -200, 200));
-
-            _rbInHand = null;
-            _gameObjectInHand = null;
-        }
-        
-    }
-
-    public void Hover(Transform target) {
-        hover = true;
-        _gameObjectInHand.transform.parent = null;
-
-        if (Vector3.Distance(_gameObjectInHand.transform.position, target.position) > 0.01f) {
-            Vector3 moveDirection = (target.position - _gameObjectInHand.transform.position);
+    void MoveObject() 
+    {
+        if (Vector3.Distance(_gameObjectInHand.transform.position, _holdPos.position) > 0.01f) {
+            Vector3 moveDirection = (_holdPos.position - _gameObjectInHand.transform.position);
             _rbInHand.AddForce(moveDirection * moveForce);
         }
+    }
 
-        //_gameObjectInHand.transform.Rotate(target.transform.rotation.eulerAngles * Time.deltaTime);
-        if (Vector3.Distance(_gameObjectInHand.transform.rotation.eulerAngles, target.rotation.eulerAngles) > 0.01f) {
-            _gameObjectInHand.transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, target.rotation.eulerAngles, Time.deltaTime * 0.00001f);
-        }
+    public void ThrowObject() 
+    {
+        _rbInHand.useGravity = true;
+        _rbInHand.drag = 0;
+        _rbInHand.transform.parent = _previousParent;
+
+        //Need to make it check the cameras movement rather than the delta but kinda works for now
+        _rbInHand.AddForce(-_holdPos.forward * pushForce +
+                           _holdPos.up * Mathf.Clamp(_mouseDelta.y * sideThrowForce, -200, 200) +
+                           -_holdPos.right * Mathf.Clamp(_mouseDelta.x * sideThrowForce, -200, 200));
+        _rbInHand = null;
+        _gameObjectInHand = null;
+        _physicsObjectInHand = null;
     }
 
     void RotateObject() {
@@ -209,6 +152,5 @@ public class PlayerPickUp : MonoBehaviour {
         yield return null;
         _gameObjectInHand = obj;
     }
-
 }
 

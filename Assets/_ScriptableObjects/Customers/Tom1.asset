@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Tom1
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 0
+  taskPool:
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: 'Could you turn the volume down?
+
+'
+    alternateTaskPrompt: 
+    taskCompletionResponse: Thanks.
+    taskFailureResponse: 
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 15
+    mainTaskPrompt: 'Ugh I always forget to eat breakfast before big meetings.
+
+      
+
+'
+    alternateTaskPrompt: 
+    taskCompletionResponse: Ah.. perfect thank you.
+    taskFailureResponse: 
+    specialTaskDialog: []
+  - taskType: 6
+    timeLimit: 10
+    mainTaskPrompt: 'Maybe something a bit more temperate?
+
+      
+
+'
+    alternateTaskPrompt: 
+    taskCompletionResponse: That'll do.
+    taskFailureResponse: 
+    specialTaskDialog: []
+  taskTimeMin: 0
+  taskTimeMax: 0
+  tempPreference: 2
+  volumePreference: 3
+  musicPreference: 0
+  musicPreferenceOther: 1
+  startRideDialogHappy: Big Corp offices please.
+  startRideDialogAngry: 
+  endRideDialogHappy: Thank you much appreciated.
+  endRideDialogAngry: Yeah you better go back to driving school.
+  specialEventDialog: 
+  generalDialog:
+  - "My wife took the car to the shop so we\u2019ll be counting on you today."
+  - This Max guy better not be late..
+  - "He thinks they\u2019re bigger than us, what a joke.\r"
+  - "What is it with your generation thinking you get to make the rules??\r"
+  crashDialog:
+  - '[s]Oi!![s]'
+  - '[s]WATCH[s] the road dummy!'
+  - I knew I shoul've gone for MOVR [s]X[s].
+  - Do you need me to take the wheel[s]??[s]

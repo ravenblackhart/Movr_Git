@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GiveWaterTask : Task
 {
-    public override void StartTask(GameManager gameManager)
+    public override PromptType StartTask(GameManager gameManager)
     {
-        //
+        return PromptType.Main;
     }
 
     public override void UpdateTask(GameManager gameManager)

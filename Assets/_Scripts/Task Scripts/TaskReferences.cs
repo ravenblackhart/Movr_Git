@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class TaskReferences
 {
-    //
+    public Lever volumeLever;
 }

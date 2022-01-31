@@ -16,22 +16,19 @@ MonoBehaviour:
   hasHat: 0
   hasGlasses: 0
   taskPool:
-  - taskType: 3
-    timeLimit: 2
-    mainTaskPrompt: Could you please pass me some water?
-    alternateTaskPrompt: 
-    taskCompletionResponse: Thank you!
-    taskFailureResponse: Asshole!
-    specialTaskDialog: []
   - taskType: 2
-    timeLimit: 2
-    mainTaskPrompt: Could you please open the window?
-    alternateTaskPrompt: Could you please close the window?
-    taskCompletionResponse: Thank you!
-    taskFailureResponse: Asshole!
+    timeLimit: 10
+    mainTaskPrompt: Yo my man. I need you to [s][c0]CRANK[c] THE SHIT[s] outta that
+      [c0]volume[c]!!!
+    secondaryTaskPrompt: Yo my man. Could you put that [c0]volume[c] at a happy [c0]medium[c]
+      for me? I'm tryin to chill out.
+    tertiaryTaskPrompt: Yo my man. Imma need you to [w][c0]cool down[c][w] that [c0]volume[c]
+      a little bit. My head's starting to hurt.
+    taskCompletionResponse: '[w]Yoooo[w] thats kinda a vibe.'
+    taskFailureResponse: Yo c'mon man. I thought you'd be a little more hosbitable.
     specialTaskDialog: []
-  taskTimeMin: 7
-  taskTimeMax: 10
+  taskTimeMin: 4
+  taskTimeMax: 6
   tempPreference: 0
   volumePreference: 0
   musicPreference: 0

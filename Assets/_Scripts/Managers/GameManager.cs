@@ -31,18 +31,17 @@ public class GameManager : MonoBehaviour
 
     #region References
 
-    [Header("Car References")]
+    [Header("References")]
 
     public Transform car;
-    public Transform steeringWheel;
-
-    [Header("General References")]
 
     [SerializeField]
     DialogRenderer dialogRenderer;
 
     [SerializeField]
     Transform customerSitGoal;
+
+    public TaskReferences taskReferences;
 
     [Header("Prefabs")]
 
@@ -150,7 +149,7 @@ public class GameManager : MonoBehaviour
         {
             if (currentDropoff.trigger.queryEvent.Query())
             {
-                currentTask?.CancelTask(this);
+                currentTask?.EndTask(this);
 
                 break;
             }
@@ -182,9 +181,20 @@ public class GameManager : MonoBehaviour
                         taskTimerTotal = currentCustomerTask.timeLimit;
                         taskTimer = taskTimerTotal;
 
-                        currentTask.StartTask(this);
+                        switch (currentTask.StartTask(this))
+                        {
+                            default:
+                                PlayDialog(currentCustomerTask.mainTaskPrompt);
+                                break;
 
-                        PlayDialog(currentCustomerTask.mainTaskPrompt);
+                            case PromptType.Secondary:
+                                PlayDialog(currentCustomerTask.secondaryTaskPrompt);
+                                break;
+
+                            case PromptType.Tertiary:
+                                PlayDialog(currentCustomerTask.tertiaryTaskPrompt);
+                                break;
+                        }
 
                         break;
                     }
@@ -199,19 +209,27 @@ public class GameManager : MonoBehaviour
 
                 if (currentTask.completedTaskEvent.Query())
                 {
+                    currentTask.EndTask(this);
+
                     currentTask = null;
 
                     taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
 
                     PlayDialog(currentCustomerTask.taskCompletionResponse);
+
+                    // Add event completion callback
                 }
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
+                    currentTask.EndTask(this);
+
                     currentTask = null;
 
                     taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
 
                     PlayDialog(currentCustomerTask.taskFailureResponse);
+
+                    // Add event failure callback
                 }
 
                 canPlayDialog = false;

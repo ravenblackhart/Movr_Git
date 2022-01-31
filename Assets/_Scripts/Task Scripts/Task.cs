@@ -6,9 +6,9 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Task
 {
-    public virtual void StartTask(GameManager gameManager)
+    public virtual PromptType StartTask(GameManager gameManager)
     {
-        //
+        return PromptType.Main;
     }
 
     public virtual void UpdateTask(GameManager gameManager)
@@ -16,7 +16,7 @@ public class Task
         //
     }
 
-    public virtual void CancelTask(GameManager gameManager)
+    public virtual void EndTask(GameManager gameManager)
     {
         //
     }
@@ -34,16 +34,47 @@ public class Task
         {
             default:
                 return new Task();
+            case TaskType.ChangeMusic:
+                return new ChangeMusicTask();
+            case TaskType.ChangeVolume:
+                return new ChangeVolumeTask();
+            case TaskType.OpenWindow:
+                return new OpenWindowTask();
+            case TaskType.GiveWater:
+                return new GiveWaterTask();
+            case TaskType.GiveSnackBar:
+                return new GiveSnackBarTask();
+            case TaskType.ChangeAc:
+                return new ChangeAcTask();
+            case TaskType.PlayCatch:
+                return new PlayCatchTask();
+            case TaskType.ChargePhone:
+                return new ChargePhoneTask();
         }
     }
+}
+
+public class TaskParams
+{
+    public int promptIndex;
 }
 
 public enum TaskType
 {
     Default,
     ChangeMusic,
+    ChangeVolume,
     OpenWindow,
     GiveWater,
-    GiveSnack,
+    GiveSnackBar,
     ChangeAc,
+    PlayCatch,
+    ChargePhone,
+}
+
+public enum PromptType
+{
+    Main,
+    Secondary,
+    Tertiary,
 }

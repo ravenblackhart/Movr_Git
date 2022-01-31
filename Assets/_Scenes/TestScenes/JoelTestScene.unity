@@ -306,9 +306,7 @@ MonoBehaviour:
   drag: 20
   rotateSpeed: 0.1
   sideThrowForce: 5
-  hover: 0
-  hoverDistance: 0
-  hoverObj: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1 &269643793
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +436,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!54 &354685897
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -666,6 +665,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!54 &433976807
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -878,6 +878,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!54 &505620497
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1782,7 +1783,6 @@ GameObject:
   - component: {fileID: 953839366}
   - component: {fileID: 953839365}
   - component: {fileID: 953839364}
-  - component: {fileID: 953839363}
   m_Layer: 0
   m_Name: CASETTE (2)
   m_TagString: Untagged
@@ -1790,23 +1790,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &953839363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953839362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c22e473c441ab4d9a0d0d493c28e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onTrigger: 0
-  moveForce: 5
-  trigger: {fileID: 0}
-  locked: 0
-  pickedUp: 0
 --- !u!114 &953839364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,6 +1805,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 200
 --- !u!54 &953839365
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1928,7 +1912,6 @@ GameObject:
   - component: {fileID: 1200270449}
   - component: {fileID: 1200270448}
   - component: {fileID: 1200270447}
-  - component: {fileID: 1200270453}
   m_Layer: 0
   m_Name: CASETTE
   m_TagString: Untagged
@@ -1951,6 +1934,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 200
 --- !u!54 &1200270448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2043,23 +2027,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1200270453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200270446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c22e473c441ab4d9a0d0d493c28e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onTrigger: 0
-  moveForce: 5
-  trigger: {fileID: 0}
-  locked: 0
-  pickedUp: 0
 --- !u!1 &1256124237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2244,7 @@ GameObject:
   - component: {fileID: 1302047691}
   - component: {fileID: 1302047690}
   - component: {fileID: 1302047689}
+  - component: {fileID: 1302047686}
   m_Layer: 2
   m_Name: Cassette trigger
   m_TagString: CassetteTrigger
@@ -2284,6 +2252,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1302047686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302047685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be31f9d9ba714ffcb687ee4275989e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _snapPosition: {fileID: 1302047692}
+  LockedPosition: {fileID: 1516518751}
 --- !u!65 &1302047689
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2456,7 +2438,6 @@ GameObject:
   - component: {fileID: 1428635872}
   - component: {fileID: 1428635871}
   - component: {fileID: 1428635870}
-  - component: {fileID: 1428635876}
   m_Layer: 0
   m_Name: CASETTE (1)
   m_TagString: Untagged
@@ -2479,6 +2460,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 200
 --- !u!54 &1428635871
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2571,23 +2553,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: -51.934, y: -28.78, z: 71.205}
---- !u!114 &1428635876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428635869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c22e473c441ab4d9a0d0d493c28e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onTrigger: 0
-  moveForce: 5
-  trigger: {fileID: 0}
-  locked: 0
-  pickedUp: 0
 --- !u!1 &1466554988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2881,6 +2846,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!54 &1594690113
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3353,6 +3319,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!54 &2075765251
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3465,6 +3432,7 @@ MonoBehaviour:
   _onInteractEvent: {fileID: 0}
   _maxRange: 10
   _rotationLambda: 6
+  _snapSpeed: 0
 --- !u!1 &2124576272
 GameObject:
   m_ObjectHideFlags: 0

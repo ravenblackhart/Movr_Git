@@ -58,7 +58,8 @@ public class CustomerTask
     [TextArea]
     public string
         mainTaskPrompt,
-        alternateTaskPrompt,
+        secondaryTaskPrompt,
+        tertiaryTaskPrompt,
 
         taskCompletionResponse,
         taskFailureResponse;
@@ -69,6 +70,7 @@ public class CustomerTask
 
 public enum MusicPreference
 {
+    Any,
     Jazz,
     Tech,
     Pop,
@@ -79,5 +81,6 @@ public enum SettingPreference
 {
     None,
     High,
+    Mid,
     Low,
 }
