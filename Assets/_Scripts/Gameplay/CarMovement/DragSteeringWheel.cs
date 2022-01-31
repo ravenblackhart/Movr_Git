@@ -32,7 +32,7 @@ public class DragSteeringWheel : MonoBehaviour
     private Vector2 _prevDelta;
 
     [SerializeField]
-    private float _rotateSpeed = 50;
+    private float _rotateSpeed = 20;
     private float _zAngle = 0;
 
     private bool _readyToReset = false;

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class CarController : MonoBehaviour
 {
     public enum Direction { Left, Right, Forward }
-    [Header("How many axles will the car have and which will be steerable and motored")]
+    [Header("How many axles the car will have")]
     [SerializeField]
     private List<AxleInfo> _axleInfos; // the information about each individual axle
     [SerializeField]
@@ -15,9 +15,8 @@ public class CarController : MonoBehaviour
     private float _maxSteeringAngle = 25; // maximum steer angle the wheel can have
 
     [SerializeField]
-    private float _maxBrakeTorque = 800; // maximum brake torque the motor can apply to wheel
+    private float _maxBrakeTorque = 8000; // maximum brake torque the motor can apply to wheel
     private float _curBrakeTorque = 0;
-    private bool _braking = false;
 
     private GameObject _steeringWheel;
 
@@ -27,8 +26,6 @@ public class CarController : MonoBehaviour
     [Range(-1, 1)]
     public float turn = 0;
 
-    private Vector3 _turnDirection;
-    
     private float _zAngle = 0;
     
 
@@ -89,31 +86,38 @@ public class CarController : MonoBehaviour
         //         _steeringWheel.transform.localEulerAngles = new Vector3(-10, 0, 0);
         //     }
         // }
-
-        if (!_braking)
+        
+        // // Hacky temp solution to 
+        //  float recoverytime = 2;
+        //  if (!(_rigidbody.velocity.sqrMagnitude < _maxVelocity))
+        //      speed = Mathf.MoveTowards(speed, 0, recoverytime * Time.deltaTime);
+        //  else
+        //  {
+        //      speed = Mathf.MoveTowards(speed, 1, recoverytime * Time.deltaTime);
+        //  }
+        //
+        
+        
+        float motor = _maxMotorTorque * speed * Time.deltaTime;
+        float steering = _maxSteeringAngle * turn;
+        foreach (AxleInfo axleInfo in _axleInfos)
         {
-            float motor = _maxMotorTorque * speed; // Input.GetAxis("Vertical");
-            float steering = _maxSteeringAngle * turn; // Input.GetAxis("Horizontal");
-
-            foreach (AxleInfo axleInfo in _axleInfos)
+            if (axleInfo.steering)
             {
-                if (axleInfo.steering)
-                {
-                    axleInfo.leftWheel.steerAngle = steering;
-                    axleInfo.rightWheel.steerAngle = steering;
-                }
-
-                if (axleInfo.motor)
-                {
-                    axleInfo.leftWheel.motorTorque = motor;
-                    axleInfo.rightWheel.motorTorque = motor;
-                    axleInfo.leftWheel.brakeTorque = _curBrakeTorque;
-                    axleInfo.rightWheel.brakeTorque = _curBrakeTorque;
-                }
-
-                ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-                ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+                axleInfo.leftWheel.steerAngle = steering;
+                axleInfo.rightWheel.steerAngle = steering;
             }
+
+            if (axleInfo.motor)
+            {
+                axleInfo.leftWheel.motorTorque = motor;
+                axleInfo.rightWheel.motorTorque = motor;
+                axleInfo.leftWheel.brakeTorque = _curBrakeTorque;
+                axleInfo.rightWheel.brakeTorque = _curBrakeTorque;
+            }
+
+            ApplyLocalPositionToVisuals(axleInfo.leftWheel);
+            ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
     }
 
@@ -123,18 +127,17 @@ public class CarController : MonoBehaviour
         
     }
 
-    public void Braking()
+    public void Braking(float time)
     {
-        StartCoroutine(StartBraking());
+        StartCoroutine(StartBraking(time));
     }
 
-    private IEnumerator StartBraking()
+    private IEnumerator StartBraking(float time)
     {
-        _braking = true;
         _curBrakeTorque = _maxBrakeTorque;
-        yield return new WaitForSeconds(0.1f); // The shorter time the better, pretty much det. braking time
+        // The shorter time the better, pretty much determines braking time
+        yield return new WaitForSeconds(time);
         _curBrakeTorque = 0;
-        _braking = false;
     }
 
     // Finds the corresponding visual wheel and, beh�vs detta?
@@ -161,8 +164,10 @@ public class CarController : MonoBehaviour
     {
         public WheelCollider leftWheel;
         public WheelCollider rightWheel;
-        public bool motor; // is this wheel attached to motor?
-        public bool steering; // does this wheel apply steer angle?
+        [Header("Is this axle attached to motor?")]
+        public bool motor; 
+        [Header("Will this axle be steerable?")]
+        public bool steering; 
     }
 
 }
