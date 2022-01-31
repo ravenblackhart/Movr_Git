@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized]
     public bool carDriving = true;
 
+    bool isPlayingDialog = false;
+
     #region References
 
     [Header("Car References")]
@@ -35,6 +37,9 @@ public class GameManager : MonoBehaviour
     public Transform steeringWheel;
 
     [Header("General References")]
+
+    [SerializeField]
+    DialogRenderer dialogRenderer;
 
     [SerializeField]
     Transform customerSitGoal;
@@ -118,6 +123,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        PlayDialog(currentCustomer.startRideDialogHappy);
+
         carDriving = true;
 
         currentDropoff.trigger.EnableTrigger();
@@ -131,6 +138,14 @@ public class GameManager : MonoBehaviour
         float taskTimerTotal = 0;
         float taskTimer = 0;
 
+        float taskIntervalTime = Random.Range(9f, 15f);
+
+        float dialogIntervalTime = Random.Range(8f, 12f);
+
+        int nextDialogIndex = 0;
+
+        bool canPlayDialog = false;
+
         while (true)
         {
             if (currentDropoff.trigger.queryEvent.Query())
@@ -142,7 +157,7 @@ public class GameManager : MonoBehaviour
 
             taskTimer -= Time.deltaTime;
 
-            if (currentTask == null && currentCustomer.taskPool.Length > 0)
+            if (currentTask == null && currentCustomer.taskPool.Length > 0 && taskIntervalTime <= 0f)
             {
                 if (tasksPool.Count == 0)
                 {
@@ -169,10 +184,14 @@ public class GameManager : MonoBehaviour
 
                         currentTask.StartTask(this);
 
+                        PlayDialog(currentCustomerTask.mainTaskPrompt);
+
                         break;
                     }
                 }
             }
+
+            taskIntervalTime -= Time.deltaTime;
 
             if (currentTask != null)
             {
@@ -181,20 +200,69 @@ public class GameManager : MonoBehaviour
                 if (currentTask.completedTaskEvent.Query())
                 {
                     currentTask = null;
+
+                    taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
+
+                    PlayDialog(currentCustomerTask.taskCompletionResponse);
                 }
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
                     currentTask = null;
+
+                    taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
+
+                    PlayDialog(currentCustomerTask.taskFailureResponse);
+                }
+
+                canPlayDialog = false;
+            }
+            else
+            {
+                if (nextDialogIndex < currentCustomer.generalDialog.Length)
+                {
+                    if (!canPlayDialog && !isPlayingDialog)
+                    {
+                        var maxInterval = taskIntervalTime - EstimateReadTime(currentCustomer.generalDialog[nextDialogIndex], dialogRenderer) - 2f;
+
+                        dialogIntervalTime = Random.Range(3f, Mathf.Clamp(maxInterval, 3f, 9f));
+
+                        if (dialogIntervalTime < 3f)
+                        {
+                            canPlayDialog = false;
+                        }
+                        else
+                        {
+                            canPlayDialog = true;
+                        }
+                    }
+
+                    if (canPlayDialog)
+                    {
+                        dialogIntervalTime -= Time.deltaTime;
+
+                        if (dialogIntervalTime <= 0f && !isPlayingDialog)
+                        {
+                            PlayDialog(currentCustomer.generalDialog[nextDialogIndex]);
+
+                            nextDialogIndex++;
+
+                            canPlayDialog = false;
+                        }
+                    }
                 }
             }
 
             yield return null;
         }
 
+        StopDialog();
+
         // Dropoff Customer
         carDriving = false;
 
-        yield return new WaitForSeconds(1f);
+        PlayDialog(currentCustomer.endRideDialogHappy);
+
+        yield return new WaitForSeconds(Mathf.Max(EstimateReadTime(currentCustomer.endRideDialogHappy, dialogRenderer), 3f));
         
         for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
         {
@@ -219,6 +287,33 @@ public class GameManager : MonoBehaviour
         currentCustomer = null;
 
         StartNewCustomer();
+    }
+
+    void PlayDialog(string dialog)
+    {
+        dialogRenderer.StartDialog(dialog);
+        isPlayingDialog = true;
+
+        StopCoroutine("PlayDialogCoroutine");
+
+        StartCoroutine("PlayDialogCoroutine", dialog);
+    }
+
+    IEnumerator PlayDialogCoroutine(string dialog)
+    {
+        yield return new WaitForSeconds(EstimateReadTime(dialog, dialogRenderer));
+
+        dialogRenderer.EraseDialog();
+        isPlayingDialog = false;
+    }
+
+    void StopDialog()
+    {
+        StopCoroutine("PlayDialogCoroutine");
+
+        dialogRenderer.StopDialog();
+
+        isPlayingDialog = false;
     }
 
     public static int WeightedDistanceRandomization(MonoBehaviour[] objectArray, Transform distanceToTransform)
@@ -246,6 +341,11 @@ public class GameManager : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public static float EstimateReadTime(string text, DialogRenderer render)
+    {
+        return (text.Length + 5f) / render.textPrintSpeed * 1.5f + 2f;
     }
 
     // OnValidate

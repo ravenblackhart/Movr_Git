@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 313375301799890396}
   - component: {fileID: 313375301799890386}
   - component: {fileID: 313375301799890397}
+  - component: {fileID: 2632827159835924209}
   m_Layer: 0
-  m_Name: Plane.002 (1)
+  m_Name: Sidewalk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,8 +60,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 336c6564aa403ee45b97798d34101715, type: 3}
-  - {fileID: -3846018093981099296, guid: 336c6564aa403ee45b97798d34101715, type: 3}
+  - {fileID: 2100000, guid: 7b1e4578471fc1f45b90007924aa214c, type: 2}
+  - {fileID: 2100000, guid: 41489bca278572948912708385db880f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,3 +83,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2632827159835924209
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313375301799890399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6416302070336371891, guid: 336c6564aa403ee45b97798d34101715, type: 3}

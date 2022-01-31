@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-// [DefaultExecutionOrder(-1)] //0 default
+[DefaultExecutionOrder(-1)]
 public class TransformToParent : MonoBehaviour
 {
     [SerializeField] private Transform _parent;
@@ -19,11 +20,18 @@ public class TransformToParent : MonoBehaviour
         transform.position = _origin;
         StartCoroutine(LateFixedUpdate());
     }
-    
+
+    // private void Update()
+    // {
+    //     transform.position = _parent.position;
+    //     transform.rotation = _parent.rotation;
+    // }
+
     private IEnumerator LateFixedUpdate()
     {
         yield return _waitForFixedUpdate;
-        transform.position = _parent.position;
-        transform.rotation = _parent.rotation;
+        var tf = transform;
+        tf.position = _parent.position;
+        tf.rotation = _parent.rotation;
     }
 }

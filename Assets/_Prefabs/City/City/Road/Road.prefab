@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 266744035090191229}
   - component: {fileID: 266744035090191227}
   - component: {fileID: 266744035090191228}
+  - component: {fileID: 4835863592468873323}
   m_Layer: 0
-  m_Name: Plane.048 (2)
+  m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,9 +60,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5605289326131794027, guid: 336c6564aa403ee45b97798d34101715, type: 3}
-  - {fileID: 637949407474519127, guid: 336c6564aa403ee45b97798d34101715, type: 3}
-  - {fileID: 99656467281103303, guid: 336c6564aa403ee45b97798d34101715, type: 3}
+  - {fileID: 2100000, guid: 076d93e1f4948b3409297cabb76f0858, type: 2}
+  - {fileID: 2100000, guid: 6a3d38feca410e3428f130b36139bc2c, type: 2}
+  - {fileID: 2100000, guid: a33a1ea821ac63c4495f8810f5f8319c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4835863592468873323
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266744035090191230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12475124, y: 0.11709058, z: 0.001304229}
+  m_Center: {x: 0.04273633, y: 0.020383174, z: -0.0006464696}
