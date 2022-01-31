@@ -252,7 +252,27 @@ public static class CustomClasses
 
     #region Classes
 
-    //
+    public struct QueryEvent
+    {
+        bool triggered;
+
+        public bool Query()
+        {
+            if (triggered)
+            {
+                triggered = false;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Invoke()
+        {
+            triggered = true;
+        }
+    }
 
     #endregion Classes
 

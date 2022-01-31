@@ -1,15 +1,22 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraRayCast : MonoBehaviour
 {
     [SerializeField] private float _castRange;
+    [SerializeField] private Transform _eyePos;
+    
     
     private Camera _camera;
     private PlayerInput _playerInput;
     private InputAction _interactAction;
     
     private IInteractable _currentTarget;
+    private Vector3 _lastCameraDirection;
+    
+    
+    [SerializeField] private LayerMask _raycastOnLayer;
     
     private void Awake()
     {
@@ -34,7 +41,22 @@ public class CameraRayCast : MonoBehaviour
     {
         RayCastCheckInteractable();
     }
+
+    // private void FixedUpdate()
+    // {
+    //     RayCastCheckInteractable();
+    // }
     
+    // private void LateUpdate()
+    // {
+    //     RayCastCheckInteractable();
+    // }
+
+    // private void OnPreRender()
+    // {
+    //     _lastCameraDirection = _camera.transform.forward;
+    // }
+
     private void OnPrimaryAction(InputAction.CallbackContext context)
     {
         if (_currentTarget != null)
@@ -46,16 +68,19 @@ public class CameraRayCast : MonoBehaviour
     private void RayCastCheckInteractable()
     {
         RaycastHit hit;
+        // int layerMask = ~_raycastOnLayer;
 
-        // Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        // Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
+        
+        Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width /2, Screen.height / 2, 0));
         
         if (Physics.Raycast(ray, out hit, _castRange))
         {
-            Debug.DrawLine(ray.origin, hit.point, Color.red);
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            print(hit.transform.name);
-
+            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
+            
+            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
+            // print(hit.transform.name);
+            
             if (interactable != null)
             {
                 //Return if we cant reach

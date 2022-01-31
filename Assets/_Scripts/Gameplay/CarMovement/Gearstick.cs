@@ -44,11 +44,16 @@ public class Gearstick : MonoBehaviour, IInteractable
     [SerializeField]
     private float _reverseGearStrength = -0.5f;
 
+    [SerializeField]
+    private string _carNameWithCarController = "CarDriving";
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (_carController == null)
+        {
+            _carController = GameObject.Find(_carNameWithCarController).GetComponent<CarController>();
+        }
     }
 
     // Update is called once per frame

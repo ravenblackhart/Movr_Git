@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] [CanBeNull] private Canvas pauseMenu;
 
     [Header("Display Fields - Menu")] 
-    [SerializeField] [CanBeNull] private TMP_InputField setUID;
+    //[SerializeField] [CanBeNull] private TMP_InputField setUID;
     [SerializeField] [CanBeNull] private TextMeshProUGUI saveMessage;
     [SerializeField] [CanBeNull] private Transform leaderTable;
     
@@ -137,14 +137,18 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true) readyPanel.enabled = false; 
+        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true)
+        {
+            readyPanel.enabled = false;
+            Time.timeScale = 1f; 
+        } 
         if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
 
         
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             // Test Scripts
-            if (Keyboard.current.dKey.isPressed) PassengerPickUp(rating);
+            if (Keyboard.current.fKey.isPressed) PassengerPickUp(rating);
         }
         
     }
@@ -178,8 +182,9 @@ public class UIManager : MonoBehaviour
 
         else
         {
-            pauseMenu.enabled = false; 
             Time.timeScale = 1f; 
+            pauseMenu.enabled = false; 
+            
         }
         
     }

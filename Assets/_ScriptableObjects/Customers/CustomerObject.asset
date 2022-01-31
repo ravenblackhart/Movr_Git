@@ -24,6 +24,8 @@ MonoBehaviour:
     taskFailureResponse: 
     specialTaskDialog:
     - no I need it da cup
+  taskTimeMin: 0
+  taskTimeMax: 0
   tempPreference: 0
   volumePreference: 0
   musicPreference: 0
@@ -34,9 +36,9 @@ MonoBehaviour:
   endRideDialogAngry: 
   specialEventDialog: 
   generalDialog:
-  - 
-  - 
-  - 
+  - Test 1
+  - Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2
+  - Test 3 Test 3 Test 3
   crashDialog:
   - 
   - 
