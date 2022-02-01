@@ -7,4 +7,5 @@ public class TaskReferences
 {
     public Lever volumeLever;
     public List<SnackBar> snackBars = new List<SnackBar>();
+    public List<Phone> phones = new List<Phone>();
 }

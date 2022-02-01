@@ -254,6 +254,8 @@ public static class CustomClasses
 
     public struct QueryEvent
     {
+        float triggeredFrame;
+
         bool triggered;
 
         public bool Query()
@@ -268,9 +270,30 @@ public static class CustomClasses
             return false;
         }
 
+        public bool Query(int frameCount)
+        {
+            if (frameCount == triggeredFrame || frameCount - 1 == triggeredFrame)
+            {
+                triggered = false;
+
+                return true;
+            }
+
+            return Query();
+        }
+
         public void Invoke()
         {
             triggered = true;
+
+            triggeredFrame = -1;
+        }
+
+        public void Invoke(int frameCount)
+        {
+            triggered = true;
+
+            triggeredFrame = frameCount;
         }
     }
 

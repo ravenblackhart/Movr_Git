@@ -10,7 +10,10 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] private float _rotationLambda = 6f;
     [SerializeField] private float _snapSpeed = 200f;
     [SerializeField] private float _snapRange = 0.1f;
-    
+
+    public CustomClasses.QueryEvent touchCustomerQueryEvent;
+    public UnityEngine.Events.UnityEvent touchCustomerUnityEvent;
+
     public float MaxRange => _maxRange;
     private bool _beingHeld = false;
     private bool _onSnapTrigger;
@@ -38,6 +41,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     public void OnStartHover()
     {
+        //
     }
 
     public void OnInteract()
@@ -51,6 +55,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
+        //
     }
     
     private void FixedUpdate()
@@ -87,5 +92,15 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     {
         _onSnapTrigger = false;
         _snapTarget = null;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Customer"))
+        {
+            touchCustomerQueryEvent.Invoke(Time.frameCount);
+
+            touchCustomerUnityEvent.Invoke();
+        }
     }
 }
