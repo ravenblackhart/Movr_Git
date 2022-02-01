@@ -6,6 +6,12 @@ using UnityEngine;
 public class MinimapScript : MonoBehaviour
 {
   public Transform Player;
+  [SerializeField] private Transform driverMarker; 
+
+  private void Update()
+  {
+    driverMarker.LookRotation(GameObject.FindGameObjectWithTag("PassengerDropoff").transform); 
+  }
 
   private void LateUpdate()
   {

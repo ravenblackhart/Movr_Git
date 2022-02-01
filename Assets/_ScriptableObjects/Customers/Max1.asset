@@ -15,17 +15,57 @@ MonoBehaviour:
   bodyMaterial: {fileID: 0}
   hasHat: 1
   hasGlasses: 1
-  taskPool: []
-  taskTimeMin: 0
-  taskTimeMax: 0
+  taskPool:
+  - taskType: 1
+    timeLimit: 20
+    mainTaskPrompt: You're really killing my vibe, got any rock music?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]Niiice[w].'
+    taskFailureResponse: Fine, forget it.. jerk.
+    specialTaskDialog: []
+  - taskType: 6
+    timeLimit: 10
+    mainTaskPrompt: Yo is it too much to ask for a more even [c2]temperature[c]??
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Yeah that's fine whatever.
+    taskFailureResponse: Jeez..
+    specialTaskDialog: []
+  - taskType: 8
+    timeLimit: 15
+    mainTaskPrompt: Hey driver, can you put my travel phone on [c2]charge[c]?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thanks, I'll let you know if I need to charge my other
+      phones.
+    taskFailureResponse: Different failure states?
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 15
+    mainTaskPrompt: Can I get something to [c2]eat[c] back here, make it vegan.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: This is kinda gross but thanks.
+    taskFailureResponse: Alright stupid.
+    specialTaskDialog: []
+  taskTimeMin: 10
+  taskTimeMax: 20
   tempPreference: 2
   volumePreference: 2
   musicPreference: 4
   musicPreferenceOther: 2
-  startRideDialogHappy: 
+  startRideDialogHappy: Big Corp offices.
   startRideDialogAngry: 
-  endRideDialogHappy: 
-  endRideDialogAngry: 
+  endRideDialogHappy: Nice one, take it easy.
+  endRideDialogAngry: This was AWFUL you better not accept my requests anymore.
   specialEventDialog: 
-  generalDialog: []
-  crashDialog: []
+  generalDialog:
+  - Can't believe they think they can buy us, they're in for a surprise.
+  - Can I vape?
+  - Sure am glad I don't live here anymore
+  crashDialog:
+  - '[s]EASY[s]! Do you know how much I''m worth??'
+  - Come on, there's literally no one on the road.
+  - Maybe if you used to hands on the steering wheel this wouldn't happen?
+  - '[s]ARGH[s]'

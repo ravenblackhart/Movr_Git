@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Wendy1
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 0
+  taskPool:
+  - taskType: 6
+    timeLimit: 10
+    mainTaskPrompt: Ugh I'm all sweaty, can you turn down the temperature?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]Thaaaanks[w]'
+    taskFailureResponse: Wooow you're useless.
+    specialTaskDialog: []
+  - taskType: 1
+    timeLimit: 15
+    mainTaskPrompt: I need some pop music in here, let's switch it up!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]Thaaaaaaaanks[w]'
+    taskFailureResponse: Gee okay, guess customer service is not your thing.
+    specialTaskDialog: []
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: Turn it [s]up[s]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]WHOOO[w]'
+    taskFailureResponse: EGH, you're such a buzzill..
+    specialTaskDialog: []
+  - taskType: 3
+    timeLimit: 20
+    mainTaskPrompt: I need some [c2]air[c] in here, it stinks..
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Finally..
+    taskFailureResponse: Ew.
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 25
+    mainTaskPrompt: '[c2]Water[c] [w]please[w].'
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Is this mineral??
+    taskFailureResponse: Can I speak just speak to your boss?
+    specialTaskDialog: []
+  taskTimeMin: 10
+  taskTimeMax: 15
+  tempPreference: 3
+  volumePreference: 1
+  musicPreference: 3
+  musicPreferenceOther: 4
+  startRideDialogHappy: Hello, take me to the park please.
+  startRideDialogAngry: 
+  endRideDialogHappy: Thanks, I'll give you a good rating but you better do the same.
+  endRideDialogAngry: Well that was the worst car ride of my life, by[w]eeeee[w].
+  specialEventDialog: 
+  generalDialog:
+  - The nanny has some family emergency or whatever, guess I have to look after the
+    kids.
+  - Have you considered getting an air freshener?
+  - Don't you wanna do something more exciting with your life than this?
+  - All my kids wanna do is play videogames, I bet you're the same aren't you? [w]Loser[w].
+  crashDialog:
+  - What is your [s]problem[s]??
+  - Are you dumb?? Watch the road!
+  - AGH you're [s]WORSE[s] than my husband!
+  - '[s]GAAAH[s]'

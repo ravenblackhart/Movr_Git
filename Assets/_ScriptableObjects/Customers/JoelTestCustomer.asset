@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: JoelTestCustomer
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 0
+  hasGlasses: 0
+  taskPool:
+  - taskType: 5
+    timeLimit: 10
+    mainTaskPrompt: MY STOMACHE IS [s][c0]RUMBLING![s][c]
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: DELICIOUS!
+    taskFailureResponse: YOU WOULD LET ME STARVE?!
+    specialTaskDialog: []
+  taskTimeMin: 7
+  taskTimeMax: 10
+  tempPreference: 0
+  volumePreference: 0
+  musicPreference: 0
+  musicPreferenceOther: 0
+  startRideDialogHappy: Hello!
+  startRideDialogAngry: 
+  endRideDialogHappy: Thanks for the ride.
+  endRideDialogAngry: Never drive again you peice of shit!
+  specialEventDialog: 
+  generalDialog:
+  - Test 1
+  - Test 2 Test 2 Test 2 Test 2 Test 2 Test 2 Test 2
+  - Test 3 Test 3 Test 3
+  crashDialog:
+  - Hope you have insurance.
+  - Eyes on the road!
+  - Are you drunk?

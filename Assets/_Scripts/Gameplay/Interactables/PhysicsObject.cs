@@ -9,6 +9,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     [SerializeField] private float _rotationLambda = 6f;
     [SerializeField] private float _snapSpeed = 200f;
+    [SerializeField] private float _snapRange = 0.1f;
     
     public float MaxRange => _maxRange;
     private bool _beingHeld = false;
@@ -17,6 +18,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] private Transform _holdPos;
     private float _snapDistance;
     private float _leaveSnapDistance;
+    private Transform _prevParent;
     public bool OnSnapTrigger
     {
         get => _onSnapTrigger;
@@ -27,6 +29,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     private void Awake() {
         _rb = gameObject.GetComponent<Rigidbody>();
+        _prevParent = transform.parent;
         _holdPos = GameObject.Find("Hold Position").transform;
         if (FindObjectOfType<SnapTrigger>() != null) {
             _snapTarget = FindObjectOfType<SnapTrigger>().transform;
@@ -56,13 +59,13 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
         if (_onSnapTrigger)
         {
-            transform.parent = null;
+            transform.parent = _prevParent;
             //transform.position = _snapTarget.position;
             transform.rotation = _snapTarget.rotation;
             Vector3 moveDirection = (_snapTarget.position - transform.position);
             _rb.AddForce(moveDirection * _snapSpeed);
 
-            if (_leaveSnapDistance > 0.2f) {
+            if (_leaveSnapDistance > _snapRange) {
                 _onSnapTrigger = false;
             }
         }
