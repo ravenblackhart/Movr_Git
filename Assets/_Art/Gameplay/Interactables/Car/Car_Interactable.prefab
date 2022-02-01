@@ -542,6 +542,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!64 &8763090455206379843
 MeshCollider:
@@ -974,6 +975,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!54 &5250586633965337747
 Rigidbody:
@@ -1104,6 +1106,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!54 &5590730749287798888
 Rigidbody:
@@ -1411,7 +1414,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b765a1a884f03b4db001c6307e0a313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 4978035246510512115}
+  driverMarker: {fileID: 5055959389022867902}
+  activeWaypointColor:
+    serializedVersion: 2
+    rgba: 4278190335
 --- !u!1 &2987728833132023289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1746,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!1 &4474148770271468309
 GameObject:
@@ -1798,7 +1806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3917365, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2592,6 +2600,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!65 &8195908519945143236
 BoxCollider:
@@ -2752,6 +2761,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!1 &6276630921658241919
 GameObject:
@@ -3046,6 +3056,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!64 &5067520445935953935
 MeshCollider:
@@ -3207,6 +3218,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!1 &7481154384574063893
 GameObject:
@@ -3730,6 +3742,7 @@ MonoBehaviour:
   _maxRange: 10
   _rotationLambda: 6
   _snapSpeed: 200
+  _snapRange: 0.1
   _holdPos: {fileID: 0}
 --- !u!54 &1672458341594051331
 Rigidbody:
