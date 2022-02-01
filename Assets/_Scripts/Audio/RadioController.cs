@@ -10,7 +10,7 @@ public class RadioController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI trackNameField; 
 
     [Header("Track List")] 
-    [SerializeField] private Track[] audioTracks;
+    [SerializeField] private Cassettes[] audioTracks;
 
     private int trackIndex; 
     private AudioSource radioAudioSource;
