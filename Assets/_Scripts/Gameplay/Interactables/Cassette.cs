@@ -11,6 +11,7 @@ public class Cassette : PhysicsObject
     public AudioClip[] TrackList;
 
     public Transform _targetPos;
+    public string _musicGenre;
 
     public bool _sliding;
     public Transform _prevParent;
@@ -19,6 +20,7 @@ public class Cassette : PhysicsObject
     private void Start() {
         TrackList = Mixtape.PlaylistTracks;
         _prevParent = transform.parent;
+        _musicGenre = Mixtape.name;
     }
 
     public void SlideInCassette() {
@@ -38,8 +40,10 @@ public class Cassette : PhysicsObject
         }
 
         else {
+            transform.parent = _prevParent;
+            _onSnapTrigger = false;
             _rb.useGravity = true;
-            _rb.drag = 0;                               
+            _rb.drag = 0;        
         }
     }
 

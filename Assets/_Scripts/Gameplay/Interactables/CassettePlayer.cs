@@ -11,10 +11,15 @@ public class CassettePlayer : SnapTrigger
     public Transform LockedStartPosition;
     public Transform LockedEndPosition;
 
+    public RadioController _radioController;
+
     [SerializeField] private Button _button;
+
+    public string audioGenre;
 
     private void Awake() {
         _button.onInteractEvent.AddListener(Eject);
+        _radioController = GetComponent<RadioController>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -23,36 +28,45 @@ public class CassettePlayer : SnapTrigger
             print("Found Cassette");
             _cassette = cassette;
             _cassette.OnSnapTrigger = true;
-            _cassette.transform.rotation = transform.rotation;
 
             //transform the position
             //change parent
             print(_cassette.name);
+            
         }
     }
 
     private void FixedUpdate() {
+        if (_cassette != null) {
+            if (_cassette.OnSnapTrigger) {
+                _cassette.transform.parent = _cassette._prevParent;
+                //transform.position = _snapTarget.position;
+                _cassette.transform.rotation = transform.rotation;
+                Vector3 moveDirection = (transform.position - _cassette.transform.position);
+                _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);
+            }
 
-        if (_cassette.OnSnapTrigger) {
-            _cassette.transform.parent = _cassette._prevParent;
-            //transform.position = _snapTarget.position;
-            transform.rotation = transform.rotation;
-            Vector3 moveDirection = (transform.position - _cassette.transform.position);
-            _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);        
-        }
+            if (_cassette._sliding) {
+                //_cassette.transform.parent = _cassette._prevParent;
+                _cassette.OnSnapTrigger = false;
+                Vector3 moveDirection = (LockedEndPosition.position - _cassette.transform.position);
+                _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);
 
-        if (_cassette._sliding) {
-            //_cassette.transform.parent = _cassette._prevParent;
-            _cassette.OnSnapTrigger = false;
-            Vector3 moveDirection = (LockedEndPosition.position - _cassette.transform.position);
-            _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);
+                if (Vector3.Distance(_cassette.transform.position, LockedEndPosition.transform.position) <= 0.01f) {
+                    cassetteInPlayer = _cassette.transform;
+                    _cassette = null;
+                    //_rb.isKinematic = true;
+                }
+            }
 
-            if (Vector3.Distance(_cassette.transform.position, LockedEndPosition.transform.position) <= 0.01f) {
-                cassetteInPlayer = _cassette.transform;
-                _cassette = null;
-                //_rb.isKinematic = true;
+            if (cassetteInPlayer != null) {
+                _radioController.RegisterTape(cassetteInPlayer.gameObject);
+                _radioController.PlayAudio();
+                audioGenre = cassetteInPlayer.GetComponent<Cassette>()._musicGenre;
             }
         }
+
+        print("Current audio genre = " + audioGenre);
     }
 
     private void Eject() {
@@ -67,6 +81,9 @@ public class CassettePlayer : SnapTrigger
             _cassetteRb.drag = 0;
             _cassetteRb.AddForce(-transform.forward * 100 + transform.right * 50);
             occupied = false;
+
+            _radioController.StopAudio();
+            audioGenre = "";
             StartCoroutine(TurnOnCollision());
         }
 

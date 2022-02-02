@@ -19,24 +19,24 @@ public class RadioController : MonoBehaviour
         UnregisterTape();
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         RegisterTape(other.gameObject);
-    }
+    }*/
     
 
     public void RegisterTape(GameObject tape)
     {
-        audioTracks = tape.GetComponent<CassetteTest>().TrackList; 
+        audioTracks = tape.GetComponent<Cassette>().TrackList; 
         trackIndex = 0;
         radioAudioSource.clip = audioTracks[trackIndex];
-        trackNameField.text = audioTracks[trackIndex].name;
+        //trackNameField.text = audioTracks[trackIndex].name;
     }
 
     public void UnregisterTape()
     {
         audioTracks = null; 
-        trackNameField.text = $"Insert Cassette";
+        //trackNameField.text = $"Insert Cassette";
     }
     
     public void PlayAudio()

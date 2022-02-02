@@ -1,48 +1,52 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class PhoneDock : MonoBehaviour
 {
     [SerializeField] private Transform _snapTransform;
+    [SerializeField] private float  _snapSpeed;
 
     private Phone _phone;
-    private Transform _prevParent;
+    private Rigidbody _rb;
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out Phone phone))
         {
             _phone = phone;
+            _rb = _phone.GetComponent<Rigidbody>();
             _phone.OnSnapTrigger = true;
-            _prevParent = phone.transform.parent;
-            
-            StartCoroutine(LerpToTarget(_phone.transform, _snapTransform.transform, 2));
-            
-            phone.transform.parent = _snapTransform;
-        }
-    }
-    
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent(out Phone phone))
-        {
-            phone.ChargeAmount += Time.deltaTime;
+            _phone.transform.parent = _snapTransform;
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (_phone == null) return;
+        if (_phone.OnSnapTrigger) 
+        {
+            _phone.transform.rotation = transform.rotation;
+            Vector3 moveDirection = (_snapTransform.position - _phone.transform.position).normalized;
+            
+            _rb.MovePosition(_snapTransform.position + moveDirection * _snapSpeed);        
+        }
+    }
+    
+    private void Update()
+    {
+        if (_phone == null) return;
+        if (_phone.OnTrigger)
+        {
+            _phone.ChargeAmount += Time.deltaTime;
+        }
+    }
+    
     private void OnTriggerExit(Collider other)
     {
-        _phone.OnSnapTrigger = false;
-        _phone = null;
+        if (_phone != null)
+        {
+            _phone.OnSnapTrigger = false;
+            _phone = null;
+        }
     }
-
-    private IEnumerator LerpToTarget(Transform obj, Transform target, float lerpTime)
-    {
-        obj.position = Vector3.Lerp(obj.position, target.position, lerpTime);
-        yield return null;
-    }
-    
-    //när objektet kommer in i triggern, snapa till transformen
     
 }
