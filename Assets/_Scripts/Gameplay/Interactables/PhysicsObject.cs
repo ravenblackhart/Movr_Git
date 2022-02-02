@@ -25,6 +25,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     private Transform _prevParent;
     public bool _sliding;
     public Transform _target;
+    public SnapTrigger _snapTrigger;
 
     public bool OnSnapTrigger
     {
@@ -40,6 +41,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
         _holdPos = GameObject.Find("Hold Position").transform;
         if (FindObjectOfType<SnapTrigger>() != null) {
             _snapTarget = FindObjectOfType<SnapTrigger>().transform;
+            _snapTrigger = _snapTarget.GetComponent<SnapTrigger>();
         }
     }
 

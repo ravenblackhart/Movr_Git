@@ -8,9 +8,12 @@ TagManager:
   - Pickup
   - Interact
   - CassetteTrigger
-  - PassengerDropoff
   - Customer
   - Cassette
+  - PassengerDropoff
+  - PassengerPickup
+  - Window
+  - WindowCrank
   layers:
   - Default
   - TransparentFX

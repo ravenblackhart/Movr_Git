@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    public enum Direction { Left, Right, Forward }
+    public bool isReversing = false;
+
+    [Range(-1, -0.1f)]
+    [SerializeField]
+    private float _reverseSpeed = -0.5f; // speed in reverse, -1 = same speed as forward
+
     [Header("How many axles the car will have")]
     [SerializeField]
     private List<AxleInfo> _axleInfos; // the information about each individual axle
+
     [SerializeField]
-    private float _maxMotorTorque = 50; // maximum torque the motor can apply to wheel
+    private float _maxMotorTorque = 1200; // maximum torque the motor can apply to wheel
     [SerializeField]
     private float _maxSteeringAngle = 25; // maximum steer angle the wheel can have
 
@@ -22,82 +29,59 @@ public class CarController : MonoBehaviour
 
 
     [Range(-1, 1)]
-    public float speed = 1;
+    [SerializeField]
+    private float speed = 1;
     [Range(-1, 1)]
     public float turn = 0;
 
     private float _zAngle = 0;
-    
+
+    private Rigidbody _rigidbody;
+    [SerializeField]
+    private float _maxVelocity = 10; // Maximum speed allowed
+    private float _recoverytime = 30;
 
     // Start is called before the first frame update
     void Awake()
     {
         _steeringWheel = GameObject.FindGameObjectWithTag("SteeringWheel");
+        _rigidbody = GetComponent<Rigidbody>();
     }
     
     void FixedUpdate()
     {
+        // prevent the car from moving to quickly
+        float maxSpeed = _maxVelocity;
+        //Debug.Log(_rigidbody.velocity.sqrMagnitude + " " + speed);
+        if (isReversing)
+        {
+            // Change the top speed depending on how quickly the car can go in reverse
+            maxSpeed *= Mathf.Abs(_reverseSpeed);
+        }
+        if (_rigidbody.velocity.sqrMagnitude > maxSpeed)
+        {
+            // Slow down the car
+            speed = GetSpeed(true, isReversing);
+        }
+        else
+        {
+            // Make the car go faster
+            speed = GetSpeed(false, isReversing);
+        }
+        //if (isReversing)
+        //{
+        //    speed = _reverseGearStrength;
+        //}
+        //else if (_rigidbody.velocity.sqrMagnitude > _maxVelocity)
+        //{
+        //    speed = Mathf.MoveTowards(speed, 0, _recoverytime * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    speed = Mathf.MoveTowards(speed, 1, _recoverytime * Time.deltaTime);
+        //}
 
-        // // if (Keyboard.current.wKey.isPressed && _speed < 1)
-        // // {
-        // //     if (_speed < 0)
-        // //     {
-        // //         _speed = 0;
-        // //     }
-        // //     _speed += Time.deltaTime;
-        // }
-        // // else if (Keyboard.current.sKey.isPressed && _speed > -1)
-        // // {
-        // //     if (_speed > 0)
-        // //     {
-        // //         _speed = 0;
-        // //     }
-        // //     _speed -= Time.deltaTime;
-        // // }
-        // // else
-
-        // if (TurnLeft && turn > -1)
-        // {
-        //     turn -= Time.deltaTime;
-        //     // _steeringWheel.transform.localEulerAngles = new Vector3(-10, 0, _zAngle -= turn * steerTempSpeed);
-        // }
-        // else if (!TurnLeft && turn < 1)
-        // {
-        //     turn += Time.deltaTime;
-        //     // _steeringWheel.transform.localEulerAngles = new Vector3(-10, 0, _zAngle -= turn * steerTempSpeed);
-        // }
-
-        // else if (!TurnLeft && !TurnRight)
-        // {
-        //     if (turn < 0)
-        //     {
-        //         turn += Time.deltaTime;
-        //     }
-        //     else
-        //     {
-        //         turn -= Time.deltaTime;
-        //     }
-        //
-        //     _steeringWheel.transform.localEulerAngles = new Vector3(-10, 0, _zAngle += turn * steerTempSpeed);
-        //     if (turn < 0.01f && turn > -0.01f)
-        //     {
-        //         turn = 0;
-        //         _zAngle = 0;
-        //         _steeringWheel.transform.localEulerAngles = new Vector3(-10, 0, 0);
-        //     }
-        // }
-        
-        // // Hacky temp solution to 
-        //  float recoverytime = 2;
-        //  if (!(_rigidbody.velocity.sqrMagnitude < _maxVelocity))
-        //      speed = Mathf.MoveTowards(speed, 0, recoverytime * Time.deltaTime);
-        //  else
-        //  {
-        //      speed = Mathf.MoveTowards(speed, 1, recoverytime * Time.deltaTime);
-        //  }
-        //
-        
-        
+        // Move and steer the car
         float motor = _maxMotorTorque * speed * Time.deltaTime;
         float steering = _maxSteeringAngle * turn;
         foreach (AxleInfo axleInfo in _axleInfos)
@@ -121,10 +105,27 @@ public class CarController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private float GetSpeed(bool decrease, bool reversing)
     {
-        
+        float speed = 0;
+        float minTarget = 0;
+        float maxTarget = 1;
+        // Changing these values if its reversing 
+        if (reversing)
+        {
+            speed = _reverseSpeed;
+            minTarget = 0;
+            maxTarget = _reverseSpeed;
+        }
+        if (decrease)
+        {
+            speed = Mathf.MoveTowards(speed, minTarget, _recoverytime * Time.deltaTime);
+        }
+        else
+        {
+            speed = Mathf.MoveTowards(speed, maxTarget, _recoverytime * Time.deltaTime);
+        }
+        return speed;
     }
 
     public void Braking(float time)

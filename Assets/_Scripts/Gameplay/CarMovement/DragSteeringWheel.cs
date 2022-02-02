@@ -13,15 +13,16 @@ public class DragSteeringWheel : MonoBehaviour
 
     private Camera _mainCamera;
 
-    private enum SteerDirection { Straight, Left, Right}
+    private enum SteerDirection { Straight, Left, Right }
     private SteerDirection _steering = SteerDirection.Straight;
     private bool _currentlySteering = false;
     [SerializeField]
-    private float _steerOffset = 1f;
+    private float _resetSteerOffset = 3f;
+    [Range(0.1f, 5f)]
     [SerializeField]
-    private float _resetSpeed = 30f;
+    private float _resetSpeed = 3f;
 
-    private CarController _carControl;
+    private CarController _carController;
     private CameraSwitcher _cameraSwitcher;
 
     private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
@@ -33,9 +34,13 @@ public class DragSteeringWheel : MonoBehaviour
 
     [SerializeField]
     private float _rotateSpeed = 20;
-    private float _zAngle = 0;
+    private float _zAngle = 90;
 
-    private bool _readyToReset = false;
+    [SerializeField]
+    private int _maxSteerAngle = 275;
+
+    [SerializeField]
+    private float _speedModifierReset = 0.5f;
 
     private void Awake()
     {
@@ -43,7 +48,7 @@ public class DragSteeringWheel : MonoBehaviour
         _cameraSwitcher = FindObjectOfType<CameraSwitcher>();
         _steeringWheel = GameObject.FindGameObjectWithTag(_steeringWheelTag);
         _mainCamera = Camera.main;
-        _carControl = GetComponent<CarController>();
+        _carController = GetComponent<CarController>();
 
         Cursor.lockState = CursorLockMode.Confined;
         
@@ -56,14 +61,11 @@ public class DragSteeringWheel : MonoBehaviour
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
         
         //Resets Steering Wheel
-        if (!_currentlySteering && _steering != SteerDirection.Straight && _readyToReset)
+        if (!_currentlySteering && _steering != SteerDirection.Straight)
         {
-            _zAngle = ResetSteeringWheel(_steering, _zAngle);
-            _steeringWheel.transform.localEulerAngles = new Vector3(0, 0, _zAngle);
-        }
-        else if (_steering == SteerDirection.Straight)
-        {
-            _readyToReset = false;
+            _zAngle = ResetSteeringWheel(_zAngle);
+            _steeringWheel.transform.localEulerAngles = new Vector3(_steeringWheel.transform.localEulerAngles.x,
+                _steeringWheel.transform.localEulerAngles.y, _zAngle);
         }
     }
 
@@ -107,15 +109,15 @@ public class DragSteeringWheel : MonoBehaviour
                 _prevDelta = _mouseDelta;
             }
             
-            //Car turning
-            // _carControl.turn = _prevDelta.x * _rotateSpeed * Time.deltaTime;
-            _carControl.turn = Mathf.Lerp(_carControl.turn, _prevDelta.x, Time.deltaTime);
-            
-            //Steering Wheel Rotate
-            steerWheel.transform.localEulerAngles = 
-                new Vector3(0, 0, _zAngle -= _prevDelta.x * _rotateSpeed * Time.deltaTime);
+            // Car turning
+            _carController.turn = Mathf.Lerp(_carController.turn, _prevDelta.x, Time.deltaTime);
+            _zAngle -= _prevDelta.x * _rotateSpeed * Time.deltaTime;
+            _zAngle = Mathf.Clamp(_zAngle, -_maxSteerAngle, _maxSteerAngle);
+            // Rotate Steering Wheel 
+            _steeringWheel.transform.localEulerAngles = new Vector3(_steeringWheel.transform.localEulerAngles.x,
+                _steeringWheel.transform.localEulerAngles.y, -_zAngle);
 
-            //Determine steer direction
+            // Determine steer direction
             if (_prevDelta.x < 0)
             {
                 _steering = SteerDirection.Left;
@@ -132,94 +134,34 @@ public class DragSteeringWheel : MonoBehaviour
             yield return _waitForFixedUpdate;
         }
         _cameraSwitcher.ToggleLock();
-        StartCoroutine(WaitForReset());
         _currentlySteering = false;
     }
 
-    private IEnumerator WaitForReset()
+    private float ResetSteeringWheel(float angle)
     {
-        yield return new WaitForSeconds(1.0f);
-        _readyToReset = true;
-    }
-
-    private float TurningAngle(Vector3 direction, float zAngle)
-    {
-        if (zAngle != 0)
+        if (angle < 90)
         {
-           
+            angle += _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle);
+            if (_carController.turn > Time.deltaTime * _speedModifierReset)
+            {
+                _carController.turn -= Time.deltaTime * _speedModifierReset;
+            }
+            
         }
-        float radian = Mathf.Atan2(direction.x, direction.y);
-        if (direction.z < 0)
+        else if (angle > 90)
         {
-            //radian = Mathf.Atan2(direction.x, direction.y);
-            //_carControl.turn = radian / Mathf.PI * 2;
-            //radian = Mathf.Atan2(direction.x, -direction.y); // yx, xz yz zx zy, n�stan ok: x,-y
+            angle -= _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle);
+            if (_carController.turn < Time.deltaTime * _speedModifierReset)
+            {
+                _carController.turn += Time.deltaTime * _speedModifierReset;
+            }
         }
-        else
-        {
-            //_carControl.turn = radian / Mathf.PI * 2;
-        }
-
-        //_carControl.turn = radian / Mathf.PI * 2;// * zAngle;// * (1 / (zAngle + 0.05f));
-        //Debug.Log(_carControl.turn);
-        //return Mathf.Atan2(direction.x, direction.y) * (180 / Mathf.PI);
-        float angle = radian * (180 / Mathf.PI);
-        if (direction.z < 0)
-        {
-            //angle *= -1;
-            //angle -= 180;
-        }
-        if (angle > -_steerOffset)
-        {
-            _steering = SteerDirection.Left;
-        }
-        else if (angle < _steerOffset)
-        {
-            _steering = SteerDirection.Right;
-            //Debug.Log(angle);
-            //return 180;
-        }
-        return angle;
-
-
-        // dont work: return Vector3.Angle(go.transform.position, direction);
-        //if (direction.y < 0)
-        //{
-        //    return 360 -direction.x * 360;
-        //}
-        //else
-        //{
-        //    return direction.x * 360;
-        //}
-    }
-
-    
-
-    private float ResetSteeringWheel(SteerDirection steerDirection, float angle)
-    {
-        //if (steerDirection == SteerDirection.Left)
-        //{
-        //    angle += _resetSpeed * Time.deltaTime;
-        //}
-        //else if (steerDirection == SteerDirection.Right)
-        //{
-        //    angle -= _resetSpeed * Time.deltaTime;
-        //}
-        if (angle < 0)
-        {
-            angle += _resetSpeed * Time.deltaTime;
-        }
-        else if (angle > 0)
-        {
-            angle -= _resetSpeed * Time.deltaTime;
-        }
-        if (angle > -_steerOffset && angle < _steerOffset)
+        if (angle > 90 - _resetSteerOffset && angle < 90 + _resetSteerOffset)
         {
             _steering = SteerDirection.Straight;
-            _carControl.turn = 0;
-            return 0;
+            _carController.turn = 0;
+            return 90;
         }
-        //_carControl.turn = (Mathf.PI / 180) * angle;
         return angle;
     }
 }
