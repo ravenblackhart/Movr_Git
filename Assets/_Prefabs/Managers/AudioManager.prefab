@@ -43,4 +43,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20690c9c157f22c439afc62b21879fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mixer: {fileID: 24100000, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+  AudioSettings:
+  - slider: {fileID: 0}
+    redX: {fileID: 0}
+    exposedParam: GlobalVol
+    soundToggle: 0
+  - slider: {fileID: 0}
+    redX: {fileID: 0}
+    exposedParam: MusicVol
+    soundToggle: 0
+  - slider: {fileID: 0}
+    redX: {fileID: 0}
+    exposedParam: SFXVol
+    soundToggle: 0
+  - slider: {fileID: 0}
+    redX: {fileID: 0}
+    exposedParam: EnvVol
+    soundToggle: 0
   sounds: []

@@ -46,8 +46,37 @@ MonoBehaviour:
   customerPool: []
   pickupPool: []
   dropoffPool: []
+  currentTaskType: 0
   car: {fileID: 0}
-  steeringWheel: {fileID: 0}
+  audioManager: {fileID: 0}
   dialogRenderer: {fileID: 0}
   customerSitGoal: {fileID: 0}
+  taskReferences:
+    volumeLever: {fileID: 0}
+    snackBars: []
+    phones: []
+    waterCups: []
+    leverAC: {fileID: 0}
+    windowsLever: {fileID: 0}
+    cassettePlayer: {fileID: 0}
+    cassetteTapes: []
   customerPrefab: {fileID: 0}
+  rideStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rideEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  taskStartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  taskEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  taskCompletionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  taskFailureEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  isDebugingTasks: 0
