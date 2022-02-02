@@ -9,18 +9,14 @@ public class CustomerPickup : MonoBehaviour
     [SerializeField]
     Canvas canvas;
 
-    GameManager gameManager;
-
     void Start()
     {
         trigger.triggerEvent.AddListener(OnCarEnterTrigger);
-
-        gameManager = GameManager.instance;
     }
 
     void Update()
     {
-        canvas.enabled = gameManager.currentPickup == this;
+        canvas.enabled = GameManager.instance.currentPickup == this;
     }
 
     void OnCarEnterTrigger()

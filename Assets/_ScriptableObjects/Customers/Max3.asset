@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Max3
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 1
+  taskPool:
+  - taskType: 2
+    timeLimit: 8
+    mainTaskPrompt: Let's get the party started, put on some techno!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]GROOVY[w]'
+    taskFailureResponse: You suck.
+    specialTaskDialog: []
+  - taskType: 3
+    timeLimit: 5
+    mainTaskPrompt: Turn the [c2]volume[c] [s]UP[s]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]GROOVY[w]'
+    taskFailureResponse: How do you deal with being such a bore?
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 6
+    mainTaskPrompt: Open the window I want everyone to hear this!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]Hell yeaaaah[w]'
+    taskFailureResponse: Are you trying to ruin my day??
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 8
+    mainTaskPrompt: I'm feeling good, I wanna play [c2]catch[c]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Nice throwing!
+    taskFailureResponse: Wow you really aren't very coordinated are you?
+    specialTaskDialog: []
+  taskTimeMin: 6
+  taskTimeMax: 15
+  tempPreference: 2
+  volumePreference: 1
+  musicPreference: 2
+  musicPreferenceOther: 4
+  startRideDialogHappy: 
+  startRideDialogAngry: 
+  endRideDialogHappy: Thanks for the ride! Why don't you come join me after the shift!
+  endRideDialogAngry: Say bye to your job [w]asshat[w].
+  specialEventDialog: 
+  generalDialog:
+  - Hey you got a plug?
+  - I'm gonna buy this [w]whooole[w] town
+  crashDialog:
+  - Stay on the [s]damn[s] road!
+  - You know what? Yeah, keep crashing[s]!![s]
+  - '[w]WHOOOOOO[w]'

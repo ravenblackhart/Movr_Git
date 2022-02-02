@@ -62,7 +62,8 @@ public class CustomerTask
         tertiaryTaskPrompt,
 
         taskCompletionResponse,
-        taskFailureResponse;
+        taskFailureResponse,
+        taskFailureResponseAlternate;
 
     [TextArea]
     public string[] specialTaskDialog;

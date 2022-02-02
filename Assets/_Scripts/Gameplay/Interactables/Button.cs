@@ -3,8 +3,10 @@ using UnityEngine.Events;
 
 public class Button : MonoBehaviour, IInteractable
 {
-    [SerializeField] private UnityEvent _onInteractEvent;
     [SerializeField] private float _maxRange = 10f;
+    
+    public UnityEvent onInteractEvent;
+    
     public float MaxRange => _maxRange;
     public void OnStartHover()
     {
@@ -12,7 +14,7 @@ public class Button : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        _onInteractEvent.Invoke();
+        onInteractEvent.Invoke();
     }
 
     public void OnEndHover()

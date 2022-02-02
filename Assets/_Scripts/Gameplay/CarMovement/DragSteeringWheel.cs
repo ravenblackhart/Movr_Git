@@ -16,11 +16,6 @@ public class DragSteeringWheel : MonoBehaviour
     private enum SteerDirection { Straight, Left, Right }
     private SteerDirection _steering = SteerDirection.Straight;
     private bool _currentlySteering = false;
-    [SerializeField]
-    private float _resetSteerOffset = 3f;
-    [Range(0.1f, 5f)]
-    [SerializeField]
-    private float _resetSpeed = 3f;
 
     private CarController _carController;
     private CameraSwitcher _cameraSwitcher;
@@ -31,17 +26,27 @@ public class DragSteeringWheel : MonoBehaviour
     private InputAction _mouseClick;
     private Vector2 _mouseDelta;
     private Vector2 _prevDelta;
-
+    [Header("Speed for rotating the steering wheel")]
     [SerializeField]
     private float _rotateSpeed = 20;
     private float _zAngle = 90;
 
     [SerializeField]
-    private int _maxSteerAngle = 275;
+    private int _maxSteerAngle = 125;
 
+    [SerializeField]
+    private float _resetSteerOffset = 3f;
+    [Header("Reset speed for the steering wheel")]
+    [SerializeField]
+    private float _resetSpeed = 30f;
+
+    [Header("Reset speed for steering the car")]
     [SerializeField]
     private float _speedModifierReset = 0.5f;
 
+    [Header("Should match the z-rotation of the steering wheel object")]
+    [SerializeField]
+    private int _rotationOffset = 90;
     private void Awake()
     {
         _playerInput = FindObjectOfType<PlayerInput>();
@@ -60,7 +65,7 @@ public class DragSteeringWheel : MonoBehaviour
         // Find mouse movement
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
         
-        //Resets Steering Wheel
+        // Resets Steering Wheel
         if (!_currentlySteering && _steering != SteerDirection.Straight)
         {
             _zAngle = ResetSteeringWheel(_zAngle);
@@ -92,13 +97,13 @@ public class DragSteeringWheel : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject.tag == _steeringWheelTag)
             {
                 _currentlySteering = true;
-                StartCoroutine(DragUpdate(hit.collider.gameObject));
+                StartCoroutine(DragUpdate());
             }
         }
     }
 
 
-    private IEnumerator DragUpdate(GameObject steerWheel)
+    private IEnumerator DragUpdate()
     {
         _cameraSwitcher.ToggleLock();
         
@@ -111,11 +116,11 @@ public class DragSteeringWheel : MonoBehaviour
             
             // Car turning
             _carController.turn = Mathf.Lerp(_carController.turn, _prevDelta.x, Time.deltaTime);
-            _zAngle -= _prevDelta.x * _rotateSpeed * Time.deltaTime;
-            _zAngle = Mathf.Clamp(_zAngle, -_maxSteerAngle, _maxSteerAngle);
+            _zAngle += _prevDelta.x * _rotateSpeed * Time.deltaTime;
+            _zAngle = Mathf.Clamp(_zAngle, _rotationOffset - _maxSteerAngle, _rotationOffset + _maxSteerAngle);
             // Rotate Steering Wheel 
             _steeringWheel.transform.localEulerAngles = new Vector3(_steeringWheel.transform.localEulerAngles.x,
-                _steeringWheel.transform.localEulerAngles.y, -_zAngle);
+                _steeringWheel.transform.localEulerAngles.y, _zAngle);
 
             // Determine steer direction
             if (_prevDelta.x < 0)
@@ -139,28 +144,28 @@ public class DragSteeringWheel : MonoBehaviour
 
     private float ResetSteeringWheel(float angle)
     {
-        if (angle < 90)
+        if (angle < _rotationOffset)
         {
-            angle += _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle);
+            angle += _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle - _rotationOffset);
             if (_carController.turn > Time.deltaTime * _speedModifierReset)
             {
                 _carController.turn -= Time.deltaTime * _speedModifierReset;
             }
             
         }
-        else if (angle > 90)
+        else if (angle > _rotationOffset)
         {
-            angle -= _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle);
+            angle -= _resetSpeed * Time.deltaTime * Mathf.Abs(_zAngle - _rotationOffset);
             if (_carController.turn < Time.deltaTime * _speedModifierReset)
             {
                 _carController.turn += Time.deltaTime * _speedModifierReset;
             }
         }
-        if (angle > 90 - _resetSteerOffset && angle < 90 + _resetSteerOffset)
+        if (angle > _rotationOffset - _resetSteerOffset && angle < _rotationOffset + _resetSteerOffset)
         {
             _steering = SteerDirection.Straight;
             _carController.turn = 0;
-            return 90;
+            return _rotationOffset;
         }
         return angle;
     }

@@ -7,9 +7,8 @@ using UnityEngine;
 
 public class RadioController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI trackNameField; 
-
-    private AudioClip[] audioTracks;
+    [SerializeField] private TextMeshProUGUI trackNameField;
+    [SerializeField] private AudioClip[] audioTracks;
 
     private int trackIndex; 
     private AudioSource radioAudioSource;
@@ -17,11 +16,29 @@ public class RadioController : MonoBehaviour
     private void Start()
     {
         radioAudioSource = GetComponent<AudioSource>();
-        trackIndex = 0;
-        radioAudioSource.clip = audioTracks[trackIndex];
-        trackNameField.text = audioTracks[trackIndex].name; 
+        UnregisterTape();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        RegisterTape(other.gameObject);
+    }
+    
+
+    public void RegisterTape(GameObject tape)
+    {
+        audioTracks = tape.GetComponent<CassetteTest>().TrackList; 
+        trackIndex = 0;
+        radioAudioSource.clip = audioTracks[trackIndex];
+        trackNameField.text = audioTracks[trackIndex].name;
+    }
+
+    public void UnregisterTape()
+    {
+        audioTracks = null; 
+        trackNameField.text = $"Insert Cassette";
+    }
+    
     public void PlayAudio()
     {
         radioAudioSource.Play();

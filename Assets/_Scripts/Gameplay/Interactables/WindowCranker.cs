@@ -7,8 +7,6 @@ public class WindowCranker : MonoBehaviour
 {
     private Camera _mainCamera;
 
-    private bool _currentlySteering = false;
-
     private CameraSwitcher _cameraSwitcher;
 
     private WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
@@ -22,15 +20,15 @@ public class WindowCranker : MonoBehaviour
     private float _rotateSpeed = 90;
     private float _zAngle = -90;
 
-    [SerializeField]
-    private int _maxSteerAngle = 270;
+    //[SerializeField]
+    private int _maxCrankAngle = 65;
 
     private string _windowTag = "Window";
     private GameObject _windows;
 
     private float _yPosWindows;
-    private readonly float MAX_Y_POS = 0.9f;
-    private readonly float MIN_Y_POS = 0.35f;
+    private readonly float MAX_Y_POS = 0.85f;
+    private readonly float MIN_Y_POS = 0.31f;
 
     [Header("The window crank game object needs this tag: (and a collider)")]
     [SerializeField]
@@ -50,13 +48,13 @@ public class WindowCranker : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
 
         _mouseClick = _playerInput.actions["PrimaryAction"];
+        _zAngle = _maxCrankAngle;
     }
 
     void Update()
     {
         // Find mouse movement
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
-
     }
 
     private void OnEnable()
@@ -81,7 +79,6 @@ public class WindowCranker : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.gameObject.tag == _windowCrankTag)
             {
-                _currentlySteering = true;
                 StartCoroutine(DragUpdate(hit.collider.gameObject));
             }
         }
@@ -93,22 +90,24 @@ public class WindowCranker : MonoBehaviour
 
         while (_mouseClick.ReadValue<float>() != 0)
         {
-            if (_mouseDelta.x != 0)
+            // Check mouse movement along y-axis
+            if (_mouseDelta.y != 0)
             {
                 _prevDelta = _mouseDelta;
             }
 
-            _zAngle -= _prevDelta.x * _rotateSpeed * Time.deltaTime;
-            _zAngle = Mathf.Clamp(_zAngle, -_maxSteerAngle, _maxSteerAngle);
+            _zAngle -= _prevDelta.y * _rotateSpeed * Time.deltaTime;
+            _zAngle = Mathf.Clamp(_zAngle, -_maxCrankAngle, _maxCrankAngle);
             // Rotate crank 
             crank.transform.localEulerAngles = new Vector3(crank.transform.localEulerAngles.x,
                 crank.transform.localEulerAngles.y, _zAngle);
-            _yPosWindows = Mathf.Clamp(_yPosWindows += (Time.deltaTime * _prevDelta.x), MIN_Y_POS, MAX_Y_POS);
-            _windows.transform.localPosition = new Vector3(0, _yPosWindows, 0); 
+            // Raise/lower windows
+            _yPosWindows = Mathf.Clamp(_yPosWindows += (Time.deltaTime * 0.35f * _prevDelta.y), MIN_Y_POS, MAX_Y_POS);
+            _windows.transform.localPosition = 
+                new Vector3(_windows.transform.localPosition.x, _yPosWindows, _windows.transform.localPosition.z); 
 
             yield return _waitForFixedUpdate;
         }
         _cameraSwitcher.ToggleLock();
-        _currentlySteering = false;
     }
 }

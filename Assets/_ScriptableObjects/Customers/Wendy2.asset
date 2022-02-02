@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Wendy2
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 0
+  taskPool:
+  - taskType: 6
+    timeLimit: 6
+    mainTaskPrompt: The kids are hungry, give them something to [c2]eat[c].
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Mh..
+    taskFailureResponse: '[w]Uuuuhm[w]?'
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 10
+    mainTaskPrompt: Hello? They're also [s]thirsty[s]?? Obviously?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Took you long enough.
+    taskFailureResponse: Your water's probably rancid anyway. [s]Ugh[s].
+    specialTaskDialog: []
+  taskTimeMin: 5
+  taskTimeMax: 12
+  tempPreference: 1
+  volumePreference: 2
+  musicPreference: 3
+  musicPreferenceOther: 4
+  startRideDialogHappy: Oh [w]heeeey[w], take us home please.
+  startRideDialogAngry: You [s]AGAIN[s], unbelievable, i'm gonna have a talk with
+    your customer service, just take us home.
+  endRideDialogHappy: 
+  endRideDialogAngry: 
+  specialEventDialog: 
+  generalDialog: []
+  crashDialog: []

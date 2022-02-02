@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 8605300377419416784}
   m_Layer: 6
   m_Name: CarDriving
-  m_TagString: Untagged
+  m_TagString: CarDriving
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,12 +334,12 @@ MonoBehaviour:
     rightWheel: {fileID: 248748077953432349}
     motor: 1
     steering: 0
-  _maxMotorTorque: 2000
+  _maxMotorTorque: 3000
   _maxSteeringAngle: 25
   _maxBrakeTorque: 8000
   speed: 1
   turn: 0
-  _maxVelocity: 10
+  _maxVelocity: 15
 --- !u!114 &8605300377419416784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,8 +353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _steeringWheelTag: SteeringWheel
+  _rotateSpeed: 45
+  _maxSteerAngle: 120
   _resetSteerOffset: 3
   _resetSpeed: 3
-  _rotateSpeed: 25
-  _maxSteerAngle: 120
   _speedModifierReset: 0.5
+  _rotationOffset: 90

@@ -70,6 +70,9 @@ public class GameManager : MonoBehaviour
 
     #endregion Callbacks
 
+    [SerializeField]
+    bool isDebugingTasks;
+
     // Start
     void Start()
     {
@@ -88,6 +91,9 @@ public class GameManager : MonoBehaviour
         {
             StartNewCustomer();
         }
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void StartNewCustomer()
@@ -158,6 +164,58 @@ public class GameManager : MonoBehaviour
         currentDropoff.trigger.EnableTrigger();
 
         // Handle Tasks
+        if (isDebugingTasks)
+        {
+            yield return TaskLoopCoroutine_Debug();
+        }
+        else
+        {
+            yield return TaskLoopCoroutine();
+        }
+
+        // Dropoff Customer
+        carDriving = false;
+
+        if (true) // Implement check for if customer was satisfied
+        {
+            PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
+        }
+        else
+        {
+            PlayDialog(currentCustomer.endRideDialogAngry, DialogAnimationType.Angry);
+        }
+
+        yield return new WaitForSeconds(Mathf.Max(EstimateReadTime(currentCustomer.endRideDialogHappy, dialogRenderer), 3f));
+        
+        for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
+        {
+            yield return null;
+
+            customer.transform.position = Vector3.Lerp(currentDropoff.transform.position, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
+
+            customer.transform.rotation = Quaternion.LerpUnclamped(currentDropoff.transform.rotation, customerSitGoal.rotation, t)
+                * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (currentDropoff.transform.position - customerSitGoal.position).RemoveY().normalized)
+                * Quaternion.AngleAxis(t * 360f, Vector3.up);
+        }
+
+        rideEndEvent.Invoke();
+
+        customer.transform.position = currentDropoff.transform.position;
+        customer.transform.rotation = currentDropoff.transform.rotation;
+
+        customer.transform.parent = null;
+
+        carDriving = true;
+
+        customer = null;
+
+        currentCustomer = null;
+
+        StartNewCustomer();
+    }
+
+    IEnumerator TaskLoopCoroutine()
+    {
         List<CustomerTask> tasksPool = new List<CustomerTask>();
 
         CustomerTask currentCustomerTask = null;
@@ -312,46 +370,97 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
+    }
 
-        // Dropoff Customer
-        carDriving = false;
+    IEnumerator TaskLoopCoroutine_Debug()
+    {
+        float taskTimer = 0;
+        float taskTimerTotal = 0;
 
-        if (true) // Implement check for if customer was satisfied
-        {
-            PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
-        }
-        else
-        {
-            PlayDialog(currentCustomer.endRideDialogAngry, DialogAnimationType.Angry);
-        }
+        float taskIntervalTime = 5f;
 
-        yield return new WaitForSeconds(Mathf.Max(EstimateReadTime(currentCustomer.endRideDialogHappy, dialogRenderer), 3f));
-        
-        for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
+        Task currentTask = null;
+
+        while (true)
         {
+            if (currentDropoff.trigger.queryEvent.Query())
+            {
+                currentTask?.EndTask(this);
+
+                break;
+            }
+
+            int numberPressed = GetNumberKeyPressed();
+            if (numberPressed > -1)
+            {
+                currentTask?.EndTask(this);
+
+                currentTask = null;
+                currentTaskType = TaskType.Null;
+
+                currentTaskType = (TaskType)(numberPressed + 1);
+
+                currentTask = Task.CreateTask(currentTaskType);
+
+                if (currentTask != null)
+                {
+                    if (!currentTask.CheckValid(this))
+                    {
+                        currentTask = null;
+                        currentTaskType = TaskType.Null;
+                    }
+                    else
+                    {
+                        taskTimerTotal = 20f;
+                        taskTimer = taskTimerTotal;
+
+                        PlayDialog(GetDebugDialog(currentTask.StartTask(this), currentTaskType));
+
+                        taskStartEvent.Invoke();
+                    }
+                }
+            }
+
+            taskTimer -= Time.deltaTime;
+
+            taskIntervalTime -= Time.deltaTime;
+
+            if (currentTask != null)
+            {
+                currentTask.UpdateTask(this);
+
+                if (currentTask.completedTaskEvent.Query())
+                {
+                    currentTask.EndTask(this);
+
+                    currentTask = null;
+                    currentTaskType = TaskType.Null;
+
+                    taskIntervalTime = 3f;
+
+                    PlayDialog("Task Completed", DialogAnimationType.Happy);
+
+                    taskEndEvent.Invoke();
+                    taskCompletionEvent.Invoke();
+                }
+                else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
+                {
+                    currentTask.EndTask(this);
+
+                    currentTask = null;
+                    currentTaskType = TaskType.Null;
+
+                    taskIntervalTime = 3f;
+
+                    PlayDialog("Task Failed", DialogAnimationType.Angry);
+
+                    taskEndEvent.Invoke();
+                    taskFailureEvent.Invoke();
+                }
+            }
+
             yield return null;
-
-            customer.transform.position = Vector3.Lerp(currentDropoff.transform.position, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
-
-            customer.transform.rotation = Quaternion.LerpUnclamped(currentDropoff.transform.rotation, customerSitGoal.rotation, t)
-                * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (currentDropoff.transform.position - customerSitGoal.position).RemoveY().normalized)
-                * Quaternion.AngleAxis(t * 360f, Vector3.up);
         }
-
-        rideEndEvent.Invoke();
-
-        customer.transform.position = currentDropoff.transform.position;
-        customer.transform.rotation = currentDropoff.transform.rotation;
-
-        customer.transform.parent = null;
-
-        carDriving = true;
-
-        customer = null;
-
-        currentCustomer = null;
-
-        StartNewCustomer();
     }
 
     void PlayDialog(string dialog, DialogAnimationType animationType = DialogAnimationType.Neutral)
@@ -425,6 +534,22 @@ public class GameManager : MonoBehaviour
         name = "GameManager";
     }
 
+    // OnGUI
+    void OnGUI()
+    {
+        if (isDebugingTasks)
+        {
+            string taskList = "Tasks:";
+
+            for (int i = 0; i < 9; i++)
+            {
+                taskList += "\n" + i.ToString() + ". " + (TaskType)(i + 1);
+            }
+
+            GUI.TextArea(new Rect(10, Screen.height - 180, 120, 170), taskList, 200);
+        }
+    }
+
     public static GameManager instance;
 
     public enum DialogAnimationType
@@ -432,5 +557,96 @@ public class GameManager : MonoBehaviour
         Neutral,
         Happy,
         Angry,
+    }
+
+    int GetNumberKeyPressed()
+    {
+        if (Input.inputString != "")
+        {
+            int number;
+            bool is_a_number = int.TryParse(Input.inputString, out number);
+            if (is_a_number && number >= 0 && number < 10)
+            {
+                return number;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    string GetDebugDialog(PromptType promptType, TaskType taskType)
+    {
+        string s = "[c0]" + taskType.ToString() + "[c] Started.";
+
+        switch (taskType)
+        {
+            case TaskType.OpenWindow:
+                s += " [c0]";
+
+                if (promptType == PromptType.Main)
+                {
+                    s += "Open";
+                }
+                else
+                {
+                    s += "Close";
+                }
+
+                s += "[c] the window.";
+                break;
+
+            case TaskType.ChangeAc:
+                s += " Set the AC to [c0]";
+
+                if (currentCustomer.volumePreference != SettingPreference.None)
+                {
+                    s += currentCustomer.tempPreference.ToString();
+                }
+                else
+                {
+                    s += (SettingPreference)(promptType + 1);
+                }
+
+                s += "[c].";
+                break;
+
+            case TaskType.ChangeVolume:
+                s += " Set the volume to [c0]";
+
+                if (currentCustomer.volumePreference != SettingPreference.None)
+                {
+                    s += currentCustomer.volumePreference.ToString();
+                }
+                else
+                {
+                    s += (SettingPreference)(promptType + 1);
+                }
+
+                s += "[c].";
+                break;
+
+            case TaskType.ChangeMusic:
+                s += " Set the music to [c0]";
+
+                if (promptType == PromptType.Main)
+                {
+                    s += currentCustomer.musicPreference.ToString();
+                }
+                else
+                {
+                    s += currentCustomer.musicPreferenceOther.ToString();
+                }
+
+                s += "[c].";
+                break;
+        }
+
+        return s;
     }
 }

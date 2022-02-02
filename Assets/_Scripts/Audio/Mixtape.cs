@@ -9,6 +9,7 @@ namespace _Scripts.Audio
         public String CassetteName ;
         public Musictype Genre; 
         public AudioClip[] PlaylistTracks;
+        public Material TapeMaterial; 
 
         public enum Musictype
         {

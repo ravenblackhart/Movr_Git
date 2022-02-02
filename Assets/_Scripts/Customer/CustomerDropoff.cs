@@ -9,18 +9,14 @@ public class CustomerDropoff : MonoBehaviour
     [SerializeField]
     Canvas canvas;
 
-    GameManager gameManager;
-
     void Start()
     {
         trigger.triggerEvent.AddListener(OnCarExitTrigger);
-
-        gameManager = GameManager.instance;
     }
 
     void Update()
     {
-        canvas.enabled = gameManager.currentDropoff == this;
+        canvas.enabled = GameManager.instance.currentDropoff == this;
     }
 
     void OnCarExitTrigger()

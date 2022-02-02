@@ -1,25 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Cassette : PhysicsObject
 {
-    public _Scripts.Audio.Mixtape Mixtape;
+    //[SerializeField] private _Scripts.Audio.Mixtape Cassette;
+    [SerializeField] private _Scripts.Audio.Mixtape Mixtape;
+    public AudioClip[] TrackList;
 
     public Transform _targetPos;
 
+    public bool _sliding;
+    public Transform _prevParent;
+    CassettePlayer _cassettePlayer;
+
+    private void Start() {
+        TrackList = Mixtape.PlaylistTracks;
+        _prevParent = transform.parent;
+    }
 
     public void SlideInCassette() {
-        if (!_snapTrigger.occupied) {
+        _cassettePlayer = FindObjectOfType<CassettePlayer>();
+
+        if (!_cassettePlayer.occupied) {
             _sliding = true;
-            Transform _lockedStartPos = GameObject.Find("CassetteTrigger").GetComponent<SnapTrigger>().LockedStartPosition;
-            _target = GameObject.Find("CassetteTrigger").GetComponent<SnapTrigger>().LockedEndPosition;
+            Transform _lockedStartPos = _cassettePlayer.LockedStartPosition;
+            Transform _target = _cassettePlayer.LockedEndPosition;
 
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             _rb.transform.parent = _lockedStartPos.parent;
 
             transform.position = _lockedStartPos.position;
-            _snapTrigger.occupied = true;
+            _cassettePlayer.occupied = true;
             //_rb.isKinematic = true;
         }
 
@@ -29,7 +43,7 @@ public class Cassette : PhysicsObject
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
+    /*private void OnTriggerEnter(Collider other) {
         var snapTrigger = other.GetComponent<SnapTrigger>();
         if (snapTrigger != null) {
             _snapTarget = snapTrigger.SnapPosition;
@@ -40,5 +54,5 @@ public class Cassette : PhysicsObject
     private void OnTriggerExit(Collider other) {
         _onSnapTrigger = false;
         _snapTarget = null;
-    }
+    }*/
 }

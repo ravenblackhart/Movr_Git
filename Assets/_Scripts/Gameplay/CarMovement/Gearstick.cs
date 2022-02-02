@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Gearstick : MonoBehaviour, IInteractable
+// todo:
+//[RequireComponent(typeof(Lever))]
+public class Gearstick : MonoBehaviour//, IInteractable
 {
     /// <summary>
     /// Interface stuff:
@@ -12,29 +14,34 @@ public class Gearstick : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 20;
     public float MaxRange => _maxRange;
 
-    public void OnStartHover()
-    {
-        //print("Started Hover");
-    }
+    //public void OnStartHover()
+    //{
+    //    //print("Started Hover");
+    //}
 
-    public void OnInteract()
-    {
-        MoveStick();
-        _carController.Braking(0.2f);
-        _forward = !_forward;
-        //Debug.Log(_carController.speed + " fwrd: " + _forward);
-    }
+    //public void OnInteract()
+    //{
+    //    MoveStick();
+    //    _carController.Braking(0.2f);
+    //    _forward = !_forward;
+    //    //Debug.Log(_carController.speed + " fwrd: " + _forward);
+    //}
 
-    public void OnEndHover()
-    {
-        //print("Ended Hover");
-    }
+    //public void OnEndHover()
+    //{
+    //    //print("Ended Hover");
+    //}
 
     //////////////////////// interface stuff end
 
 
-    [SerializeField]
     private CarController _carController;
+
+    private Lever _gearLever;
+    //[SerializeField]
+    private float _reverseLimit = 0.95f;
+    //[SerializeField]
+    private float _forwardLimit = 0.05f;
 
     private bool _forward = true;
 
@@ -44,46 +51,42 @@ public class Gearstick : MonoBehaviour, IInteractable
     private float _reverseGearStrength = -1;
 
     [SerializeField]
-    private string _carNameWithCarController = "CarDriving";
+    private string _carControllerTag = "CarDriving";
+
+    
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        if (_carController == null)
-        {
-            _carController = FindObjectOfType<CarController>();// GameObject.Find(_carNameWithCarController).GetComponent<CarController>();
-        }
+        _carController = GameObject.FindGameObjectWithTag(_carControllerTag).GetComponent<CarController>();
+        
+        _gearLever = GetComponent<Lever>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_vehicleDirection > _reverseGearStrength && !_forward)
+        if (_gearLever.LeverValue > _reverseLimit && !_forward)
         {
             ChangeDirectionSpeed(_reverseGearStrength);
         }
-        else if (_forward && _vehicleDirection < 0)
+        else if (_forward && _gearLever.LeverValue < _forwardLimit)
         {
             ChangeDirectionSpeed(1);
         }
-    }
-
-    private void MoveStick()
-    {
-        float xAngle;
-        if (!_forward)
-        {
-            xAngle = -35;
-        }
-        else
-        {
-            xAngle = -70;
-        }
-        transform.localEulerAngles = new Vector3(xAngle, 0, 0);
+        //if (_vehicleDirection > _reverseGearStrength && !_forward)
+        //{
+        //    ChangeDirectionSpeed(_reverseGearStrength);
+        //}
+        //else if (_forward && _vehicleDirection < 0)
+        //{
+        //    ChangeDirectionSpeed(1);
+        //}
     }
 
     private void ChangeDirectionSpeed(float newValue)
     {
+        Debug.Log(newValue);
         _vehicleDirection = newValue;
         _carController.isReversing = !_carController.isReversing;
     }

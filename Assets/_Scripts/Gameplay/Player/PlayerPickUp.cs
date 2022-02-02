@@ -9,22 +9,22 @@ public class PlayerPickUp : MonoBehaviour {
     [SerializeField] float moveForce = 250;
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
-    [SerializeField] float rotateSpeed = 0.005f;
+    [SerializeField] float rotateSpeed = 0.5f;
     [SerializeField] float sideThrowForce = 10;
 
-    CameraSwitcher _cameraSwitcher;
-    PlayerInput _playerInput;
-    InputAction _primaryAction;
-    InputAction _secondaryAction;
-    Vector2 _mouseDelta;
-    Transform _holdPos;
+    private CameraSwitcher _cameraSwitcher;
+    private PlayerInput _playerInput;
+    private InputAction _primaryAction;
+    private InputAction _secondaryAction;
+    private Vector2 _mouseDelta;
+    private Transform _holdPos;
     public bool canMove = true;
     
-    GameObject _gameObjectInHand;
+    private GameObject _gameObjectInHand;
     private PhysicsObject _physicsObjectInHand;
     private Rigidbody _rbInHand;
     
-    Transform _previousParent;
+    private Transform _previousParent;
 
     private void Awake() {
         _playerInput = GetComponent<PlayerInput>();
@@ -81,15 +81,15 @@ public class PlayerPickUp : MonoBehaviour {
     }
     
     private void OnPrimaryAction(InputAction.CallbackContext context) {
-        if (_gameObjectInHand != null) {
+        if (_gameObjectInHand != null && !_physicsObjectInHand.OnSnapTrigger) {
+            ThrowObject();
+        }
 
-            if (_physicsObjectInHand.OnSnapTrigger && _physicsObjectInHand.GetComponent<Cassette>() != null) {
-                SlideInCassette();
-            }
-
-            else {
-                ThrowObject();
-            }
+        if (_gameObjectInHand != null && _physicsObjectInHand.GetComponent<Cassette>() != null && _physicsObjectInHand.OnSnapTrigger) {
+            _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
+            _rbInHand = null;
+            _gameObjectInHand = null;
+            _physicsObjectInHand = null;
         }
     }
     
@@ -118,6 +118,7 @@ public class PlayerPickUp : MonoBehaviour {
 
     void MoveObject() 
     {
+        
         if (Vector3.Distance(_gameObjectInHand.transform.position, _holdPos.position) > 0.01f) {
             Vector3 moveDirection = (_holdPos.position - _gameObjectInHand.transform.position);
             _rbInHand.AddForce(moveDirection * moveForce);
@@ -138,14 +139,7 @@ public class PlayerPickUp : MonoBehaviour {
         _gameObjectInHand = null;
         _physicsObjectInHand = null;
     }
-
-    private void SlideInCassette() {
-        _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
-        _rbInHand = null;
-        _gameObjectInHand = null;
-        _physicsObjectInHand = null;
-    }
-
+    
     void RotateObject() {
         _gameObjectInHand.transform.RotateAround(_holdPos.position, Vector3.down, _mouseDelta.x * rotateSpeed);
         _gameObjectInHand.transform.RotateAround(_holdPos.position, -_holdPos.transform.right, _mouseDelta.y * rotateSpeed);

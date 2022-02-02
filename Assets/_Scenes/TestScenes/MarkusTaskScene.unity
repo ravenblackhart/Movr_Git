@@ -2480,6 +2480,8 @@ MonoBehaviour:
     waterCups: []
     leverAC: {fileID: 0}
     windowsLever: {fileID: 0}
+    cassettePlayer: {fileID: 0}
+    cassetteTapes: []
   customerPrefab: {fileID: 163253851}
   rideStartEvent:
     m_PersistentCalls:
@@ -2612,6 +2614,8 @@ MonoBehaviour:
   _holdPos: {fileID: 0}
   _sliding: 0
   _target: {fileID: 0}
+  _snapTrigger: {fileID: 0}
+  _cassettePlayer: {fileID: 0}
   _rb: {fileID: 0}
 --- !u!54 &848153697
 Rigidbody:
@@ -3024,6 +3028,8 @@ MonoBehaviour:
   _holdPos: {fileID: 0}
   _sliding: 0
   _target: {fileID: 0}
+  _snapTrigger: {fileID: 0}
+  _cassettePlayer: {fileID: 0}
   _rb: {fileID: 0}
 --- !u!65 &881689071
 BoxCollider:
@@ -6713,21 +6719,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b95574832dd6d304d8fc2ff309541744, type: 3}
---- !u!1 &2141062970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8978522633843326207, guid: b95574832dd6d304d8fc2ff309541744, type: 3}
-  m_PrefabInstance: {fileID: 2141062969}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &2141062971
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141062970}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.00219999, y: 0.0010119616, z: 0.00131526}
-  m_Center: {x: -0.0007458433, y: 0, z: 0}
