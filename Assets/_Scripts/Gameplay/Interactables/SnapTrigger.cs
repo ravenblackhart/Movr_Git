@@ -6,5 +6,6 @@ public class SnapTrigger : MonoBehaviour
     public Transform SnapPosition => _snapPosition;
     public Transform LockedStartPosition;
     public Transform LockedEndPosition;
-   
+
+    public bool occupied = false;
 }

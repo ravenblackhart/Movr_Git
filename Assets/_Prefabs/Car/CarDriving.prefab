@@ -38,7 +38,7 @@ WheelCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1179775893544646347}
-  m_Center: {x: 0, y: 0.16, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 35000
@@ -99,7 +99,7 @@ WheelCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3318373311839888135}
-  m_Center: {x: 0, y: 0.16, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 35000
@@ -160,7 +160,7 @@ WheelCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3318373312134271685}
-  m_Center: {x: 0, y: 0.16, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 35000
@@ -221,7 +221,7 @@ WheelCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3318373312765003422}
-  m_Center: {x: 0, y: 0.16, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.3
   m_SuspensionSpring:
     spring: 35000
@@ -323,6 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc6971878df7b5498e68a3e96a24695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReversing: 0
+  _reverseSpeed: -0.5
   _axleInfos:
   - leftWheel: {fileID: 4405054873722412819}
     rightWheel: {fileID: 248748078226836191}
@@ -332,11 +334,12 @@ MonoBehaviour:
     rightWheel: {fileID: 248748077953432349}
     motor: 1
     steering: 0
-  _maxMotorTorque: 300
+  _maxMotorTorque: 2000
   _maxSteeringAngle: 25
-  _maxBrakeTorque: 100000
+  _maxBrakeTorque: 8000
   speed: 1
   turn: 0
+  _maxVelocity: 10
 --- !u!114 &8605300377419416784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _steeringWheelTag: SteeringWheel
-  _steerOffset: 1
-  _resetSpeed: 30
-  _rotateSpeed: 20
+  _resetSteerOffset: 3
+  _resetSpeed: 3
+  _rotateSpeed: 25
+  _maxSteerAngle: 120
+  _speedModifierReset: 0.5
