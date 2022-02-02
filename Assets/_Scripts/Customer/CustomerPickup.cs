@@ -6,6 +6,9 @@ public class CustomerPickup : MonoBehaviour
 {
     public Trigger trigger;
 
+    [SerializeField]
+    Canvas canvas;
+
     GameManager gameManager;
 
     void Start()
@@ -13,6 +16,11 @@ public class CustomerPickup : MonoBehaviour
         trigger.triggerEvent.AddListener(OnCarEnterTrigger);
 
         gameManager = GameManager.instance;
+    }
+
+    void Update()
+    {
+        canvas.enabled = gameManager.currentPickup == this;
     }
 
     void OnCarEnterTrigger()

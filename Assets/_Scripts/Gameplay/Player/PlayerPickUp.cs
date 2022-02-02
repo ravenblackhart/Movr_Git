@@ -18,6 +18,7 @@ public class PlayerPickUp : MonoBehaviour {
     InputAction _secondaryAction;
     Vector2 _mouseDelta;
     Transform _holdPos;
+    public bool canMove = true;
     
     GameObject _gameObjectInHand;
     private PhysicsObject _physicsObjectInHand;
@@ -81,7 +82,14 @@ public class PlayerPickUp : MonoBehaviour {
     
     private void OnPrimaryAction(InputAction.CallbackContext context) {
         if (_gameObjectInHand != null) {
-            ThrowObject();
+
+            if (_physicsObjectInHand.OnSnapTrigger && _physicsObjectInHand.GetComponent<Cassette>() != null) {
+                SlideInCassette();
+            }
+
+            else {
+                ThrowObject();
+            }
         }
     }
     
@@ -126,6 +134,13 @@ public class PlayerPickUp : MonoBehaviour {
         _rbInHand.AddForce(-_holdPos.forward * pushForce +
                            _holdPos.up * Mathf.Clamp(_mouseDelta.y * sideThrowForce, -200, 200) +
                            -_holdPos.right * Mathf.Clamp(_mouseDelta.x * sideThrowForce, -200, 200));
+        _rbInHand = null;
+        _gameObjectInHand = null;
+        _physicsObjectInHand = null;
+    }
+
+    private void SlideInCassette() {
+        _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
         _rbInHand = null;
         _gameObjectInHand = null;
         _physicsObjectInHand = null;

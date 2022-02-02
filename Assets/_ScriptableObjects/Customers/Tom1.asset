@@ -18,45 +18,50 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 10
-    mainTaskPrompt: 'Could you turn the volume down?
+    mainTaskPrompt: 'Far too early in the morning for this, could you turn the [c2]volume[c]
+      down?
 
 '
-    alternateTaskPrompt: 
-    taskCompletionResponse: Thanks.
-    taskFailureResponse: 
-    specialTaskDialog: []
-  - taskType: 5
-    timeLimit: 15
-    mainTaskPrompt: 'Ugh I always forget to eat breakfast before big meetings.
-
-      
-
-'
-    alternateTaskPrompt: 
-    taskCompletionResponse: Ah.. perfect thank you.
-    taskFailureResponse: 
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thanks..
+    taskFailureResponse: Are you trying to ruin my morning??
     specialTaskDialog: []
   - taskType: 6
     timeLimit: 10
-    mainTaskPrompt: 'Maybe something a bit more temperate?
+    mainTaskPrompt: 'Maybe you could find us a more mellow [c2]temperature[c]?
 
-      
+
 
 '
-    alternateTaskPrompt: 
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
     taskCompletionResponse: That'll do.
-    taskFailureResponse: 
+    taskFailureResponse: Wow you really having a hard time with that?
     specialTaskDialog: []
-  taskTimeMin: 0
-  taskTimeMax: 0
+  - taskType: 5
+    timeLimit: 10
+    mainTaskPrompt: 'Ugh I always forget to eat [c2]breakfast[c] before big meetings.
+      You wouldn''t happen to have something to eat up there?
+
+
+
+'
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: I guess this fine.
+    taskFailureResponse: I'm not asking for much here..
+    specialTaskDialog: []
+  taskTimeMin: 15
+  taskTimeMax: 25
   tempPreference: 2
   volumePreference: 3
   musicPreference: 0
   musicPreferenceOther: 1
-  startRideDialogHappy: Big Corp offices please.
+  startRideDialogHappy: Take me to the Big Corp offices please.
   startRideDialogAngry: 
-  endRideDialogHappy: Thank you much appreciated.
-  endRideDialogAngry: Yeah you better go back to driving school.
+  endRideDialogHappy: Nice driving much appreciated.
+  endRideDialogAngry: Yeah you better go back to driving school, [s]DUMMY[s]!
   specialEventDialog: 
   generalDialog:
   - "My wife took the car to the shop so we\u2019ll be counting on you today."

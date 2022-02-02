@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Max2
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 1
+  taskPool:
+  - taskType: 1
+    timeLimit: 15
+    mainTaskPrompt: Can you put on some pop music? Just don't tell anyone.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Don't judge me.
+    taskFailureResponse: Hater.
+    specialTaskDialog: []
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: Just keep the volume on [s]medium[s] yeah?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: That's better.
+    taskFailureResponse: Fine be that way.
+    specialTaskDialog: []
+  - taskType: 8
+    timeLimit: 15
+    mainTaskPrompt: I'm gonna need you to charge my gym [s]phone[s] now.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: '[w]...[w]'
+    taskFailureResponse: Why are you incapable of simple tasks?
+    specialTaskDialog: []
+  - taskType: 6
+    timeLimit: 10
+    mainTaskPrompt: How about a [c2]medium[c] temperature?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Cool.
+    taskFailureResponse: Hello???
+    specialTaskDialog: []
+  taskTimeMin: 10
+  taskTimeMax: 20
+  tempPreference: 2
+  volumePreference: 2
+  musicPreference: 3
+  musicPreferenceOther: 4
+  startRideDialogHappy: Hey! Take me back to the airport please.
+  startRideDialogAngry: Are you serious, is there really no other driver available?
+    Airport.
+  endRideDialogHappy: 
+  endRideDialogAngry: 
+  specialEventDialog: 
+  generalDialog:
+  - Guess who's twice as rich now.
+  - 
+  crashDialog:
+  - Do you need to borrow my glasses?
+  - Do you work for Tom??
+  - '[w]&%#@![w]'
+  - I'm getting real [w]sick[w] of you.

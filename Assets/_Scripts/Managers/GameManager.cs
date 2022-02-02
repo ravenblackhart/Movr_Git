@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,11 +30,16 @@ public class GameManager : MonoBehaviour
 
     bool isPlayingDialog = false;
 
+    [HideInInspector]
+    public TaskType currentTaskType;
+
     #region References
 
     [Header("References")]
 
     public Transform car;
+
+    public AudioManager audioManager;
 
     [SerializeField]
     DialogRenderer dialogRenderer;
@@ -49,6 +55,20 @@ public class GameManager : MonoBehaviour
     GameObject customerPrefab;
 
     #endregion References
+
+    #region Callbacks
+
+    [Header("Callbacks")]
+    public UnityEvent rideStartEvent;
+    public UnityEvent rideEndEvent;
+
+    public UnityEvent taskStartEvent;
+    public UnityEvent taskEndEvent;
+
+    public UnityEvent taskCompletionEvent;
+    public UnityEvent taskFailureEvent;
+
+    #endregion Callbacks
 
     // Start
     void Start()
@@ -120,9 +140,18 @@ public class GameManager : MonoBehaviour
 
         customer.transform.parent = customerSitGoal;
 
+        rideStartEvent.Invoke();
+
         yield return new WaitForSeconds(1f);
 
-        PlayDialog(currentCustomer.startRideDialogHappy);
+        if (true) // Implement check for if customer was satisfied during your last ride with them
+        {
+            PlayDialog(currentCustomer.startRideDialogHappy, DialogAnimationType.Happy);
+        }
+        else
+        {
+            PlayDialog(currentCustomer.startRideDialogAngry, DialogAnimationType.Angry);
+        }
 
         carDriving = true;
 
@@ -171,32 +200,39 @@ public class GameManager : MonoBehaviour
                     tasksPool.RemoveAt(taskIndex);
 
                     currentTask = Task.CreateTask(currentCustomerTask.taskType);
+                    currentTaskType = currentCustomerTask.taskType;
 
-                    if (!currentTask.CheckValid(this))
+                    if (currentTask != null)
                     {
-                        currentTask = null;
-                    }
-                    else
-                    {
-                        taskTimerTotal = currentCustomerTask.timeLimit;
-                        taskTimer = taskTimerTotal;
-
-                        switch (currentTask.StartTask(this))
+                        if (!currentTask.CheckValid(this))
                         {
-                            default:
-                                PlayDialog(currentCustomerTask.mainTaskPrompt);
-                                break;
-
-                            case PromptType.Secondary:
-                                PlayDialog(currentCustomerTask.secondaryTaskPrompt);
-                                break;
-
-                            case PromptType.Tertiary:
-                                PlayDialog(currentCustomerTask.tertiaryTaskPrompt);
-                                break;
+                            currentTask = null;
+                            currentTaskType = TaskType.Null;
                         }
+                        else
+                        {
+                            taskTimerTotal = currentCustomerTask.timeLimit;
+                            taskTimer = taskTimerTotal;
 
-                        break;
+                            switch (currentTask.StartTask(this))
+                            {
+                                default:
+                                    PlayDialog(currentCustomerTask.mainTaskPrompt);
+                                    break;
+
+                                case PromptType.Secondary:
+                                    PlayDialog(currentCustomerTask.secondaryTaskPrompt);
+                                    break;
+
+                                case PromptType.Tertiary:
+                                    PlayDialog(currentCustomerTask.tertiaryTaskPrompt);
+                                    break;
+                            }
+
+                            taskStartEvent.Invoke();
+
+                            break;
+                        }
                     }
                 }
             }
@@ -212,24 +248,28 @@ public class GameManager : MonoBehaviour
                     currentTask.EndTask(this);
 
                     currentTask = null;
+                    currentTaskType = TaskType.Null;
 
                     taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
 
-                    PlayDialog(currentCustomerTask.taskCompletionResponse);
+                    PlayDialog(currentCustomerTask.taskCompletionResponse, DialogAnimationType.Happy);
 
-                    // Add event completion callback
+                    taskEndEvent.Invoke();
+                    taskCompletionEvent.Invoke();
                 }
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
                     currentTask.EndTask(this);
 
                     currentTask = null;
+                    currentTaskType = TaskType.Null;
 
                     taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
 
-                    PlayDialog(currentCustomerTask.taskFailureResponse);
+                    PlayDialog(currentCustomerTask.taskFailureResponse, DialogAnimationType.Angry);
 
-                    // Add event failure callback
+                    taskEndEvent.Invoke();
+                    taskFailureEvent.Invoke();
                 }
 
                 canPlayDialog = false;
@@ -273,12 +313,17 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        StopDialog();
-
         // Dropoff Customer
         carDriving = false;
 
-        PlayDialog(currentCustomer.endRideDialogHappy);
+        if (true) // Implement check for if customer was satisfied
+        {
+            PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
+        }
+        else
+        {
+            PlayDialog(currentCustomer.endRideDialogAngry, DialogAnimationType.Angry);
+        }
 
         yield return new WaitForSeconds(Mathf.Max(EstimateReadTime(currentCustomer.endRideDialogHappy, dialogRenderer), 3f));
         
@@ -292,6 +337,8 @@ public class GameManager : MonoBehaviour
                 * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (currentDropoff.transform.position - customerSitGoal.position).RemoveY().normalized)
                 * Quaternion.AngleAxis(t * 360f, Vector3.up);
         }
+
+        rideEndEvent.Invoke();
 
         customer.transform.position = currentDropoff.transform.position;
         customer.transform.rotation = currentDropoff.transform.rotation;
@@ -307,7 +354,7 @@ public class GameManager : MonoBehaviour
         StartNewCustomer();
     }
 
-    void PlayDialog(string dialog)
+    void PlayDialog(string dialog, DialogAnimationType animationType = DialogAnimationType.Neutral)
     {
         dialogRenderer.StartDialog(dialog);
         isPlayingDialog = true;
@@ -379,4 +426,11 @@ public class GameManager : MonoBehaviour
     }
 
     public static GameManager instance;
+
+    public enum DialogAnimationType
+    {
+        Neutral,
+        Happy,
+        Angry,
+    }
 }
