@@ -1,15 +1,38 @@
 fileFormatVersion: 2
-guid: 0bbe21cab0c6874469498ef7a9246fdd
+guid: 2fb1b3681709cf042841da77686de74b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 3909117517396431969
-    second: Char_Rig_2|Char_Rig_3Action
+      74: -6909752645110449973
+    second: Char_Rig_1|Char_Rig_3Action
   - first:
-      74: -6179768313094542937
-    second: Char_Rig_2|Char_Rig_3Action.001
-  externalObjects: {}
+      74: -4230439356229055373
+    second: Char_Rig_1|Char_Rig_3Action.001
+  - first:
+      74: -1382428145510800221
+    second: Char_Rig_1|Char_Rig_3Action.002
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 614e6a5288603a54d94205d2036f3497, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.007
+    second: {fileID: 2100000, guid: 6d444b25374c3bf4dbf694053aac5ba7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.014
+    second: {fileID: 2100000, guid: 96523806dfedfc94581edeac71a8a552, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.016
+    second: {fileID: 2100000, guid: fb6a70a9f23c99b45915e3b8d8a4ddd8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -38,11 +61,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Char_Rig_2|Char_Rig_3Action.001
-      takeName: Char_Rig_2|Char_Rig_3Action.001
+      name: Char_Rig_1|Char_Rig_3Action.002
+      takeName: Char_Rig_1|Char_Rig_3Action.002
       internalID: 0
       firstFrame: 0
-      lastFrame: 84
+      lastFrame: 9
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
