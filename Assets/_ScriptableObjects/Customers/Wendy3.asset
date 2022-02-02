@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Wendy3
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 0
+  taskPool: []
+  taskTimeMin: 5
+  taskTimeMax: 12
+  tempPreference: 3
+  volumePreference: 1
+  musicPreference: 4
+  musicPreferenceOther: 3
+  startRideDialogHappy: 
+  startRideDialogAngry: 
+  endRideDialogHappy: Yeah you did your job, you want a medal or something?
+  endRideDialogAngry: If you ever come close to my children, I'll have you [s]killed[s],
+    learn to drive you donkey
+  specialEventDialog: 
+  generalDialog:
+  - Yes yes don't worry, daddy will be home for dinner.
+  - Do you have kids? You should have kids. People without kids are worthless.
+  crashDialog:
+  - Mommy why are they such a bad driver?
+  - pls stop

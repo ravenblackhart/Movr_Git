@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: Tom3
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 1
+  hasGlasses: 0
+  taskPool:
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: Actually, put on some easy jazz yeah?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Much better.
+    taskFailureResponse: Don't worry one day you might just figure out how to be
+      a productive member of society, not today though.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 6
+    mainTaskPrompt: How about getting some air in here? Open the window.
+    secondaryTaskPrompt: It's getting chilly, close the window please.
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: That wasn't so hard was it?
+    taskFailureResponse: I guess that was really hard for you huh?
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 9
+    mainTaskPrompt: Can I get some water?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thirst quenched.
+    taskFailureResponse: Thirst unquenched.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 6
+    timeLimit: 5
+    mainTaskPrompt: Some food would be nice too.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Truly gourmet.
+    taskFailureResponse: Keeping it all to yourself are you?
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  taskTimeMin: 5
+  taskTimeMax: 12
+  tempPreference: 0
+  volumePreference: 0
+  musicPreference: 1
+  musicPreferenceOther: 0
+  startRideDialogHappy: You know what. I need to see someone, take me to the hotel
+    instead.
+  startRideDialogAngry: 
+  endRideDialogHappy: Thanks, and please.. don't tell my wife.
+  endRideDialogAngry: You better not say a word to anyone about this, and I'm never
+    getting in this car again.
+  specialEventDialog: 
+  generalDialog:
+  - That deal might've just ruined my life, so don't judge me.
+  - One last time..
+  crashDialog:
+  - How do you still have this job?
+  - '[s]NO[s]!'

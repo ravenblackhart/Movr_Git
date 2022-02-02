@@ -31,13 +31,6 @@ public class CassettePlayer : SnapTrigger
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (_cassette != null) {
-            _cassette = null;
-            _cassette.OnSnapTrigger = false;
-        }
-    }
-
     private void FixedUpdate() {
 
         if (_cassette.OnSnapTrigger) {
@@ -50,11 +43,13 @@ public class CassettePlayer : SnapTrigger
 
         if (_cassette._sliding) {
             //_cassette.transform.parent = _cassette._prevParent;
-            Vector3 moveDirection = (LockedEndPosition.position - transform.position);
+            _cassette.OnSnapTrigger = false;
+            Vector3 moveDirection = (LockedEndPosition.position - _cassette.transform.position);
             _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);
 
-            if (Vector3.Distance(_cassette.transform.position, transform.position) <= 0.01f) {
+            if (Vector3.Distance(_cassette.transform.position, LockedEndPosition.transform.position) <= 0.01f) {
                 cassetteInPlayer = _cassette.transform;
+                _cassette = null;
                 //_rb.isKinematic = true;
             }
         }

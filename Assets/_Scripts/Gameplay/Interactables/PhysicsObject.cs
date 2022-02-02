@@ -13,7 +13,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     private bool _beingHeld = false;
     private float _snapDistance;
     private float _leaveSnapDistance;
-    private bool _onSnapTrigger;
+    public bool _onSnapTrigger;
     
     public CustomClasses.QueryEvent touchCustomerQueryEvent;
     public UnityEngine.Events.UnityEvent touchCustomerUnityEvent;

@@ -15,17 +15,51 @@ MonoBehaviour:
   bodyMaterial: {fileID: 0}
   hasHat: 1
   hasGlasses: 0
-  taskPool: []
-  taskTimeMin: 0
-  taskTimeMax: 0
-  tempPreference: 0
-  volumePreference: 0
+  taskPool:
+  - taskType: 3
+    timeLimit: 5
+    mainTaskPrompt: I'm not in the mood, turn down the volume.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thanks..
+    taskFailureResponse: Jerk.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 9
+    timeLimit: 15
+    mainTaskPrompt: Could you charge my phone? I need to text someone.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: 'Great. '
+    taskFailureResponse: What do you mean use a powerbank??
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 7
+    timeLimit: 15
+    mainTaskPrompt: Maybe a medium temperature would help with your driving.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: See?
+    taskFailureResponse: Figured.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  taskTimeMin: 5
+  taskTimeMax: 10
+  tempPreference: 2
+  volumePreference: 3
   musicPreference: 0
   musicPreferenceOther: 0
-  startRideDialogHappy: 
-  startRideDialogAngry: 
+  startRideDialogHappy: What a shit day, take me home, have to get there in time
+    for dinner
+  startRideDialogAngry: Oh great, last thing I needed after that meeting was seeing
+    your face again.. take me home.
   endRideDialogHappy: 
   endRideDialogAngry: 
   specialEventDialog: 
-  generalDialog: []
-  crashDialog: []
+  generalDialog:
+  - I wonder what Wendy has planned for dinner tonight..
+  - This is your fault you know? Your damned generation is putting people like him
+    in power.
+  crashDialog:
+  - I don't even care to be honest.
+  - Okay that wasn't meant to be an encouragement.

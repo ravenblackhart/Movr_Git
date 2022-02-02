@@ -23,6 +23,7 @@ MonoBehaviour:
     tertiaryTaskPrompt: 
     taskCompletionResponse: Mh..
     taskFailureResponse: '[w]Uuuuhm[w]?'
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 5
     timeLimit: 10
@@ -31,6 +32,7 @@ MonoBehaviour:
     tertiaryTaskPrompt: 
     taskCompletionResponse: Took you long enough.
     taskFailureResponse: Your water's probably rancid anyway. [s]Ugh[s].
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
   taskTimeMin: 5
   taskTimeMax: 12
@@ -44,5 +46,9 @@ MonoBehaviour:
   endRideDialogHappy: 
   endRideDialogAngry: 
   specialEventDialog: 
-  generalDialog: []
-  crashDialog: []
+  generalDialog:
+  - I see you still haven't done anything about the smell..
+  - Are we there yet?
+  crashDialog:
+  - NO PLEASE
+  - MY [s]CHILDREN[s]

@@ -16,38 +16,42 @@ MonoBehaviour:
   hasHat: 1
   hasGlasses: 1
   taskPool:
-  - taskType: 1
+  - taskType: 2
     timeLimit: 20
     mainTaskPrompt: You're really killing my vibe, got any rock music?
-    secondaryTaskPrompt: 
+    secondaryTaskPrompt: How about some techno music?
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Niiice[w].'
     taskFailureResponse: Fine, forget it.. jerk.
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 6
+  - taskType: 7
     timeLimit: 10
     mainTaskPrompt: Yo is it too much to ask for a more even [c2]temperature[c]??
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Yeah that's fine whatever.
     taskFailureResponse: Jeez..
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 8
+  - taskType: 9
     timeLimit: 15
     mainTaskPrompt: Hey driver, can you put my travel phone on [c2]charge[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Thanks, I'll let you know if I need to charge my other
       phones.
-    taskFailureResponse: Different failure states?
+    taskFailureResponse: Eh whatever, good thing I've got multiple phones.
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 5
+  - taskType: 6
     timeLimit: 15
     mainTaskPrompt: Can I get something to [c2]eat[c] back here, make it vegan.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: This is kinda gross but thanks.
     taskFailureResponse: Alright stupid.
+    taskFailureResponseAlternate: 
     specialTaskDialog: []
   taskTimeMin: 10
   taskTimeMax: 20
