@@ -2,39 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnackBar :  MonoBehaviour
+public class SnackBar : PhysicsObject
 {
-    public bool _touchingCustomer = false;
-    AudioManager _audioManager;
-
     [SerializeField] GameObject crumbs;
 
-    float snackTimer = 0;
-
-    private void Awake() {
-        _audioManager = FindObjectOfType<AudioManager>();
+    private void Start() {
+        touchCustomerUnityEvent.AddListener(EatSnackbar);
     }
 
-    private void Update() {
-       
-    }
+    private void EatSnackbar() {
+        if (GameManager.instance.currentTaskType != TaskType.GiveSnackBar)
+            return;
 
-    private void OnCollisionEnter(Collision col) {
-        if (col.transform.name == "Customer(Clone)") {
-            StartCoroutine(EatSnackbar());
-        }
-    }
+        GameManager.instance.audioManager.Play("Chomp");
 
-
-    IEnumerator EatSnackbar() {
-        _touchingCustomer = true;   
-        //Play chomp audio?
-        _audioManager.Play("Chomp");
-        //Maybe call dialogue saying I'm not hungry?
-        yield return null;
         Instantiate(crumbs, transform.position, Quaternion.identity);
-        yield return null;
-        _touchingCustomer = false;
-        Destroy(gameObject);
+
+        // SetActive because we'll be using pooling later so we don't wanna destroy anything
+        gameObject.SetActive(false);
     }
 }

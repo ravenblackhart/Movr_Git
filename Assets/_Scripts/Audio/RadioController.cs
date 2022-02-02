@@ -51,7 +51,7 @@ public class RadioController : MonoBehaviour
 
     private void UpdateTrack(int index)
     {
-        radioAudioSource.clip = audioTracks[index].TrackAudioClip;
+        radioAudioSource.clip = audioTracks[index];
         trackNameField.text = audioTracks[index].name;
     }
 

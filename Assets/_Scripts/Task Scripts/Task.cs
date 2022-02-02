@@ -6,6 +6,15 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Task
 {
+    public TaskType type;
+
+    public Task SetType(TaskType type)
+    {
+        this.type = type;
+
+        return this;
+    }
+
     public virtual PromptType StartTask(GameManager gameManager)
     {
         return PromptType.Main;
@@ -33,23 +42,25 @@ public class Task
         switch (taskType)
         {
             default:
-                return new Task();
+                return null;
+            case TaskType.Default:
+                return new Task().SetType(taskType);
             case TaskType.ChangeMusic:
-                return new ChangeMusicTask();
+                return new ChangeMusicTask().SetType(taskType);
             case TaskType.ChangeVolume:
-                return new ChangeVolumeTask();
+                return new ChangeVolumeTask().SetType(taskType);
             case TaskType.OpenWindow:
-                return new OpenWindowTask();
+                return new OpenWindowTask().SetType(taskType);
             case TaskType.GiveWater:
-                return new GiveWaterTask();
+                return new GiveWaterTask().SetType(taskType);
             case TaskType.GiveSnackBar:
-                return new GiveSnackBarTask();
+                return new GiveSnackBarTask().SetType(taskType);
             case TaskType.ChangeAc:
-                return new ChangeAcTask();
+                return new ChangeAcTask().SetType(taskType);
             case TaskType.PlayCatch:
-                return new PlayCatchTask();
+                return new PlayCatchTask().SetType(taskType);
             case TaskType.ChargePhone:
-                return new ChargePhoneTask();
+                return new ChargePhoneTask().SetType(taskType);
         }
     }
 }
@@ -61,6 +72,7 @@ public class TaskParams
 
 public enum TaskType
 {
+    Null,
     Default,
     ChangeMusic,
     ChangeVolume,

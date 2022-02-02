@@ -14,21 +14,25 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     public CustomClasses.QueryEvent touchCustomerQueryEvent;
     public UnityEngine.Events.UnityEvent touchCustomerUnityEvent;
 
+
     public float MaxRange => _maxRange;
     private bool _beingHeld = false;
-    private bool _onSnapTrigger;
-    private Transform _snapTarget;
+    public bool _onSnapTrigger;
+    public Transform _snapTarget;
     [SerializeField] private Transform _holdPos;
     private float _snapDistance;
     private float _leaveSnapDistance;
     private Transform _prevParent;
+    public bool _sliding;
+    public Transform _target;
+
     public bool OnSnapTrigger
     {
         get => _onSnapTrigger;
         set => _onSnapTrigger = value;
     }
 
-    private Rigidbody _rb;
+    public Rigidbody _rb;
 
     private void Awake() {
         _rb = gameObject.GetComponent<Rigidbody>();
@@ -62,6 +66,15 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     {
         _leaveSnapDistance = Vector3.Distance(_holdPos.position, transform.position);
 
+        if (_sliding) {
+            Vector3 moveDirection = (_target.position - transform.position);
+            _rb.AddForce(moveDirection * _snapSpeed);
+
+            if (Vector3.Distance(_target.position, transform.position) <= 0.01f) {
+                _rb.isKinematic = true;
+            }
+        }
+
         if (_onSnapTrigger)
         {
             transform.parent = _prevParent;
@@ -76,22 +89,6 @@ public class PhysicsObject : MonoBehaviour, IInteractable
         }
             
         _rb.angularVelocity = CustomClasses.Damp(_rb.angularVelocity, Vector3.zero, _rotationLambda, Time.fixedDeltaTime);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        var snapTrigger = other.GetComponent<SnapTrigger>();
-        if (snapTrigger != null)
-        {
-            _snapTarget = snapTrigger.SnapPosition;
-            _onSnapTrigger = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        _onSnapTrigger = false;
-        _snapTarget = null;
     }
 
     private void OnCollisionEnter(Collision other)

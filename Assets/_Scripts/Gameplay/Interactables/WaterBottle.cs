@@ -1,15 +1,10 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(ParticleSystem))]
 public class WaterBottle : PhysicsObject
 {
-    private ParticleSystem _particleSystem;
+    [SerializeField] private ParticleSystem _particleSystem;
     
-    private void Start()
-    {
-        _particleSystem = GetComponent<ParticleSystem>();
-    }
-
     private void Update()
     {
         if (Vector3.Dot(transform.up, Vector3.up) < -0.5f)
