@@ -48,17 +48,24 @@ MonoBehaviour:
   - slider: {fileID: 0}
     redX: {fileID: 0}
     exposedParam: GlobalVol
-    soundToggle: 0
+    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
     redX: {fileID: 0}
     exposedParam: MusicVol
-    soundToggle: 0
+    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
     redX: {fileID: 0}
     exposedParam: SFXVol
-    soundToggle: 0
+    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
     redX: {fileID: 0}
     exposedParam: EnvVol
-    soundToggle: 0
-  sounds: []
+    soundToggle: {fileID: 0}
+  sounds:
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
