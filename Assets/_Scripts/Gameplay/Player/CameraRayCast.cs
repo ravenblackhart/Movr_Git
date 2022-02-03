@@ -12,12 +12,13 @@ public class CameraRayCast : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _interactAction;
     
-    private IInteractable _currentTarget;
+    private IInteractable _currentInteractableTarget;
     private Vector3 _lastCameraDirection;
     
     
-    [SerializeField] private LayerMask _raycastOnLayer;
-    
+    [SerializeField] private LayerMask _ignoreRaycastLayer;
+    [SerializeField] private LayerMask _ignoreRaycastLayer2;
+
     private void Awake()
     {
         _camera = Camera.main;
@@ -39,7 +40,8 @@ public class CameraRayCast : MonoBehaviour
     
     private void Update()
     {
-        RayCastCheckInteractable();
+        RayCastCheck();
+        Debug.Log($"{this} hitting interactable: {_currentInteractableTarget}");
     }
 
     // private void FixedUpdate()
@@ -59,45 +61,44 @@ public class CameraRayCast : MonoBehaviour
 
     private void OnPrimaryAction(InputAction.CallbackContext context)
     {
-        if (_currentTarget != null)
+        if (_currentInteractableTarget != null)
         {
-            _currentTarget.OnInteract();
+            _currentInteractableTarget.OnInteract();
         }
     }
     
-    private void RayCastCheckInteractable()
+    private void RayCastCheck()
     {
         RaycastHit hit;
-        // int layerMask = ~_raycastOnLayer;
+        int mask = ~(_ignoreRaycastLayer | _ignoreRaycastLayer2);
 
         // Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
         
         Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width /2, Screen.height / 2, 0));
         
-        if (Physics.Raycast(ray, out hit, _castRange))
+        if (Physics.Raycast(ray, out hit, _castRange,mask, QueryTriggerInteraction.Ignore))
         {
-            Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
+            // Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
             
+            //Check for Interactable
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
-            // print(hit.transform.name);
             
             if (interactable != null)
             {
-                //Return if we cant reach
                 if (hit.distance >= interactable.MaxRange) 
                     return;
                 
-                if (_currentTarget != null)
+                if (_currentInteractableTarget != null)
                 {
-                    _currentTarget.OnEndHover();
+                    _currentInteractableTarget.OnEndHover();
                     
-                    _currentTarget = interactable;
-                    _currentTarget.OnStartHover();
+                    _currentInteractableTarget = interactable;
+                    _currentInteractableTarget.OnStartHover();
                 }
                 else
                 {
-                    _currentTarget = interactable;
-                    _currentTarget.OnStartHover();
+                    _currentInteractableTarget = interactable;
+                    _currentInteractableTarget.OnStartHover();
                 }
             }
             else
@@ -109,10 +110,10 @@ public class CameraRayCast : MonoBehaviour
 
     private void ResetTarget()
     {
-        if (_currentTarget != null)
+        if (_currentInteractableTarget != null)
         {
-            _currentTarget.OnEndHover();
-            _currentTarget = null;
+            _currentInteractableTarget.OnEndHover();
+            _currentInteractableTarget = null;
         }
     }
 }

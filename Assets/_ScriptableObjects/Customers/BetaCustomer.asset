@@ -18,7 +18,7 @@ MonoBehaviour:
   taskPool:
   - taskType: 6
     timeLimit: 15
-    mainTaskPrompt: Hey could I get a snack?
+    mainTaskPrompt: Hey could I get a [c0]snack[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Thanks!
@@ -27,17 +27,17 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 7
     timeLimit: 15
-    mainTaskPrompt: I'd like a cooler temperature please.
+    mainTaskPrompt: I'd like a [c0]cooler temperature[c] please.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Perfect.
     taskFailureResponse: Thanks for nothing.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 2
+  - taskType: 3
     timeLimit: 20
-    mainTaskPrompt: How about some funk music?
-    secondaryTaskPrompt: How about some jazz?
+    mainTaskPrompt: How about some [c0]funk music[c]?
+    secondaryTaskPrompt: How about some [c0]jazz[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: Groovy.
     taskFailureResponse: '[w]Booo[w].'
@@ -45,7 +45,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 5
     timeLimit: 20
-    mainTaskPrompt: You got any water?
+    mainTaskPrompt: You got any [c0]water[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: "Thirst quenched.\t"
@@ -55,7 +55,7 @@ MonoBehaviour:
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 3
-  volumePreference: 2
+  volumePreference: 1
   musicPreference: 2
   musicPreferenceOther: 1
   startRideDialogHappy: Hello! I'm Mr. Beta, take me to a totally [s]NOT[s] random

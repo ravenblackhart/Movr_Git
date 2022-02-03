@@ -8,8 +8,8 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     [SerializeField] private float _rotationLambda = 6f;
     [SerializeField] public float _snapSpeed = 200f;
-    [SerializeField] private float _snapRange = 0.1f;
-    [SerializeField] private Transform _holdPos;
+    [SerializeField] public float _snapRange = 0.1f;
+    [SerializeField] public Transform _holdPos;
 
     private float _snapDistance;
     private float _leaveSnapDistance;

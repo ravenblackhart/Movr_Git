@@ -7,6 +7,9 @@ public class CustomerPickup : MonoBehaviour
     public Trigger trigger;
 
     [SerializeField]
+    GameObject testCylinder;
+
+    [SerializeField]
     Canvas canvas;
 
     void Start()
@@ -17,6 +20,8 @@ public class CustomerPickup : MonoBehaviour
     void Update()
     {
         canvas.enabled = GameManager.instance.currentPickup == this;
+
+        testCylinder.SetActive(GameManager.instance.currentPickup == this);
     }
 
     void OnCarEnterTrigger()

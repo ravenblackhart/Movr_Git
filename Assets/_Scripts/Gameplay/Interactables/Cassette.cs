@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.Interactions;
 
 public class Cassette : PhysicsObject
 {
@@ -24,7 +25,9 @@ public class Cassette : PhysicsObject
     }
 
     public override void FixedUpdate() {
-        if (_onSnapTrigger)
+        
+        if (!beingHeld) return;
+        if (_onSnapTrigger && !_sliding)
         {
              //Leaving SnapTriggerArea
              if (Vector3.Distance(_holdPos.position, transform.position) > _snapRange)
@@ -36,18 +39,20 @@ public class Cassette : PhysicsObject
 
         base.FixedUpdate();
     }
-
+    
     public void SlideInCassette() {
         _cassettePlayer = FindObjectOfType<CassettePlayer>();
 
         if (!_cassettePlayer.occupied) {
-            _sliding = true;
+            // _sliding = true;
+            _onSnapTrigger = false;
             Transform _lockedStartPos = _cassettePlayer.LockedStartPosition;
             Transform _target = _cassettePlayer.LockedEndPosition;
 
+           
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            _rb.transform.parent = _lockedStartPos.parent;
-
+            
+            transform.parent = _lockedStartPos.parent;
             transform.position = _lockedStartPos.position;
             _cassettePlayer.occupied = true;
             //_rb.isKinematic = true;

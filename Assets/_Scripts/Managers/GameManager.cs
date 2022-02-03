@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
                     tasksPool.AddRange(currentCustomer.taskPool);
                 }
 
-                var taskIndex = Random.Range(0, tasksPool.Count -1);
+                var taskIndex = Random.Range(0, tasksPool.Count);
 
                 while (tasksPool.Count > 0)
                 {
@@ -520,7 +520,7 @@ public class GameManager : MonoBehaviour
 
     public static float EstimateReadTime(string text, DialogRenderer render)
     {
-        return (text.Length + 5f) / render.textPrintSpeed * 1.5f + 2f;
+        return (text.Length + 5f) / render.textPrintSpeed * 1.8f + 3f;
     }
 
     // OnValidate
