@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PhysicsObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private float _maxRange = 10f;
@@ -10,16 +11,15 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] private float _snapRange = 0.1f;
     [SerializeField] private Transform _holdPos;
 
-    private bool _beingHeld = false;
     private float _snapDistance;
     private float _leaveSnapDistance;
     public bool _onSnapTrigger;
-    
+
     public CustomClasses.QueryEvent touchCustomerQueryEvent;
     public UnityEngine.Events.UnityEvent touchCustomerUnityEvent;
     
     public float MaxRange => _maxRange;
-
+    public bool beingHeld = false;
     public bool OnSnapTrigger
     {
         get => _onSnapTrigger;
@@ -41,28 +41,27 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        if (!_beingHeld)
-        {
+        if (!beingHeld)
             FindObjectOfType<PlayerPickUp>().PickupObject(gameObject);
-        }
-        _beingHeld = !_beingHeld;
+        
+        beingHeld = !beingHeld;
     }
 
     public void OnEndHover()
     {
     }
     
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
-        if (_onSnapTrigger)
-        {
-            //Leaving SnapTriggerArea
-            if (Vector3.Distance(_holdPos.position, transform.position) > _snapRange)
-            {
-                transform.parent = _holdPos;
-                _onSnapTrigger = false;
-            }
-        }
+        // if (_onSnapTrigger)
+        // {
+        //     //Leaving SnapTriggerArea
+        //     if (Vector3.Distance(_holdPos.position, transform.position) > _snapRange)
+        //     {
+        //         transform.parent = _holdPos;
+        //         // _onSnapTrigger = false;
+        //     }
+        // }
         _rb.angularVelocity = CustomClasses.Damp(_rb.angularVelocity, Vector3.zero, _rotationLambda, Time.fixedDeltaTime);
     }
 

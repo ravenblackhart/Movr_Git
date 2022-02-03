@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Phone : PhysicsObject
 {
-    private float _chargeAmount;
-    private bool _touchedCustomer;
-    private bool _overHeated;
+    [SerializeField] private LayerMask _raycastOnLayer;
     
-    private bool _onTrigger;
-    public bool OnTrigger => _onTrigger;
-    
-    public bool OverHeated => _overHeated;
-
     private Transform _worldParent;
+    private Transform _snapPosition;
+
+    private float _chargeAmount;
+
+    public bool OverHeated { get; private set; }
 
     public float ChargeAmount
     {
@@ -24,45 +20,69 @@ public class Phone : PhysicsObject
             CheckValue();
         }
     }
-    
     private void Start()
     {
         GameManager.instance.taskReferences.phones.Add(this);
-
+        
         _worldParent = transform.parent;
-        
         _chargeAmount = 0;
-        _touchedCustomer = false;
-        
+
     }
     private void OnDestroy()
     {
         GameManager.instance.taskReferences.phones.Remove(this);
     }
-
-    public void SetParentToWorld()
+    
+    public override void FixedUpdate()
     {
-        transform.parent = _worldParent;
+        if (!beingHeld) return;
+        _snapPosition = RayCastForSnap();
+        
+        if (_snapPosition != null)
+        {
+            _rb.isKinematic = true;
+            
+            var direction = (transform.position - _snapPosition.position).normalized;
+            _rb.MovePosition(transform.position + -direction * _snapSpeed * Time.deltaTime);
+            _rb.MoveRotation(Quaternion.Slerp(transform.rotation, _snapPosition.rotation, _snapSpeed * Time.deltaTime));
+        }
+        else
+        {
+            _rb.isKinematic = false;
+        }
+        base.FixedUpdate();
     }
-    // private void OnCollisionEnter(Collision other)
-    // {
-    //     if (other.gameObject.CompareTag("Customer"))
-    //     {
-    //         StartCoroutine(TouchCustomer());
-    //     }
-    // }
     
     private void CheckValue()
     {
-        if (_chargeAmount >= 15)
+        if (_chargeAmount >= 10)
         {
-            _overHeated = true;
+            OverHeated = true;
         }
     }
-    // private IEnumerator TouchCustomer() {
-    //     _touchedCustomer = true;
-    //     yield return new WaitForSeconds(0.5f);
-    //     _touchedCustomer = false;
-    //     Destroy(gameObject);
-    // }
+    
+    public void SetToWorldParent()
+    {
+        transform.parent = _worldParent;
+    }
+    
+    private Transform RayCastForSnap()
+    {
+        RaycastHit hit;
+        
+        Ray ray = new Ray(transform.position, -transform.parent.forward);
+        
+        // Debug.DrawRay(transform.position,-transform.parent.forward, Color.red);
+        
+        if (Physics.Raycast(ray, out hit, 10,_raycastOnLayer))
+        {
+            if (hit.collider.TryGetComponent(out PhoneDock dock))
+            {
+                // Debug.DrawRay(transform.position,-transform.parent.forward, Color.green);
+                
+                return dock.transform;
+            }
+        }
+        return null;
+    }
 }

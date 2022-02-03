@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
+  m_Name: BetaCustomer
+  m_EditorClassIdentifier: 
+  bodyMaterial: {fileID: 0}
+  hasHat: 0
+  hasGlasses: 0
+  taskPool:
+  - taskType: 6
+    timeLimit: 15
+    mainTaskPrompt: Hey could I get a snack?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thanks!
+    taskFailureResponse: Forget it.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 7
+    timeLimit: 15
+    mainTaskPrompt: I'd like a cooler temperature please.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Perfect.
+    taskFailureResponse: Thanks for nothing.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 2
+    timeLimit: 20
+    mainTaskPrompt: How about some funk music?
+    secondaryTaskPrompt: How about some jazz?
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Groovy.
+    taskFailureResponse: '[w]Booo[w].'
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 20
+    mainTaskPrompt: Open the window please?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Fresh air, [w]nice[w].
+    taskFailureResponse: Are you ignoring me?
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 20
+    mainTaskPrompt: You got any water?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: "Thirst quenched.\t"
+    taskFailureResponse: Thirst unquenched.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 9
+    timeLimit: 25
+    mainTaskPrompt: How about you charge my phone?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Excellent.
+    taskFailureResponse: :(
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 8
+    timeLimit: 25
+    mainTaskPrompt: Ok let's play catch!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Good job!
+    taskFailureResponse: ...
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  taskTimeMin: 10
+  taskTimeMax: 20
+  tempPreference: 3
+  volumePreference: 2
+  musicPreference: 2
+  musicPreferenceOther: 1
+  startRideDialogHappy: Hello! I'm Mr. Beta, take me a totally not random location
+    please!
+  startRideDialogAngry: 
+  endRideDialogHappy: Good job, very impressed!
+  endRideDialogAngry: Wow you suck, and don't blame it on the build.
+  specialEventDialog: 
+  generalDialog:
+  - Yeah yeah, we're still working on the enviroment, don't judge.
+  - Actually I guess you're here to judge so go ahead.
+  - That's kinda mean
+  - We're trying!
+  - Fine I lied, I'm Mr. Alpha.
+  crashDialog:
+  - Bravo.
+  - '[s]STOP IT[s]'
+  - '[s]AAAH[s]'
+  - Driving games aren't your thing huh?
+  - Are you just testing the physics?
