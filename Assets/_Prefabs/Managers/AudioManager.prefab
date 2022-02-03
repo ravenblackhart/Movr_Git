@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mixer: {fileID: 24100000, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+  MixerGroup: {fileID: 0}
   AudioSettings:
   - slider: {fileID: 0}
     redX: {fileID: 0}
@@ -62,10 +63,195 @@ MonoBehaviour:
     exposedParam: EnvVol
     soundToggle: {fileID: 0}
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Click
+    clip: {fileID: 8300000, guid: 348bc3c144058aa4d92ea4a166eb564e, type: 3}
+    MixerGroup: {fileID: 0}
+    volume: 0.8
+    pitch: 2.28
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Music
+    clip: {fileID: 8300000, guid: 31b0f7acb9638e44d88b0d2c27ea0054, type: 3}
+    MixerGroup: {fileID: 0}
+    volume: 0.662
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: IncomingTask
+    clip: {fileID: 8300000, guid: 1437d4b791bd42348bf82057e08fbf69, type: 3}
+    MixerGroup: {fileID: 5297001483867703038, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: MenuAudio
+    clip: {fileID: 8300000, guid: 12f384e21d08d6242b940d2acba153b4, type: 3}
+    MixerGroup: {fileID: 6427283448123735380, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CompleteTask
+    clip: {fileID: 8300000, guid: 5c6530006975fef4a8366e2e72ec87ca, type: 3}
+    MixerGroup: {fileID: 5297001483867703038, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: FailingTask
+    clip: {fileID: 8300000, guid: 1e59123cd63470344ab6050a510f907e, type: 3}
+    MixerGroup: {fileID: 5297001483867703038, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CarButton
+    clip: {fileID: 8300000, guid: 47e7c4b9856f25b4d88007ebb0aa3ee9, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CarHonk
+    clip: {fileID: 8300000, guid: 566296cfd24efd747854791c2a0a033f, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CandyBar
+    clip: {fileID: 8300000, guid: 2a17d0e52584f79418afa249b17b0b37, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: WaterBottle
+    clip: {fileID: 8300000, guid: 1f045250135a6f747ab518ca723c1fb7, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Cassette
+    clip: {fileID: 8300000, guid: 649b8700be8612e45b8d73b27ce607db, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Driving
+    clip: {fileID: 8300000, guid: d3078249b3d7df94aa22b4f315d6423a, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Gearstick
+    clip: {fileID: 8300000, guid: 8b97aaea278803141a32b7864d0b8393, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: GloveBox
+    clip: {fileID: 8300000, guid: 6532647c80afde5498edfa646d61b3ad, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Cup
+    clip: {fileID: 8300000, guid: b4d74f8497991f742af560a71ffeaff8, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: HardImpact
+    clip: {fileID: 8300000, guid: bf40af765fbd5ed4fa73898deb24d2f7, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ItemImpact
+    clip: {fileID: 8300000, guid: 03dc8dae02a3fd247b1e533b27284e48, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: LightImpact
+    clip: {fileID: 8300000, guid: 0a609f9af9913194cb4de98435ada18f, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: MediumImpact
+    clip: {fileID: 8300000, guid: ee25c9b3a180379458a9abd98f1df120, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CassetteBox
+    clip: {fileID: 8300000, guid: 449f18f1defc7f6498a97ef8fa1238e0, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: RideComplete
+    clip: {fileID: 8300000, guid: fde3f21209176f54fb38d47c1add1fd8, type: 3}
+    MixerGroup: {fileID: 5297001483867703038, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: PouringWater
+    clip: {fileID: 8300000, guid: ec8c7b756df82c54584474ff4dd73a8a, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: WindowCrank
+    clip: {fileID: 8300000, guid: 578b95855169f7a44a680f5691eab8f3, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: WindowCrank
+    clip: {fileID: 8300000, guid: 0ce1a44de1ce7074fa2c7ae5f28d7460, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
