@@ -16,6 +16,7 @@ public class CassettePlayer : SnapTrigger
     [SerializeField] private Button _button;
 
     public string audioGenre;
+    private bool playingMusic;
 
     private void Awake() {
         _button.onInteractEvent.AddListener(Eject);
@@ -23,16 +24,12 @@ public class CassettePlayer : SnapTrigger
     }
 
     private void OnTriggerEnter(Collider other) {
-        print("Did trigger");
         if (other.TryGetComponent(out Cassette cassette)) {
-            print("Found Cassette");
             _cassette = cassette;
             _cassette.OnSnapTrigger = true;
 
             //transform the position
-            //change parent
-            print(_cassette.name);
-            
+            //change parent        
         }
     }
 
@@ -59,11 +56,19 @@ public class CassettePlayer : SnapTrigger
                 }
             }
 
-            if (cassetteInPlayer != null) {
-                _radioController.RegisterTape(cassetteInPlayer.gameObject);
-                _radioController.PlayAudio();
-                audioGenre = cassetteInPlayer.GetComponent<Cassette>()._musicGenre;
-            }
+           
+        }
+
+        if (cassetteInPlayer != null && !playingMusic) {
+            print("cassetteInPlayer = " + cassetteInPlayer.name);
+            _radioController.RegisterTape(cassetteInPlayer.gameObject);
+            _radioController.PlayAudio();
+            audioGenre = cassetteInPlayer.GetComponent<Cassette>()._musicGenre;
+            playingMusic = true;
+        }
+
+        else {
+
         }
 
         print("Current audio genre = " + audioGenre);
@@ -96,6 +101,8 @@ public class CassettePlayer : SnapTrigger
         yield return new WaitForSeconds(0.1f);
         cassetteInPlayer.GetComponent<BoxCollider>().isTrigger = false;
         cassetteInPlayer = null;
+
+        playingMusic = false;
     }
 
     private void OnDisable() {

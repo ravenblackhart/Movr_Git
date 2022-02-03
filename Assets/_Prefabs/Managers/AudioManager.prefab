@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mixer: {fileID: 24100000, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-  MixerGroup: {fileID: 0}
+  MainMenuAudio: {fileID: 11400000, guid: 177c11388d87cac4cb6a33eba4704a7b, type: 2}
   AudioSettings:
   - slider: {fileID: 0}
     redX: {fileID: 0}
@@ -254,4 +254,12 @@ MonoBehaviour:
     pitch: 0.7
     loop: 0
     playOnAwake: 0
+    source: {fileID: 0}
+  - name: MainMenuMusic
+    clip: {fileID: 0}
+    MixerGroup: {fileID: 976740188088130744, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.662
+    pitch: 0.7
+    loop: 0
+    playOnAwake: 1
     source: {fileID: 0}

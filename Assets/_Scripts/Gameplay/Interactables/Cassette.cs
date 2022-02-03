@@ -23,6 +23,20 @@ public class Cassette : PhysicsObject
         _musicGenre = Mixtape.name;
     }
 
+    public override void FixedUpdate() {
+        if (_onSnapTrigger)
+        {
+             //Leaving SnapTriggerArea
+             if (Vector3.Distance(_holdPos.position, transform.position) > _snapRange)
+             {
+                 transform.parent = _holdPos;
+                 _onSnapTrigger = false;
+             }
+        }
+
+        base.FixedUpdate();
+    }
+
     public void SlideInCassette() {
         _cassettePlayer = FindObjectOfType<CassettePlayer>();
 

@@ -43,15 +43,6 @@ MonoBehaviour:
     taskFailureResponse: '[w]Booo[w].'
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 4
-    timeLimit: 20
-    mainTaskPrompt: Open the window please?
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Fresh air, [w]nice[w].
-    taskFailureResponse: Are you ignoring me?
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
   - taskType: 5
     timeLimit: 20
     mainTaskPrompt: You got any water?
@@ -61,32 +52,14 @@ MonoBehaviour:
     taskFailureResponse: Thirst unquenched.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 9
-    timeLimit: 25
-    mainTaskPrompt: How about you charge my phone?
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Excellent.
-    taskFailureResponse: :(
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
-  - taskType: 8
-    timeLimit: 25
-    mainTaskPrompt: Ok let's play catch!
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Good job!
-    taskFailureResponse: ...
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 3
   volumePreference: 2
   musicPreference: 2
   musicPreferenceOther: 1
-  startRideDialogHappy: Hello! I'm Mr. Beta, take me a totally not random location
-    please!
+  startRideDialogHappy: Hello! I'm Mr. Beta, take me to a totally [s]NOT[s] random
+    location please!
   startRideDialogAngry: 
   endRideDialogHappy: Good job, very impressed!
   endRideDialogAngry: Wow you suck, and don't blame it on the build.

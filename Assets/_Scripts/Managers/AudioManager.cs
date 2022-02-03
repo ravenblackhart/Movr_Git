@@ -1,16 +1,20 @@
 using System;
+using _Scripts.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
 public class AudioManager : MonoBehaviour
 {
     public AudioMixer Mixer;
-    public AudioMixerGroup MixerGroup; 
-    public AudioSetting[] AudioSettings; 
+    public Mixtape MainMenuAudio; 
+    
+    [Tooltip("For Settings Panel")] public AudioSetting[] AudioSettings;
     private enum AudioGroups {Global, Music, SFX, Environment }
-    public Sound[] sounds;
+    
+    [Tooltip("In-game Audio")] public Sound[] sounds;
 
     public static AudioManager Instance;
 
@@ -43,6 +47,11 @@ public class AudioManager : MonoBehaviour
         for (int i = 0; i < AudioSettings.Length; i++)
         {
             AudioSettings[i].Initialize();
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 0 )
+        {
+            
         }
     }
 

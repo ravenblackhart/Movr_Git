@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     bool isDebugingTasks;
 
     // Start
-    void Start()
+    void Awake()
     {
         if (instance != null && instance )
         {
@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
                     tasksPool.AddRange(currentCustomer.taskPool);
                 }
 
-                var taskIndex = Random.Range(0, tasksPool.Count);
+                var taskIndex = Random.Range(0, tasksPool.Count -1);
 
                 while (tasksPool.Count > 0)
                 {
@@ -300,6 +300,7 @@ public class GameManager : MonoBehaviour
             if (currentTask != null)
             {
                 currentTask.UpdateTask(this);
+                Debug.Log(currentTask);
 
                 if (currentTask.completedTaskEvent.Query())
                 {
