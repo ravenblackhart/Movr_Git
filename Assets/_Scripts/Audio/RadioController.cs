@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using _Scripts.Audio;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RadioController : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class RadioController : MonoBehaviour
     public void RegisterTape(GameObject tape)
     {
         audioTracks = tape.GetComponent<Cassette>().TrackList; 
-        trackIndex = 0;
+        trackIndex = Random.Range(0, audioTracks.Length);
         radioAudioSource.clip = audioTracks[trackIndex];
         //trackNameField.text = audioTracks[trackIndex].name;
     }
