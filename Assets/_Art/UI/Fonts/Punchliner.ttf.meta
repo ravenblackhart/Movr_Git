@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Punchliner
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 0130eb56ce5454e4eacca310b014044d, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

@@ -8,9 +8,9 @@ public class CrossHair : MonoBehaviour
     #region Declarations
 
     [Header("Crosshair Sprites")] 
-    [SerializeField] private Sprite defaultCrosshair;
-    [SerializeField] private Sprite pickupsCrosshair;
-    [SerializeField] private Sprite interactCrosshair;
+    public Sprite DefaultCrosshair;
+    public Sprite PickupsCrosshair;
+    public Sprite SteeringCrosshair;
 
     [Header("Image Renderer")]
     [SerializeField] private Image imageRenderer; 
@@ -19,22 +19,23 @@ public class CrossHair : MonoBehaviour
 
     public void UpdateCrosshair(GameObject other)
     {
-        if (other.gameObject.CompareTag("Interact"))
+        if (other.gameObject.CompareTag("Steering"))
         {
-            imageRenderer.sprite = interactCrosshair;
-            imageRenderer.SetNativeSize();
+            imageRenderer.sprite = SteeringCrosshair;
+            imageRenderer.preserveAspect = true;
         }
 
         if (other.gameObject.CompareTag("Pickup"))
         {
-            imageRenderer.sprite = pickupsCrosshair;
-            imageRenderer.SetNativeSize();
+            imageRenderer.sprite = PickupsCrosshair;
+            imageRenderer.preserveAspect = true;
         } 
+        
     }
 
     public void ResetCrosshair()
     {
-        imageRenderer.sprite = defaultCrosshair; 
-        imageRenderer.SetNativeSize();
+        imageRenderer.sprite = DefaultCrosshair; 
+        imageRenderer.preserveAspect = true;
     }
 }
