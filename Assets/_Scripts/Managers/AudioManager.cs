@@ -11,12 +11,12 @@ public class AudioManager : MonoBehaviour
     private enum AudioGroups {Global, Music, SFX, Environment }
     public Sound[] sounds;
 
-    public static AudioManager instance;
+    public static AudioManager Instance;
 
     private AudioSource _clip;
     private void Awake() {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+            Instance = this;
         else
         {
             Destroy(gameObject);
@@ -125,7 +125,7 @@ public class AudioSetting
     public void SetExposedParam(float value)
     {
         redX.SetActive(value <= slider.minValue);
-        AudioManager.instance.Mixer.SetFloat(exposedParam, value);
+        AudioManager.Instance.Mixer.SetFloat(exposedParam, value);
         PlayerPrefs.SetFloat(exposedParam, value);
     }
 }

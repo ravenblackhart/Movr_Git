@@ -61,32 +61,55 @@ public class Gearstick : MonoBehaviour//, IInteractable
         _carController = GameObject.FindGameObjectWithTag(_carControllerTag).GetComponent<CarController>();
         
         _gearLever = GetComponent<Lever>();
+        float temp = _gearLever.LeverValue;
     }
-
+    float temp;
     // Update is called once per frame
     void Update()
     {
-        if (_gearLever.LeverValue > _reverseLimit && !_forward)
-        {
-            ChangeDirectionSpeed(_reverseGearStrength);
-        }
-        else if (_forward && _gearLever.LeverValue < _forwardLimit)
-        {
-            ChangeDirectionSpeed(1);
-        }
-        //if (_vehicleDirection > _reverseGearStrength && !_forward)
+        //if (Keyboard.current.wKey.isPressed)
+        //{
+        //    Debug.Log("lower" + temp);
+        //    temp -= Time.deltaTime;
+        //}
+        //if (Keyboard.current.aKey.isPressed)
+        //{
+        //    Debug.Log("higher" + temp);
+
+        //    temp += Time.deltaTime;
+        //}
+        //if (temp > _reverseLimit && _forward)
         //{
         //    ChangeDirectionSpeed(_reverseGearStrength);
         //}
-        //else if (_forward && _vehicleDirection < 0)
+        //else if (!_forward && temp < _forwardLimit)
         //{
         //    ChangeDirectionSpeed(1);
         //}
+        if (_gearLever.LeverValue > _reverseLimit && _forward)
+        {
+            ChangeDirectionSpeed(_reverseGearStrength);
+            _forward = false;
+        }
+        else if (!_forward && _gearLever.LeverValue < _forwardLimit)
+        {
+            ChangeDirectionSpeed(1);
+            _forward = true;
+        }
+        if (_vehicleDirection > _reverseGearStrength && !_forward)
+        {
+            ChangeDirectionSpeed(_reverseGearStrength);
+        }
+        else if (_forward && _vehicleDirection < 0)
+        {
+            ChangeDirectionSpeed(1);
+        }
     }
 
     private void ChangeDirectionSpeed(float newValue)
     {
-        Debug.Log(newValue);
+        _carController.Braking(0.2f);
+        _forward = !_forward;
         _vehicleDirection = newValue;
         _carController.isReversing = !_carController.isReversing;
     }

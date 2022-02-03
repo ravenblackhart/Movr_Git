@@ -73,9 +73,8 @@ public enum MusicPreference
 {
     Any,
     Jazz,
-    Tech,
-    Pop,
-    Rock,
+    Funk,
+    House,
 }
 
 public enum SettingPreference

@@ -15,11 +15,11 @@ public class ChangeMusicTask : Task
             return PromptType.Main;
         }
 
-        else if (musicPref == MusicPreference.Tech) {
+        else if (musicPref == MusicPreference.House) {
             return PromptType.Secondary;
         }
 
-        else if (musicPref == MusicPreference.Pop) {
+        else if (musicPref == MusicPreference.Funk) {
             return PromptType.Tertiary;
         }
 
@@ -40,11 +40,11 @@ public class ChangeMusicTask : Task
             completedTaskEvent.Invoke();
         }
 
-        else if (gameManager.taskReferences.cassettePlayer.audioGenre == "HOUSE" && musicPref == MusicPreference.Tech) {
+        else if (gameManager.taskReferences.cassettePlayer.audioGenre == "HOUSE" && musicPref == MusicPreference.House) {
             completedTaskEvent.Invoke();
         }
 
-        else if (gameManager.taskReferences.cassettePlayer.audioGenre == "FUNK" && musicPref == MusicPreference.Pop) {
+        else if (gameManager.taskReferences.cassettePlayer.audioGenre == "FUNK" && musicPref == MusicPreference.Funk) {
             completedTaskEvent.Invoke();
         }
     }
@@ -67,11 +67,11 @@ public class ChangeMusicTask : Task
             return false;
         }
 
-        else if (CheckMusicPlayer(gameManager) == "FUNK" && musicPref == MusicPreference.Pop) {
+        else if (CheckMusicPlayer(gameManager) == "FUNK" && musicPref == MusicPreference.House) {
             return false;
         }
 
-        else if (CheckMusicPlayer(gameManager) == "HOUSE" && musicPref == MusicPreference.Tech) {
+        else if (CheckMusicPlayer(gameManager) == "HOUSE" && musicPref == MusicPreference.Funk) {
             return false;
         }
 
