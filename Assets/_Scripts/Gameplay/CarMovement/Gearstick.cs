@@ -11,9 +11,6 @@ public class Gearstick : MonoBehaviour//, IInteractable
     /// Interface stuff:
     /// </summary>
 
-    [SerializeField] private float _maxRange = 20;
-    public float MaxRange => _maxRange;
-
     //public void OnStartHover()
     //{
     //    //print("Started Hover");
@@ -37,20 +34,20 @@ public class Gearstick : MonoBehaviour//, IInteractable
 
     private CarController _carController;
 
-    private Lever _gearLever;
+    private LeverGearstick _gearLever;
     //[SerializeField]
     private float _reverseLimit = 0.95f;
     //[SerializeField]
     private float _forwardLimit = 0.05f;
 
     private bool _forward = true;
+    private bool _stopped = true;
 
-    // Direction of vehicle, positive (1) is forward, negative is reverse 
-    private float _vehicleDirection = 1;
+    [SerializeField]
+    private float _neutralOffset = 0.1f;
 
     private float _reverseGearStrength = -1;
 
-    [SerializeField]
     private string _carControllerTag = "CarDriving";
 
     
@@ -59,58 +56,61 @@ public class Gearstick : MonoBehaviour//, IInteractable
     void Awake()
     {
         _carController = GameObject.FindGameObjectWithTag(_carControllerTag).GetComponent<CarController>();
+        if (TryGetComponent<LeverGearstick>(out _gearLever))
+        {
+            _gearLever = GetComponent<LeverGearstick>();
+            tempLeverValue = _gearLever.LeverValue;
+        }
+        else
+        {
+            Debug.LogError("error: gearstick cant find its lever!!! chaos!!!!");
+        }
         
-        _gearLever = GetComponent<Lever>();
-        float temp = _gearLever.LeverValue;
     }
-    float temp;
+    private float tempLeverValue;
     // Update is called once per frame
     void Update()
     {
         //if (Keyboard.current.wKey.isPressed)
         //{
-        //    Debug.Log("lower" + temp);
-        //    temp -= Time.deltaTime;
+        //    temp += Time.deltaTime;
+        //    Debug.LogWarning("lower" + temp);
         //}
         //if (Keyboard.current.aKey.isPressed)
         //{
-        //    Debug.Log("higher" + temp);
-
-        //    temp += Time.deltaTime;
+        //    temp -= Time.deltaTime;
+        //    Debug.LogWarning("higher" + temp);
         //}
-        //if (temp > _reverseLimit && _forward)
-        //{
-        //    ChangeDirectionSpeed(_reverseGearStrength);
-        //}
-        //else if (!_forward && temp < _forwardLimit)
-        //{
-        //    ChangeDirectionSpeed(1);
-        //}
-        if (_gearLever.LeverValue > _reverseLimit && _forward)
+        tempLeverValue = _gearLever.LeverValue;
+        tempLeverValue = Mathf.Clamp(tempLeverValue, -0.5f, 1); // behövs?
+        _carController.speed = tempLeverValue;
+        if (tempLeverValue < -_neutralOffset && _forward)
         {
-            ChangeDirectionSpeed(_reverseGearStrength);
-            _forward = false;
+            ChangeDirectionSpeed();
         }
-        else if (!_forward && _gearLever.LeverValue < _forwardLimit)
+        else if (!_forward && tempLeverValue > _neutralOffset)
         {
-            ChangeDirectionSpeed(1);
-            _forward = true;
+            ChangeDirectionSpeed();
         }
-        if (_vehicleDirection > _reverseGearStrength && !_forward)
+        else if (tempLeverValue < _neutralOffset && tempLeverValue > -_neutralOffset && !_stopped)
         {
-            ChangeDirectionSpeed(_reverseGearStrength);
-        }
-        else if (_forward && _vehicleDirection < 0)
-        {
-            ChangeDirectionSpeed(1);
+            GoNeutral();
+            //Debug.LogWarning("stanna!!!");
         }
     }
 
-    private void ChangeDirectionSpeed(float newValue)
+    private void GoNeutral()
     {
+        _stopped = true;
+        _carController.speed = 0;
+        _carController.Braking(0.3f);
+    }
+
+    private void ChangeDirectionSpeed()
+    {
+        _stopped = false;
         _carController.Braking(0.2f);
         _forward = !_forward;
-        _vehicleDirection = newValue;
         _carController.isReversing = !_carController.isReversing;
     }
 }

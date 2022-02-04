@@ -29,8 +29,7 @@ public class CarController : MonoBehaviour
 
 
     [Range(-1, 1)]
-    [SerializeField]
-    private float speed = 1;
+    public float speed = 0;
     [Range(-1, 1)]
     public float turn = 0;
 
@@ -66,7 +65,7 @@ public class CarController : MonoBehaviour
         else
         {
             // Make the car go faster
-            speed = GetSpeed(false, isReversing);
+            //speed = GetSpeed(false, isReversing);
         }
         //if (isReversing)
         //{

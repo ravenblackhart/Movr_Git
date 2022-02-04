@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] [CanBeNull] private Canvas creditsPanel;
     [SerializeField] [CanBeNull] private Canvas readyPanel;
     [SerializeField] [CanBeNull] private Canvas pauseMenu;
+    [SerializeField] [CanBeNull] private Canvas gameOverMenu;
 
     [Header("Display Fields - Menu")] 
     //[SerializeField] [CanBeNull] private TMP_InputField setUID;
@@ -126,7 +127,8 @@ public class UIManager : MonoBehaviour
         
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            pauseMenu.enabled = false; 
+            pauseMenu.enabled = false;
+            gameOverMenu.enabled = false; 
             SetScoreText(score.IntValue.ToString());
 
             readyPanel.enabled = true;
@@ -185,6 +187,12 @@ public class UIManager : MonoBehaviour
             
         }
         
+    }
+
+    public void GameOver()
+    {
+        gameOverMenu.enabled = true;
+        Time.timeScale = 0f;
     }
 
     public void PlayGame()

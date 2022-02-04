@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &16872503412055599
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,7 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6b79390fb4d6847be5a17158fb8fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultCrosshair: {fileID: 0}
-  PickupsCrosshair: {fileID: 0}
-  SteeringCrosshair: {fileID: 21300000, guid: 64da74e3c84012b4fa6ec046632cb918, type: 3}
+  DefaultCrosshair: {fileID: 21300000, guid: bb5f6c17ca4502a4aa2e2c804d57166e, type: 3}
+  PickupsCrosshair: {fileID: 21300000, guid: a0cd99ac1ff64fa439c6a3f8955833f4, type: 3}
+  ButtonsCrosshair: {fileID: 21300000, guid: 0a5e059cb3090a14e9e9194c52879a35, type: 3}
+  SteeringCrosshair: {fileID: 21300000, guid: 61d7b5d2005bcfd4ea557a8cc279fa78, type: 3}
   imageRenderer: {fileID: 16872503412055598}

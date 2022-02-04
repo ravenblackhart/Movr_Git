@@ -36,7 +36,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     
     public void OnStartHover()
     {
-        //
+        CrossHair.Instance.UpdateCrosshair(gameObject);
     }
 
     public void OnInteract()
@@ -49,6 +49,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
+        CrossHair.Instance.ResetCrosshair();
     }
     
     public virtual void FixedUpdate()

@@ -8,7 +8,7 @@ public class Lever : MonoBehaviour, IInteractable
 
     [SerializeField] protected float _dragSpeed = 0.01f;
 
-    [Range(0, 1f)] [SerializeField] private float _leverValue;
+    [Range(0, 1f)] [SerializeField] protected private float _leverValue;
 
     [SerializeField] protected Transform _orgin;
     [SerializeField] protected Transform _start;
@@ -24,7 +24,7 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] protected bool _invert;
 
     private PlayerDragObject _playerDrag;
-    private float _moveDirection;
+    protected float _moveDirection;
 
     public float MaxRange => _maxRange;
     public float LeverValue => _leverValue;
@@ -61,6 +61,7 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void OnStartHover()
     {
+        CrossHair.Instance.UpdateCrosshair(gameObject);
     }
 
     public void OnInteract()
@@ -70,6 +71,7 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
+        CrossHair.Instance.ResetCrosshair();
     }
 
     public virtual void UpdateLeverValue()

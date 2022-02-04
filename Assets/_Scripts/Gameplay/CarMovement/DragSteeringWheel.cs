@@ -27,8 +27,9 @@ public class DragSteeringWheel : MonoBehaviour
     private Vector2 _mouseDelta;
     private Vector2 _prevDelta;
     [Header("Speed for rotating the steering wheel")]
+    [Range(0.1f, 5f)]
     [SerializeField]
-    private float _rotateSpeed = 20;
+    private float _rotateSpeed = 2;
     private float _zAngle = 90;
 
     [SerializeField]
@@ -63,7 +64,7 @@ public class DragSteeringWheel : MonoBehaviour
     void Update()
     {
         // Find mouse movement
-        _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
+        _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>();//.normalized;
         
         // Resets Steering Wheel
         if (!_currentlySteering && _steering != SteerDirection.Straight)
@@ -102,6 +103,8 @@ public class DragSteeringWheel : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private float _maxTurn = 5f;
 
     private IEnumerator DragUpdate()
     {
@@ -113,15 +116,9 @@ public class DragSteeringWheel : MonoBehaviour
             {
                 _prevDelta = _mouseDelta;
             }
-            
-            // Car turning
-            _carController.turn = Mathf.Lerp(_carController.turn, _prevDelta.x, Time.deltaTime);
+            float turn = Mathf.Clamp( _prevDelta.x * _rotateSpeed * Time.deltaTime, -_maxTurn, _maxTurn);
             _zAngle += _prevDelta.x * _rotateSpeed * Time.deltaTime;
             _zAngle = Mathf.Clamp(_zAngle, _rotationOffset - _maxSteerAngle, _rotationOffset + _maxSteerAngle);
-            // Rotate Steering Wheel 
-            _steeringWheel.transform.localEulerAngles = new Vector3(_steeringWheel.transform.localEulerAngles.x,
-                _steeringWheel.transform.localEulerAngles.y, _zAngle);
-
             // Determine steer direction
             if (_prevDelta.x < 0)
             {
@@ -131,10 +128,20 @@ public class DragSteeringWheel : MonoBehaviour
             {
                 _steering = SteerDirection.Right;
             }
-            else
+            else if (_mouseDelta.x == 0)
             {
                 _steering = SteerDirection.Straight;
+                _zAngle = _rotationOffset;
+                turn = 0;
+                //Debug.LogWarning(_steering);
             }
+            
+            // Car turning
+            _carController.turn = Mathf.Lerp(_carController.turn, turn, Time.deltaTime);
+            // Rotate Steering Wheel 
+            _steeringWheel.transform.localEulerAngles = new Vector3(_steeringWheel.transform.localEulerAngles.x,
+                _steeringWheel.transform.localEulerAngles.y, _zAngle);
+
 
             yield return _waitForFixedUpdate;
         }

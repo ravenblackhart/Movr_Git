@@ -1,13 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Button : MonoBehaviour, IInteractable
+public class SteeringWheelInteactable : MonoBehaviour, IInteractable
 {
+    //TODO change and add to exisitng script
     [SerializeField] private float _maxRange = 10f;
-    
-    public UnityEvent onInteractEvent;
-    
     public float MaxRange => _maxRange;
+    
     public void OnStartHover()
     {
         CrossHair.Instance.UpdateCrosshair(gameObject);
@@ -15,7 +15,7 @@ public class Button : MonoBehaviour, IInteractable
 
     public void OnInteract()
     {
-        onInteractEvent.Invoke();
+        
     }
 
     public void OnEndHover()

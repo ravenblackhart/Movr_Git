@@ -337,7 +337,7 @@ MonoBehaviour:
   _maxMotorTorque: 3000
   _maxSteeringAngle: 25
   _maxBrakeTorque: 8000
-  speed: 1
+  speed: 0
   turn: 0
   _maxVelocity: 15
 --- !u!114 &8605300377419416784
@@ -353,9 +353,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _steeringWheelTag: SteeringWheel
-  _rotateSpeed: 45
+  _rotateSpeed: 2
   _maxSteerAngle: 120
   _resetSteerOffset: 3
   _resetSpeed: 3
   _speedModifierReset: 0.5
   _rotationOffset: 90
+  _maxTurn: 5
