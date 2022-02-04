@@ -97,8 +97,7 @@ public class UIManager : MonoBehaviour
 
     private bool animatePanel = false;
     private RectTransform animTarget;
-
-    private PlayFabManager playFab;
+    
 
     #endregion
     #region Defaults

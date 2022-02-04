@@ -78,7 +78,7 @@ public class Lever : MonoBehaviour, IInteractable
     {
         _leverValue += _moveDirection * Time.deltaTime;
         // _leverValue += _moveDirection * _dragSpeed * Time.deltaTime;
-        // _leverValue = Mathf.Clamp(_leverValue, 0, 1);
+        _leverValue = Mathf.Clamp(_leverValue, 0, 1);
     }
 
     public virtual void UpdateLeverTransform()
