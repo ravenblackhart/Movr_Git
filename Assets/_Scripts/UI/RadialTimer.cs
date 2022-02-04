@@ -74,4 +74,5 @@ public class RadialTimer : MonoBehaviour
 
         if (Keyboard.current.aKey.wasReleasedThisFrame) shouldUpdate = true; 
     }
+    
 }

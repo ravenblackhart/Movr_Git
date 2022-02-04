@@ -143,13 +143,6 @@ public class UIManager : MonoBehaviour
         } 
         if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
 
-        
-        if (SceneManager.GetActiveScene().buildIndex == 1)
-        {
-            // Test Scripts
-            if (Keyboard.current.fKey.isPressed) PassengerPickUp(rating);
-        }
-        
     }
 
     #endregion
@@ -203,39 +196,14 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
-
-    public void PassengerPickUp(float baseRating)
-    {
-        StartCoroutine(RatingCountDown(baseRating)); 
-    }
-
-    public void TaskCountDown()
-    {
-        StartCoroutine(RadialTimer()); 
-    }
+    
     
     private void SetScoreText(string text)
     {
         scoreText.text = text; 
     }
 
-    private IEnumerator RatingCountDown(float baseRating)
-    {
-        rating = baseRating; 
-        while (rating > 0f)
-        {
-            ratingDisplay.fillAmount = rating * 0.2f;
-            rating -= (Time.deltaTime * 0.5f);
-            yield return null; 
-        }
-        
-    }
 
-    private IEnumerator RadialTimer()
-    {
-        yield return null; 
-    }
-    
 
     public void MainMenu()
     {
