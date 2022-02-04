@@ -86,7 +86,7 @@ public class WindowCranker : MonoBehaviour
 
     private IEnumerator DragUpdate(GameObject crank)
     {
-        _cameraSwitcher.ToggleLock();
+        //_cameraSwitcher.ToggleLock();
 
         while (_mouseClick.ReadValue<float>() != 0)
         {
@@ -108,6 +108,6 @@ public class WindowCranker : MonoBehaviour
 
             yield return _waitForFixedUpdate;
         }
-        _cameraSwitcher.ToggleLock();
+        //_cameraSwitcher.ToggleLock();
     }
 }
