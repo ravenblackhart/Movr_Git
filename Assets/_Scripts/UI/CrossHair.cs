@@ -19,7 +19,7 @@ public class CrossHair : MonoBehaviour
 
     public void UpdateCrosshair(GameObject other)
     {
-        if (other.gameObject.CompareTag("Steering"))
+        if (other.gameObject.CompareTag("SteeringWheel"))
         {
             imageRenderer.sprite = SteeringCrosshair;
             imageRenderer.preserveAspect = true;
