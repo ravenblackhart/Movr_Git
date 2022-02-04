@@ -21,18 +21,23 @@ public class RadialTimer : MonoBehaviour
     [SerializeField] private UnityEvent myEvent = null;
 
     public bool shouldUpdate = false;
-    private float passengerDelay = 0.3f; 
-    
-    
+    private float passengerDelay = 0.3f;
+
+
+    private void Start()
+    {
+        radialIndicatorUI.enabled = false;
+    }
+
     public void Update()
     {
         if (Keyboard.current.gKey.isPressed)
         {
-            shouldUpdate = false; 
-            indicatorTimer -= (Time.deltaTime * passengerDelay);
+            shouldUpdate = false;
             radialIndicatorUI.enabled = true;
-            radialIndicatorUI.color = color1;
+            indicatorTimer -= (Time.deltaTime * passengerDelay);
             radialIndicatorUI.fillAmount = indicatorTimer;
+            radialIndicatorUI.color = color1;
 
             if (radialIndicatorUI.fillAmount < 0.65)
             {
@@ -72,7 +77,12 @@ public class RadialTimer : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.aKey.wasReleasedThisFrame) shouldUpdate = true; 
+        if (Keyboard.current.gKey.wasReleasedThisFrame)
+        {
+            radialIndicatorUI.enabled = false; 
+            shouldUpdate = true;
+        } 
     }
-    
+
+
 }
