@@ -30,6 +30,9 @@ public class WindowCranker : MonoBehaviour
     private readonly float MAX_Y_POS = 0.85f;
     private readonly float MIN_Y_POS = 0.31f;
 
+    private float _leverValue = 0;
+    public float LeverValue => _leverValue;
+
     [Header("The window crank game object needs this tag: (and a collider)")]
     [SerializeField]
     private string _windowCrankTag = "WindowCrank";
@@ -97,17 +100,35 @@ public class WindowCranker : MonoBehaviour
             }
 
             _zAngle -= _prevDelta.y * _rotateSpeed * Time.deltaTime;
+            
             _zAngle = Mathf.Clamp(_zAngle, -_maxCrankAngle, _maxCrankAngle);
             // Rotate crank 
             crank.transform.localEulerAngles = new Vector3(crank.transform.localEulerAngles.x,
                 crank.transform.localEulerAngles.y, _zAngle);
             // Raise/lower windows
             _yPosWindows = Mathf.Clamp(_yPosWindows += (Time.deltaTime * 0.35f * _prevDelta.y), MIN_Y_POS, MAX_Y_POS);
+            _leverValue = ChangeLeverValue(_yPosWindows);
             _windows.transform.localPosition = 
                 new Vector3(_windows.transform.localPosition.x, _yPosWindows, _windows.transform.localPosition.z); 
 
             yield return _waitForFixedUpdate;
         }
         //_cameraSwitcher.ToggleLock();
+    }
+
+    private float ChangeLeverValue(float yPos)
+    {
+        if (yPos <= MIN_Y_POS + 0.05f)
+        {
+            return 0;
+        }
+        else if (yPos >= MAX_Y_POS - 0.05f)
+        {
+            return 1;
+        }
+        else
+        {
+            return _leverValue;
+        }
     }
 }

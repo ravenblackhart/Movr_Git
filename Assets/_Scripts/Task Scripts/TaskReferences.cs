@@ -11,7 +11,7 @@ public class TaskReferences
     public List<Phone> phones = new List<Phone>();
     public List<WaterCup> waterCups = new List<WaterCup>();
     public Lever leverAC;
-    public Lever windowsLever;
+    public WindowCranker windowsLever;
     public CassettePlayer cassettePlayer;
     public List<Cassette> cassetteTapes = new List<Cassette>();
 }

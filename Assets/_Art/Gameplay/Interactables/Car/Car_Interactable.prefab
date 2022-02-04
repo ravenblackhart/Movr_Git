@@ -1567,7 +1567,19 @@ MonoBehaviour:
   _maxRange: 10
   onInteractEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 16616320433194083, guid: 68cfd59bfbe1d5e40ad7b70b4861f663, type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CarButton
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3839320524023987339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1829,19 @@ MonoBehaviour:
   _maxRange: 10
   onInteractEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 16616320433194083, guid: 68cfd59bfbe1d5e40ad7b70b4861f663, type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CarButton
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4116315883828398312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,7 +1889,31 @@ MonoBehaviour:
   _maxRange: 10
   onInteractEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 16616320433194083, guid: 68cfd59bfbe1d5e40ad7b70b4861f663, type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CarButton
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 16616320433194083, guid: 68cfd59bfbe1d5e40ad7b70b4861f663, type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: CarHonk
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4223363817157312437
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,7 +2647,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _neutralOffset: 0.1
-  tempLeverValue: 0
 --- !u!1 &5433481274866943674
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,6 +3830,8 @@ MonoBehaviour:
   LockedEndPosition: {fileID: 4444969743754533374}
   _radioController: {fileID: 0}
   _button: {fileID: 4248003576796398016}
+  _slideEnd: {fileID: 0}
+  _slideTime: 0
   audioGenre: 
 --- !u!114 &844193350397772076
 MonoBehaviour:
