@@ -41,7 +41,6 @@ public class CameraRayCast : MonoBehaviour
     private void Update()
     {
         RayCastCheck();
-        Debug.Log($"{this} hitting interactable: {_currentInteractableTarget}");
     }
 
     // private void FixedUpdate()
