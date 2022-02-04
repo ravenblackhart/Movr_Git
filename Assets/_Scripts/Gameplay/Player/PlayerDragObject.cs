@@ -1,26 +1,26 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerDragObject : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    private PlayerInput _playerInput;
     private InputAction _primaryAction;
     private InputAction _secondaryAction;
-    private Camera _mainCamera;
-    
-    private Vector2 _mouseDelta;
 
-    
-    private Lever _clickedObject;
+    private Lever _clickedLever;
+    private Vector2 _mouseDelta;
+    private CameraSwitcher _cameraSwitcher;
     
     private void Awake() {
-        playerInput = GetComponent<PlayerInput>();
-        _primaryAction = playerInput.actions["PrimaryAction"];
-        _mainCamera = Camera.main;
-    }
+        _playerInput = GetComponent<PlayerInput>();
+        _primaryAction = _playerInput.actions["PrimaryAction"];
+        _cameraSwitcher = FindObjectOfType<CameraSwitcher>();
 
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+    
     private void OnEnable() {
         _primaryAction.Enable();
     }
@@ -31,22 +31,26 @@ public class PlayerDragObject : MonoBehaviour
     
     public void StartDrag(Lever lever)
     {
-        _clickedObject = lever;
+        _clickedLever = lever;
         StartCoroutine(DragUpdate());
     }
 
     private IEnumerator DragUpdate()
     {
+        _cameraSwitcher.ToggleLock();
         while (_primaryAction.ReadValue<float>() != 0)
         {
             DragObject();
             yield return null;
         }
+        _cameraSwitcher.ToggleLock();
     }
 
     private void DragObject()
     {
-        _mouseDelta = playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
-        _clickedObject.MoveDirection += _mouseDelta.x;
+        // _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
+        _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>();
+        _mouseDelta= !_clickedLever.Invert ? _mouseDelta : -_mouseDelta;
+        _clickedLever.MoveDirection = !_clickedLever.UseY ? _mouseDelta.x : _mouseDelta.y;
     }
 }
