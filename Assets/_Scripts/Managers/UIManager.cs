@@ -47,7 +47,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Panels")] 
     [SerializeField] [CanBeNull] private Canvas settingsPanel;
-    [SerializeField] [CanBeNull] private Canvas leaderboardPanel; 
     [SerializeField] [CanBeNull] private Canvas creditsPanel;
     [SerializeField] [CanBeNull] private Canvas readyPanel;
     [SerializeField] [CanBeNull] private Canvas pauseMenu;
@@ -120,7 +119,6 @@ public class UIManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             settingsPanel.enabled = false;
-            leaderboardPanel.enabled = false; 
             creditsPanel.enabled = false;
         }
         

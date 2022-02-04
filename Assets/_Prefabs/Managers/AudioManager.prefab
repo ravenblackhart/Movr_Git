@@ -44,24 +44,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mixer: {fileID: 24100000, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-  MainMenuAudio: {fileID: 11400000, guid: 177c11388d87cac4cb6a33eba4704a7b, type: 2}
   AudioSettings:
   - slider: {fileID: 0}
-    redX: {fileID: 0}
     exposedParam: GlobalVol
-    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
-    redX: {fileID: 0}
     exposedParam: MusicVol
-    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
-    redX: {fileID: 0}
     exposedParam: SFXVol
-    soundToggle: {fileID: 0}
   - slider: {fileID: 0}
-    redX: {fileID: 0}
     exposedParam: EnvVol
-    soundToggle: {fileID: 0}
   sounds:
   - name: Click
     clip: {fileID: 8300000, guid: 348bc3c144058aa4d92ea4a166eb564e, type: 3}
@@ -254,12 +245,4 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     playOnAwake: 0
-    source: {fileID: 0}
-  - name: MainMenuMusic
-    clip: {fileID: 0}
-    MixerGroup: {fileID: 976740188088130744, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.662
-    pitch: 1
-    loop: 0
-    playOnAwake: 1
     source: {fileID: 0}

@@ -9,8 +9,7 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public AudioMixer Mixer;
-    public Mixtape MainMenuAudio; 
-    
+
     [Tooltip("For Settings Panel")] public AudioSetting[] AudioSettings;
     private enum AudioGroups {Global, Music, SFX, Environment }
     
@@ -48,11 +47,6 @@ public class AudioManager : MonoBehaviour
         {
             AudioSettings[i].Initialize();
         }
-
-        if (SceneManager.GetActiveScene().buildIndex == 0 )
-        {
-            
-        }
     }
 
     public void Play(string name) {
@@ -85,25 +79,25 @@ public class AudioManager : MonoBehaviour
         AudioSettings[(int)AudioGroups.Environment].SetExposedParam(value); 
     }
 
-    public void GlobalToggle()
-    {
-        AudioSettings[(int)AudioGroups.Global].ToggleAudio();
-    }
-    
-    public void MusicToggle()
-    {
-        AudioSettings[(int)AudioGroups.Music].ToggleAudio();
-    }
-    
-    public void SFXToggle()
-    {
-        AudioSettings[(int)AudioGroups.SFX].ToggleAudio();
-    }
-    
-    public void EnvToggle()
-    {
-        AudioSettings[(int)AudioGroups.Environment].ToggleAudio();
-    }
+    // public void GlobalToggle()
+    // {
+    //     AudioSettings[(int)AudioGroups.Global].ToggleAudio();
+    // }
+    //
+    // public void MusicToggle()
+    // {
+    //     AudioSettings[(int)AudioGroups.Music].ToggleAudio();
+    // }
+    //
+    // public void SFXToggle()
+    // {
+    //     AudioSettings[(int)AudioGroups.SFX].ToggleAudio();
+    // }
+    //
+    // public void EnvToggle()
+    // {
+    //     AudioSettings[(int)AudioGroups.Environment].ToggleAudio();
+    // }
     
     
 }
@@ -112,31 +106,31 @@ public class AudioManager : MonoBehaviour
 public class AudioSetting
 {
     public Slider slider;
-    public GameObject redX;
+    //public GameObject redX;
     public string exposedParam;
-    public Toggle soundToggle; 
+    //public Toggle soundToggle; 
 
     public void Initialize()
     {
         slider.value = PlayerPrefs.GetFloat(exposedParam);
     }
 
-    public void ToggleAudio()
-    {
-        if (!soundToggle)
-        {
-            slider.value = PlayerPrefs.GetFloat(exposedParam);
-        }
-        
-        if (soundToggle)
-        {
-            slider.value = slider.minValue; 
-        }
-    }
+    // public void ToggleAudio()
+    // {
+    //     if (!soundToggle)
+    //     {
+    //         slider.value = PlayerPrefs.GetFloat(exposedParam);
+    //     }
+    //     
+    //     if (soundToggle)
+    //     {
+    //         slider.value = slider.minValue; 
+    //     }
+    // }
     
     public void SetExposedParam(float value)
     {
-        redX.SetActive(value <= slider.minValue);
+        //redX.SetActive(value <= slider.minValue);
         AudioManager.Instance.Mixer.SetFloat(exposedParam, value);
         PlayerPrefs.SetFloat(exposedParam, value);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CassettePlayer : SnapTrigger
 {
     public bool occupied = false;
-    private Cassette _cassette;
+    public Cassette _cassette;
     public Transform cassetteInPlayer;
 
     public Transform LockedStartPosition;
@@ -43,6 +43,7 @@ public class CassettePlayer : SnapTrigger
                 _cassette._rb.AddForce(moveDirection * _cassette._snapSpeed);
             }
 
+
             if (_cassette._sliding) {
                 //_cassette.transform.parent = _cassette._prevParent;
                 _cassette.OnSnapTrigger = false;
@@ -55,7 +56,7 @@ public class CassettePlayer : SnapTrigger
                     //_rb.isKinematic = true;
                 }
             }
-
+            
            
         }
 

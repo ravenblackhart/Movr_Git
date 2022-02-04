@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsPanel: {fileID: 0}
-  leaderboardPanel: {fileID: 0}
   creditsPanel: {fileID: 0}
   readyPanel: {fileID: 0}
   pauseMenu: {fileID: 0}
@@ -86,3 +85,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   shouldUpdate: 0
+  taskComplete: 0
+  taskDuration: 10

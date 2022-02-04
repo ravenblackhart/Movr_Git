@@ -21,7 +21,9 @@ public class RadialTimer : MonoBehaviour
     [SerializeField] private UnityEvent myEvent = null;
 
     public bool shouldUpdate = false;
+    public bool taskComplete = false; 
     private float passengerDelay = 0.3f;
+    [HideInInspector] public float taskDuration = 10f; 
 
 
     private void Start()
@@ -35,8 +37,7 @@ public class RadialTimer : MonoBehaviour
         {
             shouldUpdate = false;
             radialIndicatorUI.enabled = true;
-            indicatorTimer -= (Time.deltaTime * passengerDelay);
-            radialIndicatorUI.fillAmount = indicatorTimer;
+            StartCoroutine(StartCountdown(taskDuration)); 
             radialIndicatorUI.color = color1;
 
             if (radialIndicatorUI.fillAmount < 0.65)
@@ -83,6 +84,16 @@ public class RadialTimer : MonoBehaviour
             shouldUpdate = true;
         } 
     }
+
+    private IEnumerator StartCountdown(float taskTimer)
+    {
+        while (!taskComplete && taskTimer > 0f)
+        {
+            indicatorTimer -= (Time.deltaTime * passengerDelay);
+            radialIndicatorUI.fillAmount = indicatorTimer;
+            yield return null; 
+        }
+    } 
 
 
 }

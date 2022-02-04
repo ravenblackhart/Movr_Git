@@ -6,6 +6,7 @@ public class Phone : PhysicsObject
     
     private Transform _worldParent;
     private Transform _snapPosition;
+    private Vector3 _velocity = Vector3.zero;
 
     private float _chargeAmount;
 
@@ -26,14 +27,16 @@ public class Phone : PhysicsObject
         
         _worldParent = transform.parent;
         _chargeAmount = 0;
-
+        
+        //Tested value ok result
+        _snapSpeed = 10;
     }
     private void OnDestroy()
     {
         GameManager.instance.taskReferences.phones.Remove(this);
     }
     
-    public override void FixedUpdate()
+    private void Update()
     {
         if (!beingHeld) return;
         _snapPosition = RayCastForSnap();
@@ -42,16 +45,44 @@ public class Phone : PhysicsObject
         {
             _rb.isKinematic = true;
             
-            var direction = (transform.position - _snapPosition.position).normalized;
-            _rb.MovePosition(transform.position + -direction * _snapSpeed * Time.deltaTime);
-            _rb.MoveRotation(Quaternion.Slerp(transform.rotation, _snapPosition.rotation, _snapSpeed * Time.deltaTime));
+            var tf = transform;
+            var stf = _snapPosition;
+            var speed = _snapSpeed * Time.deltaTime;
+            
+            tf.position = Vector3.SmoothDamp(tf.position, stf.position, ref _velocity, speed);
+            tf.rotation = Quaternion.Slerp(transform.rotation, _snapPosition.rotation, speed);
+            
+
+            // transform.position = Vector3.MoveTowards(transform.position, _snapPosition.position);
+            // _rb.MovePosition(transform.position + -direction * _snapSpeed * Time.deltaTime);
+            // _rb.MoveRotation(Quaternion.Slerp(transform.rotation, _snapPosition.rotation, _snapSpeed * Time.deltaTime));
         }
         else
         {
             _rb.isKinematic = false;
         }
-        base.FixedUpdate();
     }
+    
+    // public override void FixedUpdate()
+    // {
+    //     if (!beingHeld) return;
+    //     _snapPosition = RayCastForSnap();
+    //     
+    //     if (_snapPosition != null)
+    //     {
+    //         _rb.isKinematic = true;
+    //         
+    //         var direction = (transform.position - _snapPosition.position).normalized;
+    //         _rb.MovePosition(transform.position + -direction * _snapSpeed * Time.deltaTime);
+    //         
+    //         
+    //     }
+    //     else
+    //     {
+    //         _rb.isKinematic = false;
+    //     }
+    //     base.FixedUpdate();
+    // }
     
     private void CheckValue()
     {
@@ -72,13 +103,13 @@ public class Phone : PhysicsObject
         
         Ray ray = new Ray(transform.position, -transform.parent.forward);
         
-        // Debug.DrawRay(transform.position,-transform.parent.forward, Color.red);
+        Debug.DrawRay(transform.position,-transform.parent.forward, Color.red);
         
         if (Physics.Raycast(ray, out hit, 10,_raycastOnLayer))
         {
             if (hit.collider.TryGetComponent(out PhoneDock dock))
             {
-                // Debug.DrawRay(transform.position,-transform.parent.forward, Color.green);
+                Debug.DrawRay(transform.position,-transform.parent.forward, Color.green);
                 
                 return dock.transform;
             }

@@ -10,6 +10,7 @@ public class Cassette : PhysicsObject
     //[SerializeField] private _Scripts.Audio.Mixtape Cassette;
     [SerializeField] private _Scripts.Audio.Mixtape Mixtape;
     public AudioClip[] TrackList;
+    [SerializeField] private LayerMask _raycastOnLayer;
 
     public Transform _targetPos;
     public string _musicGenre;
@@ -17,6 +18,8 @@ public class Cassette : PhysicsObject
     public bool _sliding;
     public Transform _prevParent;
     CassettePlayer _cassettePlayer;
+    public Transform _snapPosition;
+    bool triggerFound = false;
 
     private void Start() {
         TrackList = Mixtape.PlaylistTracks;
@@ -25,8 +28,10 @@ public class Cassette : PhysicsObject
     }
 
     public override void FixedUpdate() {
-        
-        if (!beingHeld) return;
+
+        //if (!beingHeld) return;
+
+
         if (_onSnapTrigger && !_sliding)
         {
              //Leaving SnapTriggerArea
@@ -44,7 +49,7 @@ public class Cassette : PhysicsObject
         _cassettePlayer = FindObjectOfType<CassettePlayer>();
 
         if (!_cassettePlayer.occupied) {
-            // _sliding = true;
+            _sliding = true;
             _onSnapTrigger = false;
             Transform _lockedStartPos = _cassettePlayer.LockedStartPosition;
             Transform _target = _cassettePlayer.LockedEndPosition;
@@ -64,6 +69,15 @@ public class Cassette : PhysicsObject
             _rb.useGravity = true;
             _rb.drag = 0;        
         }
+    }
+
+    IEnumerator TurnOffTrigger() {
+        yield return new WaitForSeconds(0.2f);
+        if (triggerFound) {
+            triggerFound = false;
+            _snapPosition.GetComponent<CassettePlayer>()._cassette = null;
+        }
+
     }
 
     /*private void OnTriggerEnter(Collider other) {

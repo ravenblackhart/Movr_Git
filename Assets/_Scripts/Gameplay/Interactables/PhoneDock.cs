@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PhoneDock : MonoBehaviour
@@ -12,6 +11,7 @@ public class PhoneDock : MonoBehaviour
             _phone = phone;
             _phone.OnSnapTrigger = true;
             _phone.transform.rotation = transform.rotation;
+            
         }
     }
     
