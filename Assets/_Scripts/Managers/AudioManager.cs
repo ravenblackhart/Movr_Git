@@ -1,5 +1,6 @@
 using System;
 using _Scripts.Audio;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager Instance;
     public AudioMixer Mixer;
 
     [Tooltip("For Settings Panel")] public AudioSetting[] AudioSettings;
@@ -15,7 +17,7 @@ public class AudioManager : MonoBehaviour
     
     [Tooltip("In-game Audio")] public Sound[] sounds;
 
-    public static AudioManager Instance;
+   
 
     private AudioSource _clip;
     private void Awake() {
@@ -47,6 +49,8 @@ public class AudioManager : MonoBehaviour
         {
             AudioSettings[i].Initialize();
         }
+        
+        
     }
 
     public void Play(string name) {
@@ -105,14 +109,22 @@ public class AudioManager : MonoBehaviour
 [System.Serializable]
 public class AudioSetting
 {
-    public Slider slider;
+    [CanBeNull] public Slider slider;
     //public GameObject redX;
     public string exposedParam;
+
+    [SerializeField][Range(-80f, 0f)] private float audioVolume; 
     //public Toggle soundToggle; 
 
     public void Initialize()
     {
-        slider.value = PlayerPrefs.GetFloat(exposedParam);
+        audioVolume = PlayerPrefs.GetFloat(exposedParam);
+        if (slider != null) slider.value = audioVolume; 
+    }
+
+    void OnValidate()
+    {
+        SetExposedParam(audioVolume);
     }
 
     // public void ToggleAudio()

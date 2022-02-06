@@ -21,10 +21,6 @@ public class GiveSnackBarTask : Task
 
     public override bool CheckValid(GameManager gameManager)
     {
-        if (gameManager.taskReferences.snackBars.Count <= 0) {
-            return false;
-        }
-
         return true;
     }
 }

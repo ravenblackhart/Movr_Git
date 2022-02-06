@@ -25,6 +25,7 @@ public class Cassette : PhysicsObject
         TrackList = Mixtape.PlaylistTracks;
         _prevParent = transform.parent;
         _musicGenre = Mixtape.name;
+        GameManager.instance.taskReferences.cassetteTapes.Add(this);
     }
 
     public override void FixedUpdate() {

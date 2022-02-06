@@ -43,6 +43,6 @@ public class OpenWindowTask : Task
 
     public bool LeverInRange(GameManager gameManager)
     {
-        return Mathf.Abs(gameManager.taskReferences.volumeLever.LeverValue - leverGoal) <= 0.1f;
+        return Mathf.Abs(gameManager.taskReferences.windowsLever.LeverValue - leverGoal) <= 0.1f;
     }
 }

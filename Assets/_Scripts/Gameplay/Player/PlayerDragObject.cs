@@ -37,12 +37,15 @@ public class PlayerDragObject : MonoBehaviour
 
     private IEnumerator DragUpdate()
     {
+        _clickedLever.OnDrag = true;
         _cameraSwitcher.ToggleLock();
+        
         while (_primaryAction.ReadValue<float>() != 0)
         {
             DragObject();
             yield return null;
         }
+        _clickedLever.OnDrag = false;
         _cameraSwitcher.ToggleLock();
     }
 

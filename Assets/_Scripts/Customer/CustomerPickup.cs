@@ -21,7 +21,8 @@ public class CustomerPickup : MonoBehaviour
     {
         canvas.enabled = GameManager.instance.currentPickup == this;
 
-        testCylinder.SetActive(GameManager.instance.currentPickup == this);
+        if (testCylinder != null)
+            testCylinder.SetActive(GameManager.instance.currentPickup == this);
     }
 
     void OnCarEnterTrigger()

@@ -5,18 +5,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerPickUp : MonoBehaviour {
     
-
     [SerializeField] float moveForce = 250;
     [SerializeField] float pushForce = 100;
     [SerializeField] float drag = 10;
     [SerializeField] float rotateSpeed = 0.5f;
     [SerializeField] float sideThrowForce = 10;
 
+    private Camera _camera;
     private CameraSwitcher _cameraSwitcher;
     private PlayerInput _playerInput;
     private InputAction _primaryAction;
     private InputAction _secondaryAction;
     private Vector2 _mouseDelta;
+    
     private Transform _holdPos;
     public bool canMove = true;
     
@@ -27,6 +28,8 @@ public class PlayerPickUp : MonoBehaviour {
     private Transform _previousParent;
 
     private void Awake() {
+        
+        _camera = Camera.main;
         _playerInput = GetComponent<PlayerInput>();
         _cameraSwitcher = FindObjectOfType<CameraSwitcher>();
         
@@ -80,13 +83,41 @@ public class PlayerPickUp : MonoBehaviour {
         _holdPos.transform.LookAt(transform.GetChild(0).position);
     }
     
-    private void OnPrimaryAction(InputAction.CallbackContext context) {
-        if (_gameObjectInHand != null && !_physicsObjectInHand.OnSnapTrigger) {
+    private void OnPrimaryAction(InputAction.CallbackContext context) 
+    {
+        if (_gameObjectInHand != null && !_physicsObjectInHand.OnSnapTrigger && _secondaryAction.ReadValue<float>() == 0) {
             ThrowObject();
         }
 
+        if (_gameObjectInHand != null && _gameObjectInHand.TryGetComponent(out Phone phone))
+        {
+            if (!phone.OnSnapTrigger) return;
+            
+            phone.beingHeld = false;
+            phone.SetToWorldParent();
+            
+            
+            _rbInHand = null;
+            _physicsObjectInHand = null;
+            _gameObjectInHand = null;
+        }      
+        
+        // if (_gameObjectInHand != null && _gameObjectInHand.TryGetComponent(out Cassette cas))
+        // {
+        //     if (!cas.OnSnapTrigger) return;
+        //     
+        //     // cas.SetToWorldParent();
+        //     cas.LockInPlayer();
+        //     
+        //     _rbInHand = null;
+        //     _physicsObjectInHand = null;
+        //     _gameObjectInHand = null;
+        // }
+
         if (_gameObjectInHand != null && _physicsObjectInHand.GetComponent<Cassette>() != null && _physicsObjectInHand.OnSnapTrigger) {
             _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
+            
+            _physicsObjectInHand.beingHeld = false;
             _rbInHand = null;
             _gameObjectInHand = null;
             _physicsObjectInHand = null;
@@ -128,6 +159,7 @@ public class PlayerPickUp : MonoBehaviour {
     public void ThrowObject() 
     {
         _rbInHand.useGravity = true;
+        _rbInHand.isKinematic = false;
         _rbInHand.drag = 0;
         _rbInHand.transform.parent = _previousParent;
 
@@ -148,7 +180,7 @@ public class PlayerPickUp : MonoBehaviour {
     IEnumerator RotationUpdate() {
         _cameraSwitcher.ToggleLock();
 
-        while (_secondaryAction.ReadValue<float>() != 0) {
+        while (_secondaryAction.ReadValue<float>() != 0 && !_physicsObjectInHand.OnSnapTrigger) {
             RotateObject();
             yield return null;
         }

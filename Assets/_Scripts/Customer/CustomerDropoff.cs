@@ -21,7 +21,8 @@ public class CustomerDropoff : MonoBehaviour
     {
         canvas.enabled = GameManager.instance.currentDropoff == this;
 
-        testCylinder.SetActive(GameManager.instance.currentDropoff == this);
+        if (testCylinder != null)
+            testCylinder.SetActive(GameManager.instance.currentDropoff == this);
     }
 
     void OnCarExitTrigger()

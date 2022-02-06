@@ -75,12 +75,8 @@ public class ChangeMusicTask : Task
             return false;
         }
 
-        if (gameManager.taskReferences.cassetteTapes.Count != 0) {
-            return true;
-        }
-
         else {
-            return false;
+            return true;
         }
     }
 
