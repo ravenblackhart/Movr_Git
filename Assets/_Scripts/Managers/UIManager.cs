@@ -80,9 +80,9 @@ public class UIManager : MonoBehaviour
     private float rating = 5f; 
     
     //Settings
-    private bool tutorialOn = true; 
+    private Color enabledColor = new Color32(56, 56, 56, 255); 
+    private Color disabledColor = new Color32(120, 120, 120, 255); 
     
-
     
     
     
@@ -101,21 +101,30 @@ public class UIManager : MonoBehaviour
             instance = this; 
         }
 
-        if (PlayerPrefs.GetString("TutorialState") == "true") tutorialOn = true; 
-        else if (PlayerPrefs.GetString("TutorialState") == "false") tutorialOn = false; 
+        if (PlayerPrefs.GetInt("TutorialState") == 1) tutorialState.isOn = true; 
+        else if (PlayerPrefs.GetInt("TutorialState") == 0) tutorialState.isOn = false; 
     }
     
 
     private void Start()
     {
-        
-        
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             settingsPanel.enabled = false;
             creditsPanel.enabled = false;
-            tsLabel.text = tutorialOn ? "Tutorial On" : "Tutorial Off";
-            tutorialState.isOn = tutorialOn; 
+
+            if (!tutorialState.isOn == false)
+            {
+                tsLabel.text = "Tutorial Off";
+                tsLabel.color = disabledColor;
+            }
+            
+            else if (tutorialState.isOn == true)
+            {
+                tsLabel.text = "Tutorial On";
+                tsLabel.color = enabledColor;
+            }
+            
         }
         
         if (SceneManager.GetActiveScene().buildIndex != 0)
@@ -124,13 +133,13 @@ public class UIManager : MonoBehaviour
             gameOverMenu.enabled = false; 
             SetScoreText(score.IntValue.ToString());
 
-            if (tutorialOn)
+            if (tutorialState.isOn == true)
             {
                 readyPanel.enabled = true;
                 tutorialCanvas.enabled = true; 
             }
             
-            else if (!tutorialOn)
+            else if (tutorialState.isOn == false)
             {
                 readyPanel.enabled = false;
                 tutorialCanvas.enabled = false; 
@@ -210,9 +219,19 @@ public class UIManager : MonoBehaviour
 
     public void TutorialState()
     {
-        tutorialOn = tutorialState.isOn? true : false;
-        tsLabel.text = tutorialOn ? "Tutorial On" : "Tutorial Off"; 
-        PlayerPrefs.SetString("TutorialState", tutorialOn ? "true" : "false" );
+        tsLabel.text = tutorialState.isOn ? "Tutorial On" : "Tutorial Off";
+
+        if (tutorialState.isOn == true)
+        {
+            PlayerPrefs.SetInt("TutorialState", 0);
+            tsLabel.color = enabledColor;
+        }
+        
+        else if (tutorialState.isOn == false)
+        {
+            PlayerPrefs.SetInt("TutorialState", 0);
+            tsLabel.color = disabledColor;
+        }
     }
 
 
