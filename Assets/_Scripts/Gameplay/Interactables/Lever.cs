@@ -5,10 +5,9 @@ public class Lever : MonoBehaviour, IInteractable
 {
     // [SerializeField] private GameEvent _onInteractEvent;
     [SerializeField] protected float _maxRange = 10f;
-
     [SerializeField] protected float _dragSpeed = 0.01f;
 
-    [Range(0, 1f)] [SerializeField] protected private float _leverValue;
+    [Range(0, 1f)] [SerializeField] private protected float _leverValue;
 
     [SerializeField] protected Transform _orgin;
     [SerializeField] protected Transform _start;
@@ -26,6 +25,7 @@ public class Lever : MonoBehaviour, IInteractable
     private PlayerDragObject _playerDrag;
     protected float _moveDirection;
 
+    public bool OnDrag { get; set; }
     public float MaxRange => _maxRange;
     public float LeverValue => _leverValue;
     public bool UseY => _useY;
