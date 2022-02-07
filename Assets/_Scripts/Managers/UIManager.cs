@@ -134,7 +134,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.anyKey.isPressed && readyPanel.enabled == true)
+        if ((Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed) && readyPanel.enabled == true)
         {
             readyPanel.enabled = false;
             Time.timeScale = 1f; 
