@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
 [System.Serializable]
@@ -45,21 +46,21 @@ public class UIManager : MonoBehaviour
 
     #region Inspector
 
-    [Header("Panels")] 
+    [Header("Displays")] 
     [SerializeField] [CanBeNull] private Canvas settingsPanel;
     [SerializeField] [CanBeNull] private Canvas creditsPanel;
     [SerializeField] [CanBeNull] private Canvas readyPanel;
+    [SerializeField] [CanBeNull] private Canvas tutorialCanvas;
     [SerializeField] [CanBeNull] private Canvas pauseMenu;
     [SerializeField] [CanBeNull] private Canvas gameOverMenu;
 
     [Header("Display Fields - Menu")] 
-    //[SerializeField] [CanBeNull] private TMP_InputField setUID;
-    [SerializeField] [CanBeNull] private TextMeshProUGUI saveMessage;
-    [SerializeField] [CanBeNull] private Transform leaderTable;
+    [SerializeField] [CanBeNull] private Toggle tutorialState; 
+    [SerializeField] [CanBeNull] private TextMeshProUGUI tsLabel;
     
     [Header("Display Fields - Game")]
     [SerializeField] [CanBeNull] private TextMeshProUGUI scoreText;
-    [SerializeField] [CanBeNull] private Image ratingDisplay; 
+    [SerializeField] [CanBeNull] private TextMeshProUGUI gameOverScoreText; 
 
     [Header("Data")] 
     [SerializeField] [CanBeNull] private IntVariable score;
@@ -78,24 +79,13 @@ public class UIManager : MonoBehaviour
     //Gameplay Data
     private float rating = 5f; 
     
-    //Script Internal
+    //Settings
+    private bool tutorialOn = true; 
     
-    private float posXIn = 0f;
-    private float posYIn = 120f;
 
-    private float posXOut = 0f;
-    private float posYOut = 1175f;
-
-    private float elapsedAnimDuration = 0;
-    private float percentAnim;
-    private float timeOffset = 5f;
-    private bool gameOn = false;
     
-    private Vector2 startPosition;
-    private Vector2 targetPosition;
-
-    private bool animatePanel = false;
-    private RectTransform animTarget;
+    
+    
     
 
     #endregion
@@ -110,16 +100,22 @@ public class UIManager : MonoBehaviour
         {
             instance = this; 
         }
-        
+
+        if (PlayerPrefs.GetString("TutorialState") == "true") tutorialOn = true; 
+        else if (PlayerPrefs.GetString("TutorialState") == "false") tutorialOn = false; 
     }
     
 
     private void Start()
     {
+        
+        
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             settingsPanel.enabled = false;
             creditsPanel.enabled = false;
+            tsLabel.text = tutorialOn ? "Tutorial On" : "Tutorial Off";
+            tutorialState.isOn = tutorialOn; 
         }
         
         if (SceneManager.GetActiveScene().buildIndex != 0)
@@ -128,7 +124,17 @@ public class UIManager : MonoBehaviour
             gameOverMenu.enabled = false; 
             SetScoreText(score.IntValue.ToString());
 
-            readyPanel.enabled = true;
+            if (tutorialOn)
+            {
+                readyPanel.enabled = true;
+                tutorialCanvas.enabled = true; 
+            }
+            
+            else if (!tutorialOn)
+            {
+                readyPanel.enabled = false;
+                tutorialCanvas.enabled = false; 
+            }
         }
     }
 
@@ -181,6 +187,7 @@ public class UIManager : MonoBehaviour
 
     public void GameOver()
     {
+        gameOverScoreText.text = score.ToString(); 
         gameOverMenu.enabled = true;
         Time.timeScale = 0f;
     }
@@ -199,6 +206,13 @@ public class UIManager : MonoBehaviour
     private void SetScoreText(string text)
     {
         scoreText.text = text; 
+    } 
+
+    public void TutorialState()
+    {
+        tutorialOn = tutorialState.isOn? true : false;
+        tsLabel.text = tutorialOn ? "Tutorial On" : "Tutorial Off"; 
+        PlayerPrefs.SetString("TutorialState", tutorialOn ? "true" : "false" );
     }
 
 
