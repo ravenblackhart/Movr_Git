@@ -47,12 +47,16 @@ MonoBehaviour:
   AudioSettings:
   - slider: {fileID: 0}
     exposedParam: GlobalVol
+    audioVolume: 0
   - slider: {fileID: 0}
     exposedParam: MusicVol
+    audioVolume: 0
   - slider: {fileID: 0}
     exposedParam: SFXVol
+    audioVolume: 0
   - slider: {fileID: 0}
     exposedParam: EnvVol
+    audioVolume: 0
   sounds:
   - name: Click
     clip: {fileID: 8300000, guid: 348bc3c144058aa4d92ea4a166eb564e, type: 3}
@@ -119,7 +123,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: CandyBar
-    clip: {fileID: 8300000, guid: 2a17d0e52584f79418afa249b17b0b37, type: 3}
+    clip: {fileID: 8300000, guid: de9ee9cef10f0a64c979bc70281dd04d, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
     volume: 0.662
     pitch: 1

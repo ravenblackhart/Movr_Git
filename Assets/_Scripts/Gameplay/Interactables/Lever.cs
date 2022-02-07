@@ -22,7 +22,7 @@ public class Lever : MonoBehaviour, IInteractable
     [SerializeField] protected bool _useY;
     [SerializeField] protected bool _invert;
 
-    private PlayerDragObject _playerDrag;
+    protected private PlayerDragObject _playerDrag;
     protected float _moveDirection;
 
     public bool OnDrag { get; set; }

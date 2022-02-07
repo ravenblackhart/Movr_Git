@@ -3492,6 +3492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2760577386293222250}
+  - component: {fileID: 6852108162246203691}
   m_Layer: 0
   m_Name: Building_Pink
   m_TagString: Untagged
@@ -3618,6 +3619,19 @@ Transform:
   m_Father: {fileID: 9034312892139021461}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6852108162246203691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243816781710328272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.199593, y: 11.895782, z: 8.269682}
+  m_Center: {x: -4.0997972, y: 5.447891, z: -10.230978}
 --- !u!1 &3246043028686900159
 GameObject:
   m_ObjectHideFlags: 0
@@ -8165,7 +8179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9034312892139021461}
   m_Layer: 0
-  m_Name: Building_6
+  m_Name: Building_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4389,6 +4389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050236081424605431}
+  - component: {fileID: 1981724344917362044}
   m_Layer: 0
   m_Name: Market_with_sign
   m_TagString: Untagged
@@ -4494,6 +4495,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &1981724344917362044
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6394285761291680333}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.808224, y: 8.832388, z: 14.085901}
+  m_Center: {x: -0.15866375, y: 3.916194, z: 0.17467976}
 --- !u!1 &6403476344594406418
 GameObject:
   m_ObjectHideFlags: 0

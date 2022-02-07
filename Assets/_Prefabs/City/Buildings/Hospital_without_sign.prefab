@@ -9799,6 +9799,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6799469530476420911}
+  - component: {fileID: 575476176517955021}
+  - component: {fileID: 1658239327979181910}
   m_Layer: 0
   m_Name: Hospital_without_sign
   m_TagString: Untagged
@@ -9821,6 +9823,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &575476176517955021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9058657543966964365}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10.828522, y: 10.109279, z: 13.869194}
+  m_Center: {x: 1.9568634, y: 4.5546393, z: 1.3185921}
+--- !u!65 &1658239327979181910
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9058657543966964365}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.683563, y: 9.866282, z: 5.7825623}
+  m_Center: {x: -3.3417816, y: 4.433142, z: -2.7501602}
 --- !u!1 &9159061519284149121
 GameObject:
   m_ObjectHideFlags: 0

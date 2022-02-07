@@ -20,8 +20,7 @@ public class WindowCranker : MonoBehaviour
     private float _rotateSpeed = 90;
     private float _zAngle = -90;
 
-    //[SerializeField]
-    private int _maxCrankAngle = 65;
+    private readonly int _maxCrankAngle = 65;
 
     private string _windowTag = "Window";
     private GameObject _windows;
@@ -30,20 +29,18 @@ public class WindowCranker : MonoBehaviour
     private readonly float MAX_Y_POS = 0.85f;
     private readonly float MIN_Y_POS = 0.31f;
 
-    private float _leverValue = 0;
+    private float _leverValue = 1;
     public float LeverValue => _leverValue;
 
     [Header("The window crank game object needs this tag: (and a collider)")]
     [SerializeField]
     private string _windowCrankTag = "WindowCrank";
 
-    private GameObject _crank;
 
     private void Awake()
     {
-        _crank = GameObject.FindGameObjectWithTag(_windowCrankTag);
         _windows = GameObject.FindGameObjectWithTag(_windowTag);
-        _yPosWindows = MIN_Y_POS;
+        _yPosWindows = MAX_Y_POS;
         _playerInput = FindObjectOfType<PlayerInput>();
         _cameraSwitcher = FindObjectOfType<CameraSwitcher>();
         _mainCamera = Camera.main;
@@ -51,7 +48,7 @@ public class WindowCranker : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
 
         _mouseClick = _playerInput.actions["PrimaryAction"];
-        _zAngle = _maxCrankAngle;
+        _zAngle = -_maxCrankAngle;
     }
 
     void Update()

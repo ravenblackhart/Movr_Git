@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6628256038175283233}
   - component: {fileID: 275223530424111988}
   - component: {fileID: 421674669029097962}
+  - component: {fileID: 136295601950496649}
   m_Layer: 0
   m_Name: Motel_with_sign
   m_TagString: Untagged
@@ -117,3 +118,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &136295601950496649
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707990986177451308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08932466, y: 0.053481054, z: 0.11111962}
+  m_Center: {x: -0.00011514872, y: 0.0002585026, z: 0.05555981}

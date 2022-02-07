@@ -11,6 +11,10 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     [SerializeField] public float _snapRange = 0.1f;
     [SerializeField] public Transform _holdPos;
 
+    //for audio, might move later
+    [SerializeField] private string _pickupSound;
+    [SerializeField] private string _impactSound;
+    
     private float _snapDistance;
     private float _leaveSnapDistance;
     public bool _onSnapTrigger;
@@ -42,7 +46,10 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         if (!beingHeld)
+        {
             FindObjectOfType<PlayerPickUp>().PickupObject(gameObject);
+            AudioManager.Instance.Play(_pickupSound);
+        }
         
         beingHeld = !beingHeld;
     }
@@ -54,15 +61,6 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     
     public virtual void FixedUpdate()
     {
-        // if (_onSnapTrigger)
-        // {
-        //     //Leaving SnapTriggerArea
-        //     if (Vector3.Distance(_holdPos.position, transform.position) > _snapRange)
-        //     {
-        //         transform.parent = _holdPos;
-        //         // _onSnapTrigger = false;
-        //     }
-        // }
         _rb.angularVelocity = CustomClasses.Damp(_rb.angularVelocity, Vector3.zero, _rotationLambda, Time.fixedDeltaTime);
     }
 
@@ -73,6 +71,11 @@ public class PhysicsObject : MonoBehaviour, IInteractable
             touchCustomerQueryEvent.Invoke(Time.frameCount);
 
             touchCustomerUnityEvent.Invoke();
+        }
+
+        if (other.relativeVelocity.magnitude > 2)
+        {
+            AudioManager.Instance.Play(_impactSound);
         }
     }
 }
