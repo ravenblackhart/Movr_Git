@@ -15,6 +15,7 @@ namespace _Scripts.UI
         [SerializeField] [Range(0f, 5f)] private float customerBaseRating = 5f;
         [SerializeField] [Range(0f, 1f)] private float customerRatingModifier = 0.3f; 
         private float rating;
+        private float progress;
 
         private void Update()
         {
@@ -22,6 +23,18 @@ namespace _Scripts.UI
         }
 
         public void UpdateRating(float newRating)
+        {
+            UpdateRatingNoProgress(newRating);
+        }
+
+        public void UpdateRating(float newRating, float progress)
+        {
+            this.progress = progress;
+
+            UpdateRatingNoProgress(newRating);
+        }
+
+        void UpdateRatingNoProgress(float newRating)
         {
             if (starFallProgs == null || starDefaultPositions == null)
             {
@@ -33,11 +46,6 @@ namespace _Scripts.UI
                 {
                     starDefaultPositions[i] = ratingDisplays[i].transform.parent.localPosition;
                 }
-            }
-
-            if (Mathf.Floor(newRating) < Mathf.Floor(rating))
-            {
-                //
             }
 
             for (int i = 0; i < ratingDisplays.Length; i++)
@@ -63,14 +71,16 @@ namespace _Scripts.UI
 
                 float height = UnityEngine.Random.value;
 
-                Vector3 posDeltaFalling = 
+                Vector3 posDeltaFalling =
                     Vector3.up * -t * (t - (0.75f + height * 0.5f) * 13f)
                     + Vector3.right * t * (0.75f + speed * 0.5f) * 2f;
                 Vector3 rotDeltaFalling = Vector3.forward * t * 5f;
 
                 Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.Clamp01(1f - t / 5f) * Mathf.InverseLerp(0.333f, 0.2f, fill);
 
-                ratingDisplays[i].transform.parent.localPosition = starDefaultPositions[i] + posDeltaFalling + posDeltaShaking;
+                Vector3 posDeltaTransition = Vector3.up * Mathf.Pow(progress - 1f, 2f) * 200f;
+
+                ratingDisplays[i].transform.parent.localPosition = starDefaultPositions[i] + posDeltaFalling + posDeltaShaking + posDeltaTransition;
 
                 ratingDisplays[i].transform.parent.localEulerAngles = rotDeltaFalling;
             }

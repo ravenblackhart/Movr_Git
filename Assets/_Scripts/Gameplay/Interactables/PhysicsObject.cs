@@ -58,7 +58,14 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     {
         CrossHair.Instance.ResetCrosshair();
     }
-    
+
+    private void Update()
+    {
+        //Check if outside car
+        if (Vector3.Distance(transform.position, _holdPos.position) > 5)
+            Destroy(gameObject, 1);
+    }
+
     public virtual void FixedUpdate()
     {
         _rb.angularVelocity = CustomClasses.Damp(_rb.angularVelocity, Vector3.zero, _rotationLambda, Time.fixedDeltaTime);
@@ -71,10 +78,11 @@ public class PhysicsObject : MonoBehaviour, IInteractable
             touchCustomerQueryEvent.Invoke(Time.frameCount);
 
             touchCustomerUnityEvent.Invoke();
-        } else if (other.gameObject.CompareTag("Ground"))
+        } 
+        
+        //Destroy physicsobject 
+        if (other.gameObject.CompareTag("Ground"))
         {
-            //Destroy physicsobject 2 seconds after colliding with world
-            
             //TODO Add with pooling system
             Destroy(gameObject, 2);
         }
@@ -82,6 +90,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
         if (other.relativeVelocity.magnitude > 2)
         {
             AudioManager.Instance.Play(_impactSound);
+            
         }
     }
 }

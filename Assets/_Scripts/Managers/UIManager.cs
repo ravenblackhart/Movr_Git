@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Scripts.ScriptableVariables;
 using JetBrains.Annotations;
-using ScriptableEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -62,26 +60,22 @@ public class UIManager : MonoBehaviour
     [SerializeField] [CanBeNull] private TextMeshProUGUI scoreText;
     [SerializeField] [CanBeNull] private TextMeshProUGUI gameOverScoreText; 
 
+    [Header("Audio Toggle")]
+    [SerializeField] public Sprite AudioStrength1;
+    [SerializeField] public Sprite AudioStrength2;
+    [SerializeField] public Sprite AudioStrength3;
+    
     [Header("Data")] 
-    [SerializeField] [CanBeNull] private IntVariable score;
-    [SerializeField] [CanBeNull] private CustomerObject customer;
-    [SerializeField] [CanBeNull] private FloatVariable startingRating; 
+    [SerializeField] [CanBeNull] private int score;
 
-    [Header("Events")] 
-    [SerializeField] private ScriptableEventInt scoreUpdate; 
-    
-    
 
     #endregion
 
     #region Other Declarations
-
-    //Gameplay Data
-    private float rating = 5f; 
     
     //Settings
-    private Color enabledColor = new Color32(56, 56, 56, 255); 
-    private Color disabledColor = new Color32(120, 120, 120, 255);
+    public Color EnabledColor = new Color32(56, 56, 56, 255); 
+    public Color DisabledColor = new Color32(120, 120, 120, 255);
 
     private bool tutorialOn = true; 
     
@@ -103,13 +97,12 @@ public class UIManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("TutorialState") == 1)
         {
-            tutorialState.isOn = true;
-            tutorialOn = true; 
+            tutorialOn = true;
         } 
+        
         else if (PlayerPrefs.GetInt("TutorialState") == 0)
         {
-            tutorialState.isOn = false;
-            tutorialOn = false; 
+            tutorialOn = false;
         } 
     }
     
@@ -121,16 +114,18 @@ public class UIManager : MonoBehaviour
             settingsPanel.enabled = false;
             creditsPanel.enabled = false;
 
-            if (!tutorialState.isOn == false)
+            if (tutorialOn == false)
             {
+                tutorialState.isOn = false; 
                 tsLabel.text = "Tutorial Off";
-                tsLabel.color = disabledColor;
+                tsLabel.color = DisabledColor;
             }
             
-            else if (tutorialState.isOn == true)
+            else if (tutorialOn == true)
             {
+                tutorialState.isOn = true;
                 tsLabel.text = "Tutorial On";
-                tsLabel.color = enabledColor;
+                tsLabel.color = EnabledColor;
             }
             
         }
@@ -139,7 +134,7 @@ public class UIManager : MonoBehaviour
         {
             pauseMenu.enabled = false;
             gameOverMenu.enabled = false; 
-            SetScoreText(score.IntValue.ToString());
+            SetScoreText(score.ToString());
 
             if (tutorialOn == true)
             {
@@ -231,14 +226,14 @@ public class UIManager : MonoBehaviour
 
         if (tutorialState.isOn == true)
         {
-            PlayerPrefs.SetInt("TutorialState", 0);
-            tsLabel.color = enabledColor;
+            PlayerPrefs.SetInt("TutorialState",1);
+            tsLabel.color = EnabledColor;
         }
         
         else if (tutorialState.isOn == false)
         {
             PlayerPrefs.SetInt("TutorialState", 0);
-            tsLabel.color = disabledColor;
+            tsLabel.color = DisabledColor;
         }
     }
 

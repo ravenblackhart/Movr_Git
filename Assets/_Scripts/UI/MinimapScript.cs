@@ -21,9 +21,9 @@ public class MinimapScript : MonoBehaviour
 
   private void Update()
   {
-    if (GameManager.instance.currentCustomer != null) targetLocation = GameObject.FindGameObjectWithTag("PassengerDropoff").transform;
-    else if (GameManager.instance.currentCustomer == null) targetLocation = GameObject.FindGameObjectWithTag("PassengerPickup").transform;
-    else if (GameManager.instance.currentCustomer == null && GameObject.FindGameObjectWithTag("PassengerPickup").transform == null) targetLocation = null;
+    if (GameManager.instance.inRide == true) targetLocation = GameObject.FindGameObjectWithTag("PassengerDropoff").transform;
+    else if (GameManager.instance.inRide == false) targetLocation = GameObject.FindGameObjectWithTag("PassengerPickup").transform;
+    else if (GameManager.instance.inRide == false && GameObject.FindGameObjectWithTag("PassengerPickup").transform == null) targetLocation = null;
 
     if (targetLocation != null)
     {

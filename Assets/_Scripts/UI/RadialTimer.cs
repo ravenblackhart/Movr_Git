@@ -26,6 +26,8 @@ public class RadialTimer : MonoBehaviour
     [HideInInspector] public float taskDuration = 10f;
 
     float fillProgress;
+    float transitionProgress;
+    bool transitionGoal;
 
     private void Start()
     {
@@ -49,25 +51,36 @@ public class RadialTimer : MonoBehaviour
 
         Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.InverseLerp(0.3f, 0f, fill);
 
-        radialIndicatorUI.transform.localPosition = posDeltaShaking;
+        radialIndicatorUI.transform.localPosition = posDeltaShaking + GetProgressPosition(transitionProgress);
     }
 
     public void UpdateRadialTimer()
     {
-        radialIndicatorUI.fillAmount = fillProgress;
-
-        if (radialIndicatorUI.fillAmount > 0.5f)
+        if (transitionGoal)
         {
-            radialIndicatorUI.color = CustomClasses.RemapLerp(color1, color2, 1f, 0.5f, fillProgress);
+            transitionProgress = Mathf.Min(transitionProgress + Time.deltaTime / 0.5f, 1f);
         }
-        else
+        else if (transitionProgress != 0f)
         {
-            radialIndicatorUI.color = CustomClasses.RemapLerp(color2, color3, 0.5f, 0f, fillProgress);
+            transitionProgress += Time.deltaTime / 0.5f;
+
+            if (transitionProgress >= 2f)
+            {
+                transitionProgress = 0f;
+            }
         }
 
-        Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.InverseLerp(0.3f, 0f, fillProgress);
+        radialIndicatorUI.transform.localPosition = GetProgressPosition(transitionProgress);
+    }
 
-        radialIndicatorUI.transform.localPosition = posDeltaShaking;
+    public void UpdateRadialTimerGoal(bool goal)
+    {
+        transitionGoal = goal;
+    }
+
+    Vector3 GetProgressPosition(float progress)
+    {
+        return Vector3.up * Mathf.Pow(progress - 1f, 2f) * 200f;
     }
 
     void Update()

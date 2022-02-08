@@ -16,7 +16,8 @@ namespace _Scripts.Audio
             Jazz, 
             Blues, 
             House, 
-            Funk
+            Funk,
+            Rock
         }
     }
 }

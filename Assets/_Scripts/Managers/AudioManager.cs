@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
+
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
@@ -83,25 +84,25 @@ public class AudioManager : MonoBehaviour
         AudioSettings[(int)AudioGroups.Environment].SetExposedParam(value); 
     }
 
-    // public void GlobalToggle()
-    // {
-    //     AudioSettings[(int)AudioGroups.Global].ToggleAudio();
-    // }
-    //
-    // public void MusicToggle()
-    // {
-    //     AudioSettings[(int)AudioGroups.Music].ToggleAudio();
-    // }
-    //
-    // public void SFXToggle()
-    // {
-    //     AudioSettings[(int)AudioGroups.SFX].ToggleAudio();
-    // }
-    //
-    // public void EnvToggle()
-    // {
-    //     AudioSettings[(int)AudioGroups.Environment].ToggleAudio();
-    // }
+    public void GlobalToggle()
+    {
+        AudioSettings[(int)AudioGroups.Global].ToggleAudio();
+    }
+    
+    public void MusicToggle()
+    {
+        AudioSettings[(int)AudioGroups.Music].ToggleAudio();
+    }
+    
+    public void SFXToggle()
+    {
+        AudioSettings[(int)AudioGroups.SFX].ToggleAudio();
+    }
+    
+    public void EnvToggle()
+    {
+        AudioSettings[(int)AudioGroups.Environment].ToggleAudio();
+    }
     
     
 }
@@ -110,35 +111,46 @@ public class AudioManager : MonoBehaviour
 public class AudioSetting
 {
     [CanBeNull] public Slider slider;
-    //public GameObject redX;
     public string exposedParam;
 
     [SerializeField][Range(-80f, 0f)] private float audioVolume; 
-    //public Toggle soundToggle; 
+    public Toggle soundToggle;
+    private Image audioStrength; 
 
     public void Initialize()
     {
         audioVolume = PlayerPrefs.GetFloat(exposedParam);
-        if (slider != null) slider.value = audioVolume; 
+        if (slider != null) slider.value = audioVolume;
+
+        audioStrength = soundToggle.transform.Find("VolImage").GetComponent<Image>(); 
+
     }
 
     void OnValidate()
     {
         SetExposedParam(audioVolume);
+        if (audioVolume > 60f) 
+            audioStrength.sprite = UIManager.Instance.AudioStrength3; 
+        if (audioVolume <= 60f) 
+            audioStrength.sprite = UIManager.Instance.AudioStrength2; 
+        if (audioVolume <= 30f) 
+            audioStrength.sprite = UIManager.Instance.AudioStrength1;
     }
 
-    // public void ToggleAudio()
-    // {
-    //     if (!soundToggle)
-    //     {
-    //         slider.value = PlayerPrefs.GetFloat(exposedParam);
-    //     }
-    //     
-    //     if (soundToggle)
-    //     {
-    //         slider.value = slider.minValue; 
-    //     }
-    // }
+    public void ToggleAudio()
+    {
+        if (soundToggle)
+        {
+            slider.value = PlayerPrefs.GetFloat(exposedParam);
+            
+        }
+        
+        if (!soundToggle)
+        {
+            slider.value = slider.minValue;
+            soundToggle.image.color = UIManager.Instance.DisabledColor; 
+        }
+    }
     
     public void SetExposedParam(float value)
     {

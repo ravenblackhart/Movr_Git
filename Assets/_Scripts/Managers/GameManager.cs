@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public TaskType currentTaskType;
 
+    int totalScore;
+
     float potentialRideScore;
 
     bool scoreTicking;
@@ -91,6 +93,15 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        ratingCountdown.UpdateRating(5f, 0f);
+
+        radialTimer.UpdateRadialTimer();
+
+        scoreText.text = "$0";
+    }
+
     // Update
     void Update()
     {
@@ -105,17 +116,14 @@ public class GameManager : MonoBehaviour
 
     void StartNewCustomer()
     {
-        currentPickup = pickupPool[WeightedDistanceRandomization(pickupPool, car)];
+        currentPickup = pickupPool[customerIndex];
 
-        currentDropoff = dropoffPool[WeightedDistanceRandomization(dropoffPool, currentPickup.transform)];
+        currentDropoff = dropoffPool[customerIndex];
 
         currentCustomer = customerPool[customerIndex];
 
         customerIndex++;
-        if (customerIndex >= customerPool.Length)
-        {
-            customerIndex = customerPool.Length - 1;
-        }
+        customerIndex = Mathf.Max(customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
 
         StartCoroutine(CustomerCoroutine());
     }
@@ -125,15 +133,7 @@ public class GameManager : MonoBehaviour
         // Innitialization
         customer = Instantiate(customerPrefab, currentPickup.transform.position, currentPickup.transform.rotation).GetComponent<CustomerController>();
 
-        potentialRideScore = 5f;
-
-        ratingCountdown.UpdateRating(potentialRideScore);
-
         scoreTicking = false;
-
-        StartCoroutine(ScoreUpdateLoopCoroutine());
-
-        inRide = true;
 
         // Pickup Customer
         currentPickup.trigger.EnableTrigger();
@@ -165,6 +165,16 @@ public class GameManager : MonoBehaviour
 
         rideStartEvent.Invoke();
 
+        potentialRideScore = 5f;
+
+        ratingCountdown.UpdateRating(potentialRideScore, 0f);
+
+        radialTimer.UpdateRadialTimer(1f);
+
+        inRide = true;
+
+        StartCoroutine(ScoreUpdateLoopCoroutine());
+
         yield return new WaitForSeconds(1f);
 
         if (true) // Implement check for if customer was satisfied during your last ride with them
@@ -193,6 +203,8 @@ public class GameManager : MonoBehaviour
         }
 
         scoreTicking = false;
+
+        radialTimer.UpdateRadialTimerGoal(false);
 
         // Dropoff Customer
         carDriving = false;
@@ -312,6 +324,8 @@ public class GameManager : MonoBehaviour
 
                             taskStartEvent.Invoke();
 
+                            radialTimer.UpdateRadialTimerGoal(true);
+
                             break;
                         }
                     }
@@ -324,6 +338,8 @@ public class GameManager : MonoBehaviour
             {
                 currentTask.UpdateTask(this);
                 Debug.Log(currentTask);
+
+                radialTimer.UpdateRadialTimer(taskTimer / taskTimerTotal);
 
                 if (currentTask.completedTaskEvent.Query())
                 {
@@ -338,6 +354,8 @@ public class GameManager : MonoBehaviour
 
                     taskEndEvent.Invoke();
                     taskCompletionEvent.Invoke();
+
+                    radialTimer.UpdateRadialTimerGoal(false);
                 }
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
@@ -352,6 +370,8 @@ public class GameManager : MonoBehaviour
 
                     taskEndEvent.Invoke();
                     taskFailureEvent.Invoke();
+
+                    radialTimer.UpdateRadialTimerGoal(false);
 
                     ScoreLoseStar();
                 }
@@ -393,8 +413,6 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-
-            radialTimer.UpdateRadialTimer(taskTimer / taskTimerTotal);
 
             yield return null;
         }
@@ -515,9 +533,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ScoreUpdateLoopCoroutine()
     {
-        while (true)
+        float progress = 0f;
+
+        while (inRide)
         {
             yield return null;
+
+            progress = Mathf.Clamp01(progress + Time.deltaTime / 0.5f);
 
             var lastPotentialRideScore = potentialRideScore;
 
@@ -526,9 +548,24 @@ public class GameManager : MonoBehaviour
                 potentialRideScore -= Time.deltaTime / 10f;
             }
 
-            ratingCountdown.UpdateRating(potentialRideScore);
+            ratingCountdown.UpdateRating(potentialRideScore, progress);
 
             radialTimer.UpdateRadialTimer();
+        }
+
+        totalScore = Mathf.CeilToInt(potentialRideScore) * 10;
+
+        scoreText.text = "$" + totalScore.ToString();
+
+        while (progress < 2f)
+        {
+            progress = Mathf.Min(progress + Time.deltaTime / 0.5f, 2f);
+
+            ratingCountdown.UpdateRating(potentialRideScore, progress);
+
+            radialTimer.UpdateRadialTimer();
+
+            yield return null;
         }
     }
 
@@ -545,6 +582,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField]
     RadialTimer radialTimer;
+
+    [SerializeField]
+    TMPro.TextMeshProUGUI scoreText;
 
     void StopDialog()
     {

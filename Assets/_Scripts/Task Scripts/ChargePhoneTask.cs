@@ -3,9 +3,11 @@ using UnityEngine;
 public class ChargePhoneTask : Task
 {
     private float _goalValue = 10f;
-    
+    private float _timer = 0;
+
     public override PromptType StartTask(GameManager gameManager)
     {
+        ThrowPhone(gameManager);
         return PromptType.Main;
     }
 
@@ -15,8 +17,9 @@ public class ChargePhoneTask : Task
         {
             if (phone.touchCustomerQueryEvent.Query(Time.frameCount))
             {
+
                 if (!phone.OverHeated && phone.ChargeAmount >= _goalValue)
-                {
+                {                                       
                     completedTaskEvent.Invoke();
                 }
                 else
@@ -25,11 +28,23 @@ public class ChargePhoneTask : Task
                 }
             }
         }
+
+        _timer += Time.deltaTime;
+
+        if (_timer >= gameManager.customer.GetComponent<ThrowPhone>().throwTimer) {
+            ThrowPhone(gameManager);
+            _timer = 0;
+        }
     }
 
     public override void EndTask(GameManager gameManager)
     {
         //
+    }
+
+    public void ThrowPhone(GameManager gameManager) {
+        ThrowPhone throwPhone = gameManager.customer.GetComponent<ThrowPhone>();
+        throwPhone.Throw(gameManager.taskReferences.phones[0].gameObject);
     }
 
     // public override bool CheckValid(GameManager gameManager)

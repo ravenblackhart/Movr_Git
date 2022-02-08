@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,10 +33,10 @@ public class WindowCranker : MonoBehaviour
     private float _leverValue = 1;
     public float LeverValue => _leverValue;
 
-    [Header("The window crank game object needs this tag: (and a collider)")]
-    [SerializeField]
-    private string _windowCrankTag = "WindowCrank";
+    private readonly string _windowCrank = "WindowCrank";
+    private readonly float _windowSpeed = 0.35f; 
 
+    private Sound _crankingSound;
 
     private void Awake()
     {
@@ -49,6 +50,10 @@ public class WindowCranker : MonoBehaviour
 
         _mouseClick = _playerInput.actions["PrimaryAction"];
         _zAngle = -_maxCrankAngle;
+
+        _crankingSound = FindCrankingSound(_windowCrank);
+        //AudioManager.Instance.Play(_windowCrank);
+        //_crankingSound.source.Pause();
     }
 
     void Update()
@@ -69,6 +74,11 @@ public class WindowCranker : MonoBehaviour
         _mouseClick.Disable();
     }
 
+    private Sound FindCrankingSound(string name)
+    {
+        return Array.Find(AudioManager.Instance.sounds, sound => sound.name == name);
+    }
+
     private void MousePressed(InputAction.CallbackContext context)
     {
         Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2, 0);
@@ -77,7 +87,7 @@ public class WindowCranker : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider != null && hit.collider.gameObject.tag == _windowCrankTag)
+            if (hit.collider != null && hit.collider.gameObject.tag == _windowCrank)
             {
                 StartCoroutine(DragUpdate(hit.collider.gameObject));
             }
@@ -87,7 +97,8 @@ public class WindowCranker : MonoBehaviour
     private IEnumerator DragUpdate(GameObject crank)
     {
         _cameraSwitcher.ToggleLock();
-
+        // Start sound
+        _crankingSound.source.Play();
         while (_mouseClick.ReadValue<float>() != 0)
         {
             // Check mouse movement along y-axis
@@ -103,24 +114,35 @@ public class WindowCranker : MonoBehaviour
             crank.transform.localEulerAngles = new Vector3(crank.transform.localEulerAngles.x,
                 crank.transform.localEulerAngles.y, _zAngle);
             // Raise/lower windows
-            _yPosWindows = Mathf.Clamp(_yPosWindows += (Time.deltaTime * 0.35f * _prevDelta.y), MIN_Y_POS, MAX_Y_POS);
+            _yPosWindows = Mathf.Clamp(_yPosWindows += 
+                (Time.deltaTime * _windowSpeed * _prevDelta.y), MIN_Y_POS, MAX_Y_POS);
             _leverValue = ChangeLeverValue(_yPosWindows);
-            _windows.transform.localPosition = 
-                new Vector3(_windows.transform.localPosition.x, _yPosWindows, _windows.transform.localPosition.z); 
+            _windows.transform.localPosition = new Vector3(_windows.transform.localPosition.x,
+                _yPosWindows, _windows.transform.localPosition.z); 
 
             yield return _waitForFixedUpdate;
         }
+        // Stop this soundly madness
+        _crankingSound.source.Stop();
+        // Resume to the normal camera
         _cameraSwitcher.ToggleLock();
     }
 
     private float ChangeLeverValue(float yPos)
     {
+        // Resume sound...
+        _crankingSound.source.UnPause();
+        // ... unless:
         if (yPos <= MIN_Y_POS + 0.05f)
         {
+            // Pause sound
+            _crankingSound.source.Pause();
             return 0;
         }
         else if (yPos >= MAX_Y_POS - 0.05f)
         {
+            // Pause sound
+            _crankingSound.source.Pause();
             return 1;
         }
         else

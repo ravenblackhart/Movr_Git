@@ -83,7 +83,12 @@ public class Phone : PhysicsObject
     //     }
     //     base.FixedUpdate();
     // }
-    
+
+    private void LerpColour()
+    {
+        
+    }
+
     private void CheckValue()
     {
         if (_chargeAmount >= 10)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,33 +26,40 @@ public class CarController : MonoBehaviour
     private float _maxBrakeTorque = 8000; // maximum brake torque the motor can apply to wheel
     private float _curBrakeTorque = 0;
 
-    private GameObject _steeringWheel;
-
-
     [Range(-1, 1)]
     public float speed = 0;
     [Range(-1, 1)]
     public float turn = 0;
 
-    private float _zAngle = 0;
 
     private Rigidbody _rigidbody;
     [SerializeField]
     private float _maxVelocity = 10; // Maximum speed allowed
-    private float _recoverytime = 30;
+    private readonly float _recoverytime = 30;
+
+    //private bool motorSound = false;
+    private Sound _motorSound;
+    private readonly string _driving = "Driving";
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        _steeringWheel = GameObject.FindGameObjectWithTag("SteeringWheel");
         _rigidbody = GetComponent<Rigidbody>();
+        _motorSound = FindMotorSound(_driving);
+        _motorSound.loop = true;
+        AudioManager.Instance.Play(_driving);
+        _motorSound.source.Pause();
     }
     
+    private Sound FindMotorSound(string name)
+    {
+        return Array.Find(AudioManager.Instance.sounds, sound => sound.name == name);
+    }
+
     void FixedUpdate()
     {
         // prevent the car from moving to quickly
         float maxSpeed = _maxVelocity;
-        //Debug.Log(_rigidbody.velocity.sqrMagnitude + " " + speed);
         if (isReversing)
         {
             // Change the top speed depending on how quickly the car can go in reverse
@@ -62,27 +70,35 @@ public class CarController : MonoBehaviour
             // Slow down the car
             speed = GetSpeed(true, isReversing);
         }
-        else
-        {
-            // Make the car go faster
-            //speed = GetSpeed(false, isReversing);
-        }
-        //if (isReversing)
-        //{
-        //    speed = _reverseGearStrength;
-        //}
-        //else if (_rigidbody.velocity.sqrMagnitude > _maxVelocity)
-        //{
-        //    speed = Mathf.MoveTowards(speed, 0, _recoverytime * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    speed = Mathf.MoveTowards(speed, 1, _recoverytime * Time.deltaTime);
-        //}
-
+        
         // Move and steer the car
         float motor = _maxMotorTorque * speed * Time.deltaTime;
         float steering = _maxSteeringAngle * turn;
+
+        // sound if car is moving
+        //if ((motor > 0.5f || motor < -0.5f) && !_motorSound.source.isPlaying)
+        //{
+        //    AudioManager.Instance.Play("Driving");
+        //}
+        //else 
+        if ((motor > 0.5f || motor < -0.5f) && !_motorSound.source.isPlaying)
+        {
+            _motorSound.source.UnPause();
+        }
+        else if (motor < 0.5f && motor > -0.5f)
+        {
+            //_motorSound.source.Pause();
+        }
+
+        //if (!motorSound && (int)speed != 0)
+        //{
+        //    AudioManager.Instance.Play("Driving");
+        //    motorSound = true;
+        //}
+        //else if ((int)speed == 0)
+        //{
+        //    motorSound = false;
+        //}
         foreach (AxleInfo axleInfo in _axleInfos)
         {
             if (axleInfo.steering)
@@ -140,8 +156,8 @@ public class CarController : MonoBehaviour
         _curBrakeTorque = 0;
     }
 
-    // Finds the corresponding visual wheel and, beh�vs detta?
-    // correctly applies the transform
+    // Finds the corresponding visual wheel and, behövs detta?
+    // correctly turns them
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
         if (collider.transform.childCount == 0)
@@ -159,7 +175,7 @@ public class CarController : MonoBehaviour
         visualWheel.transform.rotation = rotation;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class AxleInfo
     {
         public WheelCollider leftWheel;
