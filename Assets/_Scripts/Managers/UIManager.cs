@@ -81,9 +81,9 @@ public class UIManager : MonoBehaviour
     
     //Settings
     private Color enabledColor = new Color32(56, 56, 56, 255); 
-    private Color disabledColor = new Color32(120, 120, 120, 255); 
-    
-    
+    private Color disabledColor = new Color32(120, 120, 120, 255);
+
+    private bool tutorialOn = true; 
     
     
     
@@ -101,8 +101,16 @@ public class UIManager : MonoBehaviour
             instance = this; 
         }
 
-        if (PlayerPrefs.GetInt("TutorialState") == 1) tutorialState.isOn = true; 
-        else if (PlayerPrefs.GetInt("TutorialState") == 0) tutorialState.isOn = false; 
+        if (PlayerPrefs.GetInt("TutorialState") == 1)
+        {
+            tutorialState.isOn = true;
+            tutorialOn = true; 
+        } 
+        else if (PlayerPrefs.GetInt("TutorialState") == 0)
+        {
+            tutorialState.isOn = false;
+            tutorialOn = false; 
+        } 
     }
     
 
@@ -127,22 +135,24 @@ public class UIManager : MonoBehaviour
             
         }
         
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        else if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             pauseMenu.enabled = false;
             gameOverMenu.enabled = false; 
             SetScoreText(score.IntValue.ToString());
 
-            if (tutorialState.isOn == true)
+            if (tutorialOn == true)
             {
                 readyPanel.enabled = true;
-                tutorialCanvas.enabled = true; 
+                tutorialCanvas.enabled = true;
+                Time.timeScale = 0f; 
             }
             
-            else if (tutorialState.isOn == false)
+            else if (tutorialOn == false)
             {
                 readyPanel.enabled = false;
-                tutorialCanvas.enabled = false; 
+                tutorialCanvas.enabled = false;
+                Time.timeScale = 1f; 
             }
         }
     }
@@ -165,13 +175,11 @@ public class UIManager : MonoBehaviour
     public void OpenPanel(Canvas panel)
     {
         panel.enabled = true;
-        
     }
 
     public void ClosePanel(Canvas panel)
     {
-        panel.enabled = false; 
-
+        panel.enabled = false;
     }
     
 

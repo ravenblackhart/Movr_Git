@@ -30,8 +30,15 @@ public class GameManager : MonoBehaviour
 
     bool isPlayingDialog = false;
 
+    [System.NonSerialized]
+    public bool inRide;
+
     [HideInInspector]
     public TaskType currentTaskType;
+
+    float potentialRideScore;
+
+    bool scoreTicking;
 
     #region References
 
@@ -110,13 +117,23 @@ public class GameManager : MonoBehaviour
             customerIndex = customerPool.Length - 1;
         }
 
-        StartCoroutine("CustomerCoroutine");
+        StartCoroutine(CustomerCoroutine());
     }
 
     IEnumerator CustomerCoroutine()
     {
-        // Create Customer
+        // Innitialization
         customer = Instantiate(customerPrefab, currentPickup.transform.position, currentPickup.transform.rotation).GetComponent<CustomerController>();
+
+        potentialRideScore = 5f;
+
+        ratingCountdown.UpdateRating(potentialRideScore);
+
+        scoreTicking = false;
+
+        StartCoroutine(ScoreUpdateLoopCoroutine());
+
+        inRide = true;
 
         // Pickup Customer
         currentPickup.trigger.EnableTrigger();
@@ -164,6 +181,8 @@ public class GameManager : MonoBehaviour
         currentDropoff.trigger.EnableTrigger();
 
         // Handle Tasks
+        scoreTicking = true;
+
         if (isDebugingTasks)
         {
             yield return TaskLoopCoroutine_Debug();
@@ -172,6 +191,8 @@ public class GameManager : MonoBehaviour
         {
             yield return TaskLoopCoroutine();
         }
+
+        scoreTicking = false;
 
         // Dropoff Customer
         carDriving = false;
@@ -210,6 +231,8 @@ public class GameManager : MonoBehaviour
         customer = null;
 
         currentCustomer = null;
+
+        inRide = false;
 
         StartNewCustomer();
     }
@@ -329,6 +352,8 @@ public class GameManager : MonoBehaviour
 
                     taskEndEvent.Invoke();
                     taskFailureEvent.Invoke();
+
+                    ScoreLoseStar();
                 }
 
                 canPlayDialog = false;
@@ -368,6 +393,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+
+            radialTimer.UpdateRadialTimer(taskTimer / taskTimerTotal);
 
             yield return null;
         }
@@ -457,8 +484,12 @@ public class GameManager : MonoBehaviour
 
                     taskEndEvent.Invoke();
                     taskFailureEvent.Invoke();
+
+                    ScoreLoseStar();
                 }
             }
+
+            radialTimer.UpdateRadialTimer(taskTimer / taskTimerTotal);
 
             yield return null;
         }
@@ -482,6 +513,39 @@ public class GameManager : MonoBehaviour
         isPlayingDialog = false;
     }
 
+    IEnumerator ScoreUpdateLoopCoroutine()
+    {
+        while (true)
+        {
+            yield return null;
+
+            var lastPotentialRideScore = potentialRideScore;
+
+            if (scoreTicking)
+            {
+                potentialRideScore -= Time.deltaTime / 10f;
+            }
+
+            ratingCountdown.UpdateRating(potentialRideScore);
+
+            radialTimer.UpdateRadialTimer();
+        }
+    }
+
+    void ScoreLoseStar()
+    {
+        potentialRideScore = Mathf.Floor(potentialRideScore) == potentialRideScore ? potentialRideScore - 1f : Mathf.Floor(potentialRideScore);
+
+        ratingCountdown.UpdateRating(potentialRideScore);
+    }
+
+    #region UI
+    [Header("UI References"), SerializeField]
+    _Scripts.UI.RatingCountdown ratingCountdown;
+    
+    [SerializeField]
+    RadialTimer radialTimer;
+
     void StopDialog()
     {
         StopCoroutine("PlayDialogCoroutine");
@@ -490,6 +554,8 @@ public class GameManager : MonoBehaviour
 
         isPlayingDialog = false;
     }
+
+    #endregion UI
 
     public static int WeightedDistanceRandomization(MonoBehaviour[] objectArray, Transform distanceToTransform)
     {

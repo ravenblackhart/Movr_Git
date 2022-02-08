@@ -64,6 +64,11 @@ public static class CustomClasses
 
     public static void Align(this Transform[] a, Transform[] b) { for (int i = 0; i < Mathf.Min(a.Length, b.Length); i++) { a[i].Align(b[i]); } }
 
+    public static Vector3 Damp(this Vector3 v, Vector3 a, Vector3 b, float lambda, float dt)
+    {
+        return Vector3.Lerp(a, b, 1 - Mathf.Exp(-lambda * dt));
+    }
+
     public static float[] Normalize(this float[] a)
     {
         float total = 0f;
@@ -203,6 +208,31 @@ public static class CustomClasses
     public static float DampAngle(float a, float b, float lambda, float dt)
     {
         return Mathf.LerpAngle(a, b, 1 - Mathf.Exp(-lambda * dt));
+    }
+
+    public static float RemapLerp(float a1, float b1, float a2, float b2, float t)
+    {
+        return Mathf.Lerp(a1, b1, Mathf.InverseLerp(a2, b2, t));
+    }
+
+    public static Vector2 RemapLerp(Vector2 a1, Vector2 b1, float a2, float b2, float t)
+    {
+        return Vector2.Lerp(a1, b1, Mathf.InverseLerp(a2, b2, t));
+    }
+
+    public static Vector3 RemapLerp(Vector3 a1, Vector3 b1, float a2, float b2, float t)
+    {
+        return Vector3.Lerp(a1, b1, Mathf.InverseLerp(a2, b2, t));
+    }
+
+    public static Quaternion RemapLerp(Quaternion a1, Quaternion b1, float a2, float b2, float t)
+    {
+        return Quaternion.Lerp(a1, b1, Mathf.InverseLerp(a2, b2, t));
+    }
+
+    public static Color RemapLerp(Color a1, Color b1, float a2, float b2, float t)
+    {
+        return Color.Lerp(a1, b1, Mathf.InverseLerp(a2, b2, t));
     }
 
     private static List<Transform> GetAllChildrenRecursive(Transform a)

@@ -10,6 +10,8 @@ public class LeverGearstick : Lever
     [SerializeField]
     private float _value2AngleModifier = 60.0f;
 
+    private string _audioName = "Gearstick";
+
     void Awake()
     {
         _playerDrag = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDragObject>();
@@ -33,6 +35,8 @@ public class LeverGearstick : Lever
             _orgin.transform.localEulerAngles.y,  SetStickAngle( -_zAngle));//-_zAngle);//
         
     }
+        bool _soundOn = false;
+    int _prevGear = 0;
     /// <summary>
     /// Gives the stick four gears: full speed, half speed, park(brake) and reverse
     /// </summary>
@@ -42,23 +46,19 @@ public class LeverGearstick : Lever
     {
         if (curValue < -55)
         {
-            _leverValue = 1;
-            return -60;
+            return ChangeGearValues(2);
         }
-        else if (curValue < -25 && curValue > -40)
+        else if (curValue < -25 && curValue > -35)
         {
-            _leverValue = 0.5f;
-            return -30;
+            return ChangeGearValues(1);
         }
         else if (curValue < 10 && curValue > -5)
         {
-            _leverValue = 0;
-            return 0;
+            return ChangeGearValues(0);
         }
         else if (curValue > 20)
         {
-            _leverValue = -0.5f;
-            return 30;
+            return ChangeGearValues(-1);
         }
         else
         {
@@ -66,4 +66,37 @@ public class LeverGearstick : Lever
         }
     }
 
+    private int ChangeGearValues(int gear)
+    {
+        switch (gear)
+        {
+            case 2:
+                PlaySound(2);
+                _leverValue = 1;
+                return -60;
+            case 1:
+                PlaySound(1);
+                _leverValue = 0.5f;
+                return -30;
+            case 0:
+                PlaySound(0);
+                _leverValue = 0;
+                return 0;
+            case -1:
+                PlaySound(-1);
+                _leverValue = -0.5f;
+                return 30;
+            default:
+                return 0;
+        }
+    }
+
+    private void PlaySound(int gear)
+    {
+        if (gear != _prevGear)
+        {
+            AudioManager.Instance.Play(_audioName);
+            _prevGear = gear;
+        }
+    }
 }

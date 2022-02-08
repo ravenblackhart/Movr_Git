@@ -23,66 +23,105 @@ public class RadialTimer : MonoBehaviour
     public bool shouldUpdate = false;
     public bool taskComplete = false; 
     private float passengerDelay = 0.3f;
-    [HideInInspector] public float taskDuration = 10f; 
+    [HideInInspector] public float taskDuration = 10f;
 
+    float fillProgress;
 
     private void Start()
     {
-        radialIndicatorUI.enabled = false;
+        radialIndicatorUI.fillAmount = maxIndicatorTimer;
     }
 
-    public void Update()
+    public void UpdateRadialTimer(float fill)
     {
-        if (Keyboard.current.gKey.isPressed)
+        radialIndicatorUI.fillAmount = fill;
+
+        fillProgress = fill;
+
+        if (radialIndicatorUI.fillAmount > 0.5f)
         {
-            shouldUpdate = false;
-            radialIndicatorUI.enabled = true;
-            StartCoroutine(StartCountdown(taskDuration)); 
-            radialIndicatorUI.color = color1;
-
-            if (radialIndicatorUI.fillAmount < 0.65)
-            {
-                radialIndicatorUI.color = color2; 
-            }
-            
-            if (radialIndicatorUI.fillAmount < 0.35)
-            {
-                radialIndicatorUI.color = color3; 
-            }
-
-            if (indicatorTimer <= 0)
-            {
-                indicatorTimer = maxIndicatorTimer;
-                radialIndicatorUI.fillAmount = maxIndicatorTimer;
-                radialIndicatorUI.enabled = false; 
-                myEvent.Invoke();
-            }
-            
-            
+            radialIndicatorUI.color = CustomClasses.RemapLerp(color1, color2, 1f, 0.5f, fill);
         }
-
         else
         {
-            if (shouldUpdate)
-            {
-                indicatorTimer += Time.deltaTime;
-                radialIndicatorUI.fillAmount = indicatorTimer;
-
-                if (indicatorTimer >= maxIndicatorTimer)
-                {
-                    indicatorTimer = maxIndicatorTimer;
-                    radialIndicatorUI.fillAmount = maxIndicatorTimer;
-                    radialIndicatorUI.enabled = false;
-                    shouldUpdate = false; 
-                }
-            }
+            radialIndicatorUI.color = CustomClasses.RemapLerp(color2, color3, 0.5f, 0f, fill);
         }
 
-        if (Keyboard.current.gKey.wasReleasedThisFrame)
+        Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.InverseLerp(0.3f, 0f, fill);
+
+        radialIndicatorUI.transform.localPosition = posDeltaShaking;
+    }
+
+    public void UpdateRadialTimer()
+    {
+        radialIndicatorUI.fillAmount = fillProgress;
+
+        if (radialIndicatorUI.fillAmount > 0.5f)
         {
-            radialIndicatorUI.enabled = false; 
-            shouldUpdate = true;
-        } 
+            radialIndicatorUI.color = CustomClasses.RemapLerp(color1, color2, 1f, 0.5f, fillProgress);
+        }
+        else
+        {
+            radialIndicatorUI.color = CustomClasses.RemapLerp(color2, color3, 0.5f, 0f, fillProgress);
+        }
+
+        Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.InverseLerp(0.3f, 0f, fillProgress);
+
+        radialIndicatorUI.transform.localPosition = posDeltaShaking;
+    }
+
+    void Update()
+    {
+        //if (Keyboard.current.gKey.isPressed)
+        //{
+        //    shouldUpdate = false;
+        //    radialIndicatorUI.enabled = true;
+        //    StartCoroutine(StartCountdown(taskDuration)); 
+        //    radialIndicatorUI.color = color1;
+
+        //    if (radialIndicatorUI.fillAmount < 0.65)
+        //    {
+        //        radialIndicatorUI.color = color2; 
+        //    }
+            
+        //    if (radialIndicatorUI.fillAmount < 0.35)
+        //    {
+        //        radialIndicatorUI.color = color3; 
+        //    }
+
+        //    if (indicatorTimer <= 0)
+        //    {
+        //        indicatorTimer = maxIndicatorTimer;
+        //        radialIndicatorUI.fillAmount = maxIndicatorTimer;
+        //        radialIndicatorUI.enabled = false; 
+        //        myEvent.Invoke();
+        //    }
+            
+            
+        //}
+
+        //else
+        //{
+        //    if (shouldUpdate)
+        //    {
+        //        indicatorTimer += Time.deltaTime;
+        //        radialIndicatorUI.fillAmount = indicatorTimer;
+
+        //        if (indicatorTimer >= maxIndicatorTimer)
+        //        {
+        //            indicatorTimer = maxIndicatorTimer;
+        //            radialIndicatorUI.fillAmount = maxIndicatorTimer;
+        //            radialIndicatorUI.enabled = false;
+        //            shouldUpdate = false; 
+        //        }
+        //    }
+        //}
+
+        //if (Keyboard.current.gKey.wasReleasedThisFrame)
+        //{
+        //    radialIndicatorUI.enabled = false; 
+        //    shouldUpdate = true;
+        //} 
     }
 
     private IEnumerator StartCountdown(float taskTimer)
