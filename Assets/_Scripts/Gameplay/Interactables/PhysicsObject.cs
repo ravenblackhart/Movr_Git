@@ -71,6 +71,12 @@ public class PhysicsObject : MonoBehaviour, IInteractable
             touchCustomerQueryEvent.Invoke(Time.frameCount);
 
             touchCustomerUnityEvent.Invoke();
+        } else if (other.gameObject.CompareTag("Ground"))
+        {
+            //Destroy physicsobject 2 seconds after colliding with world
+            
+            //TODO Add with pooling system
+            Destroy(gameObject, 2);
         }
 
         if (other.relativeVelocity.magnitude > 2)

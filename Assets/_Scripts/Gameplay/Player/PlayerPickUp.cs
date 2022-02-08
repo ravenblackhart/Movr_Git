@@ -115,9 +115,9 @@ public class PlayerPickUp : MonoBehaviour {
         // }
 
         if (_gameObjectInHand != null && _physicsObjectInHand.GetComponent<Cassette>() != null && _physicsObjectInHand.OnSnapTrigger) {
-            _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
-            
-            _physicsObjectInHand.beingHeld = false;
+            _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();          
+
+            //_physicsObjectInHand.beingHeld = false;
             _rbInHand = null;
             _gameObjectInHand = null;
             _physicsObjectInHand = null;

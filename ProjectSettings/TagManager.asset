@@ -15,6 +15,7 @@ TagManager:
   - Window
   - WindowCrank
   - CarDriving
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -46,7 +47,7 @@ TagManager:
   - 
   - 
   - PurplePlaneGone
-  - 
+  - WorldSpaceUI
   - MinimapMarkers
   m_SortingLayers:
   - name: Default
