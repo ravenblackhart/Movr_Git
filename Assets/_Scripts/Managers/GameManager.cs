@@ -100,6 +100,20 @@ public class GameManager : MonoBehaviour
         radialTimer.UpdateRadialTimer();
 
         scoreText.text = "$0";
+
+        foreach (GameObject g in taskTutorialObjects)
+        {
+            if (g != null)
+                g.SetActive(false);
+        }
+
+        foreach (GameObject g in taskTutorialObjectsOther)
+        {
+            if (g != null)
+                g.SetActive(false);
+        }
+
+        tasksCompleted = new bool[taskTutorialObjects.Length];
     }
 
     // Update
@@ -123,7 +137,7 @@ public class GameManager : MonoBehaviour
         currentCustomer = customerPool[customerIndex];
 
         customerIndex++;
-        customerIndex = Mathf.Max(customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
+        customerIndex = Mathf.Min(customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
 
         StartCoroutine(CustomerCoroutine());
     }
@@ -205,6 +219,18 @@ public class GameManager : MonoBehaviour
         scoreTicking = false;
 
         radialTimer.UpdateRadialTimerGoal(false);
+
+        foreach (GameObject g in taskTutorialObjects)
+        {
+            if (g != null)
+                g.SetActive(false);
+        }
+
+        foreach (GameObject g in taskTutorialObjectsOther)
+        {
+            if (g != null)
+                g.SetActive(false);
+        }
 
         // Dropoff Customer
         carDriving = false;
@@ -326,6 +352,17 @@ public class GameManager : MonoBehaviour
 
                             radialTimer.UpdateRadialTimerGoal(true);
 
+                            if (!tasksCompleted[(int)currentTaskType - 2])
+                            {
+                                if ((int)currentTaskType - 2 < taskTutorialObjects.Length) 
+                                    if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                                        taskTutorialObjects[(int)currentTaskType - 2].SetActive(true);
+
+                                if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                                    if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                                        taskTutorialObjectsOther[(int)currentTaskType - 2].SetActive(true);
+                            }
+
                             break;
                         }
                     }
@@ -345,6 +382,16 @@ public class GameManager : MonoBehaviour
                 {
                     currentTask.EndTask(this);
 
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                        if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                            taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                        if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                            taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
+
+                    tasksCompleted[(int)currentTaskType - 2] = true;
+
                     currentTask = null;
                     currentTaskType = TaskType.Null;
 
@@ -360,6 +407,14 @@ public class GameManager : MonoBehaviour
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
                     currentTask.EndTask(this);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                        if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                            taskTutorialObjects[(int)currentTaskType - 2].SetActive(false);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                        if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                            taskTutorialObjectsOther[(int)currentTaskType - 2].SetActive(false);
 
                     currentTask = null;
                     currentTaskType = TaskType.Null;
@@ -463,6 +518,17 @@ public class GameManager : MonoBehaviour
                         PlayDialog(GetDebugDialog(currentTask.StartTask(this), currentTaskType));
 
                         taskStartEvent.Invoke();
+
+                        if (!tasksCompleted[(int)currentTaskType - 2])
+                        {
+                            if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                                if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                                    taskTutorialObjects[(int)currentTaskType - 2].SetActive(true);
+
+                            if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                                if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                                    taskTutorialObjectsOther[(int)currentTaskType - 2].SetActive(true);
+                        }
                     }
                 }
             }
@@ -479,6 +545,16 @@ public class GameManager : MonoBehaviour
                 {
                     currentTask.EndTask(this);
 
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                        if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                            taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                        if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                            taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
+
+                    tasksCompleted[(int)currentTaskType - 2] = true;
+
                     currentTask = null;
                     currentTaskType = TaskType.Null;
 
@@ -492,6 +568,14 @@ public class GameManager : MonoBehaviour
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
                     currentTask.EndTask(this);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                        if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                            taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                        if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                            taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
 
                     currentTask = null;
                     currentTaskType = TaskType.Null;
@@ -543,9 +627,9 @@ public class GameManager : MonoBehaviour
 
             var lastPotentialRideScore = potentialRideScore;
 
-            if (scoreTicking)
+            if (scoreTicking && currentCustomer != null)
             {
-                potentialRideScore -= Time.deltaTime / 10f;
+                potentialRideScore -= Time.deltaTime / currentCustomer.starTimeLimit;
             }
 
             ratingCountdown.UpdateRating(potentialRideScore, progress);
@@ -585,6 +669,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     TMPro.TextMeshProUGUI scoreText;
+
+    [SerializeField]
+    GameObject[] 
+        taskTutorialObjects, 
+        taskTutorialObjectsOther;
+
+    bool[] tasksCompleted;
 
     void StopDialog()
     {

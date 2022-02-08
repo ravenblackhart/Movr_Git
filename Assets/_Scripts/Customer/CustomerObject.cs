@@ -13,6 +13,8 @@ public class CustomerObject : ScriptableObject
 
     public CustomerTask[] taskPool;
 
+    public float starTimeLimit = 40f;
+
     [Tooltip("The minimum interval between tasks.")]
     public float taskTimeMin;
 

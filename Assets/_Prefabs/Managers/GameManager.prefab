@@ -43,9 +43,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ba8195e1a0ba3143bef2da29df5e826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerPool: []
-  pickupPool: []
-  dropoffPool: []
+  customerPool:
+  - {fileID: 11400000, guid: 59a0b56a2e0947346b6e478608d87e20, type: 2}
+  - {fileID: 11400000, guid: 914ec0583516af14aa25d0efc32845a7, type: 2}
+  - {fileID: 11400000, guid: 614c6025f5bf24340abf28fec3b36e52, type: 2}
+  - {fileID: 11400000, guid: 7775d22dec4f0d24c8841314ffaff414, type: 2}
+  - {fileID: 11400000, guid: b334c3fe09ec1c44193c65211cce5447, type: 2}
+  - {fileID: 11400000, guid: 26a06d65d8297194194f658fd1a07bcf, type: 2}
+  - {fileID: 11400000, guid: d05307376e517c4429f1bf75db6946bd, type: 2}
+  - {fileID: 11400000, guid: 82ac35ea46af46f4da0d3dd65a0f3b23, type: 2}
+  - {fileID: 11400000, guid: 91d22c10be9a26c48acf3dc338fddc79, type: 2}
+  pickupPool:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dropoffPool:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   currentTaskType: 0
   car: {fileID: 0}
   audioManager: {fileID: 0}
@@ -82,3 +109,6 @@ MonoBehaviour:
   isDebugingTasks: 0
   ratingCountdown: {fileID: 0}
   radialTimer: {fileID: 0}
+  scoreText: {fileID: 0}
+  taskTutorialObjects: []
+  taskTutorialObjectsOther: []

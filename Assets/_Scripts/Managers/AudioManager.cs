@@ -122,15 +122,19 @@ public class AudioSetting
         audioVolume = PlayerPrefs.GetFloat(exposedParam);
         if (slider != null) slider.value = audioVolume;
 
-        audioStrength = soundToggle.transform.Find("VolImage").GetComponent<Image>(); 
+        audioStrength = soundToggle.graphic.GetComponent<Image>(); 
 
     }
 
     void OnValidate()
     {
         SetExposedParam(audioVolume);
+    }
+
+    void Update()
+    {
         if (audioVolume > 60f) 
-            audioStrength.sprite = UIManager.Instance.AudioStrength3; 
+        audioStrength.sprite = UIManager.Instance.AudioStrength3; 
         if (audioVolume <= 60f) 
             audioStrength.sprite = UIManager.Instance.AudioStrength2; 
         if (audioVolume <= 30f) 
@@ -139,13 +143,13 @@ public class AudioSetting
 
     public void ToggleAudio()
     {
-        if (soundToggle)
+        if (soundToggle.isOn == true)
         {
             slider.value = PlayerPrefs.GetFloat(exposedParam);
             
         }
         
-        if (!soundToggle)
+        if (soundToggle.isOn == false)
         {
             slider.value = slider.minValue;
             soundToggle.image.color = UIManager.Instance.DisabledColor; 
@@ -154,8 +158,9 @@ public class AudioSetting
     
     public void SetExposedParam(float value)
     {
-        //redX.SetActive(value <= slider.minValue);
         AudioManager.Instance.Mixer.SetFloat(exposedParam, value);
         PlayerPrefs.SetFloat(exposedParam, value);
+
+        if (value <= slider.minValue) soundToggle.isOn = false; 
     }
 }
