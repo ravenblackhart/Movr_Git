@@ -14,14 +14,16 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     //for audio, might move later
     [SerializeField] private string _pickupSound;
     [SerializeField] private string _impactSound;
-    
+
+    private Transform _worldParent;
     private float _snapDistance;
     private float _leaveSnapDistance;
     public bool _onSnapTrigger;
 
     public CustomClasses.QueryEvent touchCustomerQueryEvent;
     public UnityEngine.Events.UnityEvent touchCustomerUnityEvent;
-    
+
+    public Transform WorldParent => _worldParent;
     public float MaxRange => _maxRange;
     public bool beingHeld = false;
     public bool OnSnapTrigger
@@ -36,8 +38,14 @@ public class PhysicsObject : MonoBehaviour, IInteractable
     {
         _rb = gameObject.GetComponent<Rigidbody>();
         _holdPos = GameObject.Find("Hold Position").transform;
+        _worldParent = GameObject.FindWithTag("CarStill").transform;
     }
-    
+
+    // private void Start()
+    // {
+    //     _worldParent = GameObject.FindWithTag("CarStill").transform;
+    // }
+
     public void OnStartHover()
     {
         CrossHair.Instance.UpdateCrosshair(gameObject);

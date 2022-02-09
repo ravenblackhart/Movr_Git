@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 3290601531500402994}
   - component: {fileID: 1874987548732757655}
   - component: {fileID: 4459052313456140893}
+  - component: {fileID: 6903336109420264307}
+  - component: {fileID: 5208213865347723878}
   m_Layer: 0
-  m_Name: Grass_Cube_Corner
+  m_Name: HedgeAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,3 +83,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6903336109420264307
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801590829339132808}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.013403541, y: 0.049941406, z: 0.021222195}
+  m_Center: {x: 0.0006879768, y: 2.4301746e-17, z: 0.010611095}
+--- !u!65 &5208213865347723878
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801590829339132808}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05186619, y: 0.013230336, z: 0.021222195}
+  m_Center: {x: -0.01854333, y: -0.018355565, z: 0.0106110955}

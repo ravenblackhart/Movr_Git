@@ -17,7 +17,7 @@ MonoBehaviour:
   hasGlasses: 0
   taskPool:
   - taskType: 3
-    timeLimit: 10
+    timeLimit: 12
     mainTaskPrompt: 'Far too early in the morning for this, could you turn the [c2]volume[c]
       down?
 
@@ -29,8 +29,8 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 7
-    timeLimit: 10
-    mainTaskPrompt: 'Maybe you could find us a more mellow [c2]temperature[c]?
+    timeLimit: 12
+    mainTaskPrompt: 'Maybe you could find us a more [w]average[w] [c2]temperature[c]?
 
 
 
@@ -42,32 +42,33 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 6
-    timeLimit: 10
-    mainTaskPrompt: 'Ugh I always forget to eat [c2]breakfast[c] before big meetings.
-      You wouldn''t happen to have something to eat up there?
+    timeLimit: 12
+    mainTaskPrompt: 'I always forget to eat breakfast before big meetings. You wouldn''t
+      happen to have something to [c2]eat[c] up there?
 
 
 
 '
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
-    taskCompletionResponse: I guess this fine.
+    taskCompletionResponse: I guess this is fine.
     taskFailureResponse: I'm not asking for much here..
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 15
   taskTimeMax: 25
   tempPreference: 2
   volumePreference: 3
   musicPreference: 0
   musicPreferenceOther: 1
-  startRideDialogHappy: Take me to the Big Corp offices please.
+  startRideDialogHappy: Take me to the Big Corp [c2]offices[c] please.
   startRideDialogAngry: 
   endRideDialogHappy: Nice driving much appreciated.
   endRideDialogAngry: Yeah you better go back to driving school, [s]DUMMY[s]!
   specialEventDialog: 
   generalDialog:
-  - "My wife took the car to the shop so we\u2019ll be counting on you today."
+  - My wife took the car to the shop so we'll be counting on you today.
   - This Max guy better not be late..
   - "He thinks they\u2019re bigger than us, what a joke.\r"
   - "What is it with your generation thinking you get to make the rules??\r"

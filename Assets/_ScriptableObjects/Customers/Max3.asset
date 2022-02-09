@@ -18,24 +18,24 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 8
-    mainTaskPrompt: Let's get the party started, put on some techno!
-    secondaryTaskPrompt: 
+    mainTaskPrompt: Let's get the party started, put on some [c5]house[c] [c2]music[c]
+    secondaryTaskPrompt: Let's get the party started, put on some [c4]funk[c] [c2]music[c]
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]GROOVY[w]'
     taskFailureResponse: You suck.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 3
-    timeLimit: 5
+    timeLimit: 6
     mainTaskPrompt: Turn the [c2]volume[c] [s]UP[s]!
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
-    taskCompletionResponse: '[w]GROOVY[w]'
+    taskCompletionResponse: '[w]YEAAH[w]'
     taskFailureResponse: How do you deal with being such a bore?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 4
-    timeLimit: 6
+    timeLimit: 8
     mainTaskPrompt: Open the window I want everyone to hear this!
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -43,23 +43,15 @@ MonoBehaviour:
     taskFailureResponse: Are you trying to ruin my day??
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 8
-    timeLimit: 8
-    mainTaskPrompt: I'm feeling good, I wanna play [c2]catch[c]!
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Nice throwing!
-    taskFailureResponse: Wow you really aren't very coordinated are you?
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 6
   taskTimeMax: 15
   tempPreference: 2
   volumePreference: 1
-  musicPreference: 2
-  musicPreferenceOther: 4
+  musicPreference: 4
+  musicPreferenceOther: 3
   startRideDialogHappy: You know what? I wanna celebrate, forget my flight, take
-    me to the bar!
+    me to the [c2]bar[c]!
   startRideDialogAngry: 
   endRideDialogHappy: Thanks for the ride! Why don't you come join me after the shift!
   endRideDialogAngry: Say bye to your job [w]asshat[w].

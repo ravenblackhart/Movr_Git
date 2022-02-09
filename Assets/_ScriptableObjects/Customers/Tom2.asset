@@ -18,7 +18,7 @@ MonoBehaviour:
   taskPool:
   - taskType: 3
     timeLimit: 5
-    mainTaskPrompt: I'm not in the mood, turn down the volume.
+    mainTaskPrompt: I'm not in the mood, turn down the [c2]volume[c].
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Thanks..
@@ -27,7 +27,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 9
     timeLimit: 15
-    mainTaskPrompt: Could you charge my phone? I need to text someone.
+    mainTaskPrompt: Could you [c2]charge[c] my phone? I need to text someone.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: 'Great. '
@@ -35,24 +35,25 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 7
-    timeLimit: 15
-    mainTaskPrompt: Maybe a medium temperature would help with your driving.
+    timeLimit: 6
+    mainTaskPrompt: Maybe a medium [c2]temperature[c] would help with your driving.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: See?
     taskFailureResponse: Figured.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 5
   taskTimeMax: 10
   tempPreference: 2
   volumePreference: 3
   musicPreference: 0
   musicPreferenceOther: 0
-  startRideDialogHappy: What a shit day, take me home, have to get there in time
-    for dinner
+  startRideDialogHappy: What a shit day, take me [c2]home[c], have to get there in
+    time for dinner
   startRideDialogAngry: Oh great, last thing I needed after that meeting was seeing
-    your face again.. take me home.
+    your face again.. take me [c2]home[c].
   endRideDialogHappy: 
   endRideDialogAngry: 
   specialEventDialog: 

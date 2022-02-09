@@ -22,19 +22,19 @@ namespace _Scripts.UI
             //if (Keyboard.current.fKey.isPressed)StartCountdown(customerBaseRating);
         }
 
-        public void UpdateRating(float newRating)
+        public void UpdateRating(float newRating, bool canFall = true)
         {
-            UpdateRatingNoProgress(newRating);
+            UpdateRatingNoProgress(newRating, canFall);
         }
 
-        public void UpdateRating(float newRating, float progress)
+        public void UpdateRating(float newRating, float progress, bool canFall = true)
         {
             this.progress = progress;
 
-            UpdateRatingNoProgress(newRating);
+            UpdateRatingNoProgress(newRating, canFall);
         }
 
-        void UpdateRatingNoProgress(float newRating)
+        void UpdateRatingNoProgress(float newRating, bool canFall)
         {
             if (starFallProgs == null || starDefaultPositions == null)
             {
@@ -54,14 +54,15 @@ namespace _Scripts.UI
 
                 ratingDisplays[i].fillAmount = fill;
 
-                if (i > newRating)
-                {
-                    starFallProgs[i] += Time.deltaTime * 30f;
-                }
-                else
-                {
-                    starFallProgs[i] = 0f;
-                }
+                if (canFall)
+                    if (i > newRating)
+                    {
+                        starFallProgs[i] += Time.deltaTime * 30f;
+                    }
+                    else
+                    {
+                        starFallProgs[i] = 0f;
+                    }
 
                 var t = starFallProgs[i];
 
@@ -76,7 +77,9 @@ namespace _Scripts.UI
                     + Vector3.right * t * (0.75f + speed * 0.5f) * 2f;
                 Vector3 rotDeltaFalling = Vector3.forward * t * 5f;
 
-                Vector3 posDeltaShaking = (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.Clamp01(1f - t / 5f) * Mathf.InverseLerp(0.333f, 0.2f, fill);
+                Vector3 posDeltaShaking = canFall 
+                    ? (Vector3.right * Mathf.Sin(Time.time * 90f) * 2f + Vector3.up * Mathf.Cos(Time.time * 20f)) * Mathf.Clamp01(1f - t / 5f) * Mathf.InverseLerp(0.333f, 0.2f, fill)
+                    : Vector3.zero;
 
                 Vector3 posDeltaTransition = Vector3.up * Mathf.Pow(progress - 1f, 2f) * 200f;
 

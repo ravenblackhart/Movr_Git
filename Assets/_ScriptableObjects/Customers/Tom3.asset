@@ -18,8 +18,8 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 10
-    mainTaskPrompt: Actually, put on some easy jazz yeah?
-    secondaryTaskPrompt: 
+    mainTaskPrompt: Actually, put on some easy [c3]jazz[c] [c2]music[c] yeah?
+    secondaryTaskPrompt: Actually, put on some easy [c3]funk[c] [c2]music[c] yeah?
     tertiaryTaskPrompt: 
     taskCompletionResponse: Much better.
     taskFailureResponse: Don't worry one day you might just figure out how to be
@@ -27,9 +27,9 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 4
-    timeLimit: 6
-    mainTaskPrompt: How about getting some air in here? Open the window.
-    secondaryTaskPrompt: It's getting chilly, close the window please.
+    timeLimit: 9
+    mainTaskPrompt: How about getting some air in here? Open the [c2]window[c].
+    secondaryTaskPrompt: It's getting chilly, close the [c2]window[c] please.
     tertiaryTaskPrompt: 
     taskCompletionResponse: That wasn't so hard was it?
     taskFailureResponse: I guess that was really hard for you huh?
@@ -37,7 +37,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 5
     timeLimit: 9
-    mainTaskPrompt: Can I get some water?
+    mainTaskPrompt: Can I get some [c2]water[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Thirst quenched.
@@ -46,20 +46,21 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 6
     timeLimit: 5
-    mainTaskPrompt: Some food would be nice too.
+    mainTaskPrompt: Some [c2]food[c] would be nice too.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Truly gourmet.
     taskFailureResponse: Keeping it all to yourself are you?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 5
   taskTimeMax: 12
   tempPreference: 0
   volumePreference: 0
-  musicPreference: 1
-  musicPreferenceOther: 0
-  startRideDialogHappy: You know what. I need to see someone, take me to the hotel
+  musicPreference: 2
+  musicPreferenceOther: 3
+  startRideDialogHappy: You know what. I need to see someone, take me to the [c2]hotel[c]
     instead.
   startRideDialogAngry: 
   endRideDialogHappy: Thanks, and please.. don't tell my wife.

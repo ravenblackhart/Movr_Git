@@ -74,6 +74,7 @@ public class CustomerTask
 public enum MusicPreference
 {
     Any,
+    Rock,
     Jazz,
     Funk,
     House,

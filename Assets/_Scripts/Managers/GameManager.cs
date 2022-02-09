@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
 
         scoreText.text = "$0";
 
+        dialogRenderer.EraseDialog();
+
         foreach (GameObject g in taskTutorialObjects)
         {
             if (g != null)
@@ -136,8 +138,7 @@ public class GameManager : MonoBehaviour
 
         currentCustomer = customerPool[customerIndex];
 
-        customerIndex++;
-        customerIndex = Mathf.Min(customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
+        customerIndex = Mathf.Min(customerIndex + 1, customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
 
         StartCoroutine(CustomerCoroutine());
     }
@@ -235,7 +236,7 @@ public class GameManager : MonoBehaviour
         // Dropoff Customer
         carDriving = false;
 
-        if (true) // Implement check for if customer was satisfied
+        if (potentialRideScore >= 3f)
         {
             PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
         }
@@ -244,7 +245,9 @@ public class GameManager : MonoBehaviour
             PlayDialog(currentCustomer.endRideDialogAngry, DialogAnimationType.Angry);
         }
 
-        yield return new WaitForSeconds(Mathf.Max(EstimateReadTime(currentCustomer.endRideDialogHappy, dialogRenderer), 3f));
+        inRide = false;
+
+        yield return new WaitForSeconds(3f);
         
         for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
         {
@@ -269,8 +272,6 @@ public class GameManager : MonoBehaviour
         customer = null;
 
         currentCustomer = null;
-
-        inRide = false;
 
         StartNewCustomer();
     }
@@ -637,7 +638,36 @@ public class GameManager : MonoBehaviour
             radialTimer.UpdateRadialTimer();
         }
 
-        totalScore = Mathf.CeilToInt(potentialRideScore) * 10;
+        int lastScore = totalScore;
+        totalScore += Mathf.CeilToInt(potentialRideScore) * 10;
+
+        AnimationCurve animationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+        for (float f = 0; f < 2f; f += Time.deltaTime)
+        {
+            potentialRideScore = Mathf.Min(potentialRideScore + Time.deltaTime, Mathf.Ceil(potentialRideScore));
+
+            ratingCountdown.UpdateRating(potentialRideScore, progress);
+
+            radialTimer.UpdateRadialTimer();
+
+            scoreText.transform.localScale = Vector3.one * (1f + animationCurve.Evaluate(Mathf.Clamp01(f - 1f)) * 1.5f);
+
+            yield return null;
+        }
+
+        for (float f = 0; f < 1f; f += Time.deltaTime / potentialRideScore)
+        {
+            float fScaled = 1f - Mathf.Pow(1f - f, 2f);
+
+            scoreText.text = "$" + Mathf.FloorToInt(Mathf.Lerp(lastScore, totalScore, fScaled)).ToString();
+
+            ratingCountdown.UpdateRating(potentialRideScore * (1f - fScaled), false);
+
+            radialTimer.UpdateRadialTimer();
+
+            yield return null;
+        }
 
         scoreText.text = "$" + totalScore.ToString();
 
@@ -645,12 +675,16 @@ public class GameManager : MonoBehaviour
         {
             progress = Mathf.Min(progress + Time.deltaTime / 0.5f, 2f);
 
-            ratingCountdown.UpdateRating(potentialRideScore, progress);
+            ratingCountdown.UpdateRating(0f, progress, false);
 
             radialTimer.UpdateRadialTimer();
 
+            scoreText.transform.localScale = Vector3.one * (2.5f - animationCurve.Evaluate(Mathf.Clamp01(progress - 1f)) * 1.5f);
+
             yield return null;
         }
+
+        scoreText.transform.localScale = Vector3.one;
     }
 
     void ScoreLoseStar()

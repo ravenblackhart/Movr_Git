@@ -18,17 +18,17 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 15
-    mainTaskPrompt: Can you put on some pop music? Just don't tell anyone.
-    secondaryTaskPrompt: 
+    mainTaskPrompt: 'Can you put on some [c3]jazz[c] [c2]music[c]? '
+    secondaryTaskPrompt: What's this shit? Go back to the [c6]rock[c] [c2]music[c].
     tertiaryTaskPrompt: 
-    taskCompletionResponse: Don't judge me.
-    taskFailureResponse: Hater.
+    taskCompletionResponse: Decent..
+    taskFailureResponse: 'Uhm.. maybe you should label your cassettes?  '
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 2
+  - taskType: 3
     timeLimit: 10
-    mainTaskPrompt: Just keep the volume on [s]medium[s] yeah?
-    secondaryTaskPrompt: What's this shit? Go back to the rock music.
+    mainTaskPrompt: Just keep the [c2]volume[c] on medium yeah?
+    secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: That's better.
     taskFailureResponse: Fine be that way.
@@ -36,7 +36,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 9
     timeLimit: 15
-    mainTaskPrompt: I'm gonna need you to charge my gym [s]phone[s] now.
+    mainTaskPrompt: I'm gonna need you to [c2]charge[c] my gym phone now.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]...[w]'
@@ -44,23 +44,24 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 7
-    timeLimit: 10
-    mainTaskPrompt: How about a [c2]medium[c] temperature?
+    timeLimit: 8
+    mainTaskPrompt: How about a medium [c2]temperature[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Cool.
     taskFailureResponse: Hello???
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 2
   volumePreference: 2
-  musicPreference: 3
-  musicPreferenceOther: 4
-  startRideDialogHappy: Hey! Take me back to the airport please.
+  musicPreference: 2
+  musicPreferenceOther: 1
+  startRideDialogHappy: Hey! Take me back to the [c2]airport[c] please.
   startRideDialogAngry: Are you serious, is there really no other driver available?
-    Airport.
+    [c2]Airport[c].
   endRideDialogHappy: 
   endRideDialogAngry: 
   specialEventDialog: 

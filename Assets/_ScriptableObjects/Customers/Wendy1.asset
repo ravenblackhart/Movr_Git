@@ -17,8 +17,8 @@ MonoBehaviour:
   hasGlasses: 0
   taskPool:
   - taskType: 7
-    timeLimit: 10
-    mainTaskPrompt: Ugh I'm all sweaty, can you turn down the temperature?
+    timeLimit: 8
+    mainTaskPrompt: Ugh I'm all sweaty, can you turn [c1]down[c] the [c2]temperature[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Thaaaanks[w]'
@@ -27,27 +27,29 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 2
     timeLimit: 15
-    mainTaskPrompt: I need some pop music in here, let's switch it up!
-    secondaryTaskPrompt: I need something more lively back here, got any rock?
+    mainTaskPrompt: I need some [c4]funk[c] [c2]music[c] in here, let's switch it
+      up!
+    secondaryTaskPrompt: I need something more lively back here, got any [c6]rock[c]
+      [c2]music[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Thaaaaaaaanks[w]'
     taskFailureResponse: Gee okay, guess customer service is not your thing.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 3
-    timeLimit: 10
+    timeLimit: 8
     mainTaskPrompt: Turn [s]up[s] the [c2]volume[c]!
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
-    taskCompletionResponse: '[w]WHOOO[w]'
-    taskFailureResponse: EGH, you're such a buzzill..
+    taskCompletionResponse: '[w]WHOOOOO[w]'
+    taskFailureResponse: '[s]EGH[s], you''re such a buzzill..'
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 4
-    timeLimit: 20
+    timeLimit: 16
     mainTaskPrompt: I need some [c2]air[c] in here, it stinks..
     secondaryTaskPrompt: I've just been to the gym, I'm all sweaty, do you want me
-      to get sick?? Close the window!
+      to get sick?? Close the [c2]window[c]!
     tertiaryTaskPrompt: 
     taskCompletionResponse: Finally..
     taskFailureResponse: Ew.
@@ -62,13 +64,14 @@ MonoBehaviour:
     taskFailureResponse: Can I speak just speak to your boss?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 10
   taskTimeMax: 15
   tempPreference: 3
   volumePreference: 1
   musicPreference: 3
   musicPreferenceOther: 4
-  startRideDialogHappy: Hello, take me to the park please.
+  startRideDialogHappy: Hello, take me to the [c2]park[c] please.
   startRideDialogAngry: 
   endRideDialogHappy: Thanks, I'll give you a good rating but you better do the same.
   endRideDialogAngry: Well that was the worst car ride of my life, by[w]eeeee[w].

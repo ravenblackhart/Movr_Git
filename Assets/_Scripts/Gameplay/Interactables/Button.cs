@@ -6,7 +6,7 @@ public class Button : MonoBehaviour, IInteractable
     [SerializeField] private float _maxRange = 10f;
     [SerializeField] private string _onInteractAudio;
     
-    [HideInInspector]public UnityEvent onInteractEvent;
+    public UnityEvent onInteractEvent;
     
     public float MaxRange => _maxRange;
     public void OnStartHover()

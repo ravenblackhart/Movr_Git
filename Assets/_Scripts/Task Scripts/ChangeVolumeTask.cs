@@ -51,8 +51,10 @@ public class ChangeVolumeTask : Task
 
     public override bool CheckValid(GameManager gameManager)
     {
+        if (!gameManager.taskReferences.cassettePlayer.occupied)
+            return false;
+        
         settingGoal = gameManager.currentCustomer.volumePreference;
-
         if (settingGoal == SettingPreference.None)
         {
             settingGoal = (SettingPreference)Random.Range(1, 3);

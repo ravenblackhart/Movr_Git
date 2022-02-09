@@ -136,8 +136,8 @@ public class PlayerPickUp : MonoBehaviour {
         {
             _rbInHand = obj.GetComponent<Rigidbody>();
             _physicsObjectInHand = obj.GetComponent<PhysicsObject>();
-            
-            _previousParent = obj.transform.parent;
+
+            _previousParent = _physicsObjectInHand.WorldParent;
             _rbInHand.useGravity = false;
             _rbInHand.drag = drag;
 

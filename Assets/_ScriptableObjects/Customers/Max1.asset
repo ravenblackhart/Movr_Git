@@ -17,16 +17,16 @@ MonoBehaviour:
   hasGlasses: 1
   taskPool:
   - taskType: 2
-    timeLimit: 20
-    mainTaskPrompt: You're really killing my vibe, got any rock music?
-    secondaryTaskPrompt: How about some techno music?
+    timeLimit: 15
+    mainTaskPrompt: You're really killing my vibe, got any [c6]rock[c] [c2]music[c]?
+    secondaryTaskPrompt: How about some [c4]funk[c] [c2]music[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Niiice[w].'
     taskFailureResponse: Fine, forget it.. jerk.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 7
-    timeLimit: 10
+    timeLimit: 8
     mainTaskPrompt: Yo is it too much to ask for a more even [c2]temperature[c]??
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -53,13 +53,14 @@ MonoBehaviour:
     taskFailureResponse: Alright stupid.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 2
   volumePreference: 2
-  musicPreference: 4
-  musicPreferenceOther: 2
-  startRideDialogHappy: Big Corp offices.
+  musicPreference: 1
+  musicPreferenceOther: 3
+  startRideDialogHappy: Big Corp [c2]offices[c].
   startRideDialogAngry: 
   endRideDialogHappy: Nice one, take it easy.
   endRideDialogAngry: This was AWFUL you better not accept my requests anymore.

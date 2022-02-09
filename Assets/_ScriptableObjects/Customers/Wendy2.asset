@@ -27,17 +27,45 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 5
     timeLimit: 10
-    mainTaskPrompt: Hello? They're also [s]thirsty[s]?? Obviously?
+    mainTaskPrompt: Hello? They're also [s][c2]thirsty[c][s]?? Obviously?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Took you long enough.
     taskFailureResponse: Your water's probably rancid anyway. [s]Ugh[s].
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: The kids like [c4]funk[c] [c2]music[c]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Your favorite!
+    taskFailureResponse: You need to refresh your library..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 7
+    timeLimit: 4
+    mainTaskPrompt: They're gonna get cold, turn up the [c2]temperature[c]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: There you go..
+    taskFailureResponse: You're [s]EnDanGeRinG[s] my kids!
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 3
+    timeLimit: 5
+    mainTaskPrompt: More [c2]volume[c]!!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Alright!
+    taskFailureResponse: '[w]zzzzzzzz[w]'
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 5
   taskTimeMax: 12
   tempPreference: 1
-  volumePreference: 2
+  volumePreference: 1
   musicPreference: 3
   musicPreferenceOther: 4
   startRideDialogHappy: Oh [w]heeeey[w], take us home please.

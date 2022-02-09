@@ -15,13 +15,53 @@ MonoBehaviour:
   bodyMaterial: {fileID: 0}
   hasHat: 1
   hasGlasses: 0
-  taskPool: []
+  taskPool:
+  - taskType: 3
+    timeLimit: 5
+    mainTaskPrompt: Actually, the [c2]volume[c] is too high, think of their ears!
+      Lower it!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Phew..
+    taskFailureResponse: '[w]HELLOOO[w]?'
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 2
+    timeLimit: 10
+    mainTaskPrompt: In fact, put on some [c3]jazz[c] [c2]music[c] instead.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Are you little ears better now?
+    taskFailureResponse: Do I need to reach over and do it myself??
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 7
+    timeLimit: 5
+    mainTaskPrompt: It's also far too hot now, turn down the [c2]temperature[c] to
+      medium.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: ty
+    taskFailureResponse: THIS IS SO [s]FRUSTRATING[s].
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 8
+    mainTaskPrompt: Could you go ahead and [c2]open[c] the window, they like the
+      breeze.
+    secondaryTaskPrompt: '[c2]Close[c] the window! Who knows what might fly in!!'
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Wait, isn't this a [w]convertible[w]?
+    taskFailureResponse: This is pointless..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 5
   taskTimeMax: 12
-  tempPreference: 3
-  volumePreference: 1
-  musicPreference: 4
-  musicPreferenceOther: 3
+  tempPreference: 2
+  volumePreference: 3
+  musicPreference: 2
+  musicPreferenceOther: 1
   startRideDialogHappy: 
   startRideDialogAngry: 
   endRideDialogHappy: Yeah you did your job, you want a medal or something?
