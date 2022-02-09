@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CassetteName: 
   Genre: 4
-  PlaylistTracks: []
+  PlaylistTracks:
+  - {fileID: 8300000, guid: d9aabf8ec05bd0d4a8bf7ef7e302295f, type: 3}
+  - {fileID: 8300000, guid: 0d1dec48b9b9ea6448b8fd5531bec7ad, type: 3}
   TapeMaterial: {fileID: 0}

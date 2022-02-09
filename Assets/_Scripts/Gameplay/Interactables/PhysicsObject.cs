@@ -97,8 +97,7 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
         if (other.relativeVelocity.magnitude > 2)
         {
-            AudioManager.Instance.Play(_impactSound);
-            
+            AudioManager.Instance.PlayFromObject(_impactSound, gameObject);
         }
     }
 }

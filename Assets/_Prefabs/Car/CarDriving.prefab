@@ -336,12 +336,12 @@ MonoBehaviour:
     rightWheel: {fileID: 248748077953432349}
     motor: 1
     steering: 0
-  _maxMotorTorque: 3000
+  _maxMotorTorque: 5000
   _maxSteeringAngle: 25
-  _maxBrakeTorque: 8000
+  _maxBrakeTorque: 800000
   speed: 0
   turn: 0
-  _maxVelocity: 15
+  _maxVelocity: 50
 --- !u!114 &8605300377419416784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,8 +372,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1, y: 1.5, z: 3.8}
-  m_Center: {x: 0, y: 0.44, z: -0.06}
+  m_Size: {x: 2.3, y: 1.5, z: 3.8}
+  m_Center: {x: 0, y: 0.5, z: -0.06}
 --- !u!114 &5656399904755307836
 MonoBehaviour:
   m_ObjectHideFlags: 0

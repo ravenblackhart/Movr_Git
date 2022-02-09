@@ -18,12 +18,12 @@ public class CarController : MonoBehaviour
     private List<AxleInfo> _axleInfos; // the information about each individual axle
 
     [SerializeField]
-    private float _maxMotorTorque = 1200; // maximum torque the motor can apply to wheel
+    private float _maxMotorTorque = 5000; // maximum torque the motor can apply to wheel
     [SerializeField]
     private float _maxSteeringAngle = 25; // maximum steer angle the wheel can have
 
     [SerializeField]
-    private float _maxBrakeTorque = 8000; // maximum brake torque the motor can apply to wheel
+    private float _maxBrakeTorque = 80000; // maximum brake torque the motor can apply to wheel
     private float _curBrakeTorque = 0;
 
     [Range(-1, 1)]
@@ -33,8 +33,7 @@ public class CarController : MonoBehaviour
 
 
     private Rigidbody _rigidbody;
-    [SerializeField]
-    private float _maxVelocity = 10; // Maximum speed allowed
+    public float maxVelocity = 50; // Maximum speed allowed
     private readonly float _recoverytime = 30;
 
     //private bool motorSound = false;
@@ -59,7 +58,7 @@ public class CarController : MonoBehaviour
     void FixedUpdate()
     {
         // prevent the car from moving to quickly
-        float maxSpeed = _maxVelocity;
+        float maxSpeed = maxVelocity;
         if (isReversing)
         {
             // Change the top speed depending on how quickly the car can go in reverse

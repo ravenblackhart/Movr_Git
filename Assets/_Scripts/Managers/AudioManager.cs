@@ -50,8 +50,21 @@ public class AudioManager : MonoBehaviour
         {
             AudioSettings[i].Initialize();
         }
-        
-        
+    }
+
+    public Sound GetSound(string name)
+    {
+        return Array.Find(sounds, sound => sound.name == name);
+    }
+
+    public void PlayFromObject(string name, GameObject audioObject)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null)
+        {
+            s.source = audioObject.AddComponent<AudioSource>();
+            s.source.Play();
+        }
     }
 
     public void Play(string name) {
@@ -59,10 +72,6 @@ public class AudioManager : MonoBehaviour
         if (s != null) {
             s.source.Play();
         }
-        // // if (!s.source.isPlaying)
-        // // {
-        //     s.source.Play();
-        // // }
     }
 
     public void GlobalSlider(float value)
@@ -104,6 +113,12 @@ public class AudioManager : MonoBehaviour
         AudioSettings[(int)AudioGroups.Environment].ToggleAudio();
     }
     
+    // for inGame
+    public void RadioVolume(float value)
+    {
+        AudioSettings[(int)AudioGroups.Music].SetExposedParamNoWrite(value);
+    }
+    
     
 }
 
@@ -122,7 +137,7 @@ public class AudioSetting
         audioVolume = PlayerPrefs.GetFloat(exposedParam);
         if (slider != null) slider.value = audioVolume;
 
-        audioStrength = soundToggle.graphic.GetComponent<Image>(); 
+
 
     }
 
@@ -130,16 +145,7 @@ public class AudioSetting
     {
         SetExposedParam(audioVolume);
     }
-
-    void Update()
-    {
-        if (audioVolume > 60f) 
-        audioStrength.sprite = UIManager.Instance.AudioStrength3; 
-        if (audioVolume <= 60f) 
-            audioStrength.sprite = UIManager.Instance.AudioStrength2; 
-        if (audioVolume <= 30f) 
-            audioStrength.sprite = UIManager.Instance.AudioStrength1;
-    }
+    
 
     public void ToggleAudio()
     {
@@ -162,5 +168,10 @@ public class AudioSetting
         PlayerPrefs.SetFloat(exposedParam, value);
 
         if (value <= slider.minValue) soundToggle.isOn = false; 
+    }
+    
+    public void SetExposedParamNoWrite(float value)
+    {
+        AudioManager.Instance.Mixer.SetFloat(exposedParam, value);
     }
 }

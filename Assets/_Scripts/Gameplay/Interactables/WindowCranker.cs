@@ -18,7 +18,7 @@ public class WindowCranker : MonoBehaviour
     private Vector2 _prevDelta;
 
     [SerializeField]
-    private float _rotateSpeed = 90;
+    private float _rotateSpeed = 120;
     private float _zAngle = -90;
 
     private readonly int _maxCrankAngle = 65;
@@ -51,13 +51,24 @@ public class WindowCranker : MonoBehaviour
         _mouseClick = _playerInput.actions["PrimaryAction"];
         _zAngle = -_maxCrankAngle;
 
-        _crankingSound = FindCrankingSound(_windowCrank);
+        
         //AudioManager.Instance.Play(_windowCrank);
         //_crankingSound.source.Pause();
     }
 
+    void Start()
+    {
+        _crankingSound = AudioManager.Instance.GetSound(_windowCrank);
+
+    }
+
     void Update()
     {
+        if (_crankingSound == null)
+        {
+            Debug.LogWarning("Höpp");
+            _crankingSound = FindCrankingSound(_windowCrank);
+        }
         // Find mouse movement
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
     }

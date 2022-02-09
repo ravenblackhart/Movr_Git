@@ -1,12 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class VolumeKnob : Lever
 {
+    [SerializeField] private float _minVol;
+    [SerializeField] private float _maxVol;
+
+    [SerializeField] private AudioMixer _radioMixer;
+    
+    
     public override void UpdateLeverTransform()
     {
         _orgin.rotation = LongLerp(_start.rotation, _end.rotation, _curve.Evaluate(_leverValue));
+        
+        // Messy to put here, but method is called as the levervalue is set in the baseclass
+        ChangeVolume();
+    }
+    
+    private void ChangeVolume()
+    {
+        var radioVolume = Mathf.Lerp(_minVol, _maxVol, _leverValue);
+        print(radioVolume);
+        _radioMixer.SetFloat("MusicVol", radioVolume); 
+        
     }
     
     private Quaternion LongLerp(Quaternion p, Quaternion q, float t)

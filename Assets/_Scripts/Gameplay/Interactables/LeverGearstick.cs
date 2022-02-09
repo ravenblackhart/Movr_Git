@@ -15,11 +15,16 @@ public class LeverGearstick : Lever
     private int _currentGear = 0;
     public int CurrentGear => _currentGear;
 
-    private bool _snapOnlyNeutral = true;
+    private CarController _carController;
+    private readonly string _carControllerTag = "CarDriving";
+
+    private float _maxSpeed;
 
     void Awake()
     {
         _playerDrag = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDragObject>();
+        _carController = GameObject.FindGameObjectWithTag(_carControllerTag).GetComponent<CarController>();
+        _maxSpeed = _carController.maxVelocity;
     }
 
     public override void UpdateLeverValue()
@@ -28,6 +33,14 @@ public class LeverGearstick : Lever
         // script GearStick reads it (the LeverValue)
         _leverValue -= _moveDirection * Time.deltaTime;
         _leverValue = Mathf.Clamp(_leverValue, -0.5f, 1);
+        if (_leverValue > 0)
+        {
+            _carController.maxVelocity = _maxSpeed * _leverValue;
+        }
+        else
+        {
+            _carController.maxVelocity = _maxSpeed;
+        }
     }
 
     public override void UpdateLeverTransform()
@@ -53,7 +66,7 @@ public class LeverGearstick : Lever
         {
             return ChangeGearValues(2);
         }
-        else if (curAngle < 15 && curAngle > -15)
+        else if (curAngle < 10 && curAngle > -15)
         {
             return ChangeGearValues(0);
         }
@@ -116,34 +129,36 @@ public class LeverGearstick : Lever
         switch (gear)
         {
             case 2:
-                PlaySound(2);
+                ChangeGearSound(2);
                 _leverValue = 1;
                 return -60;
             case 1:
                 // not used right now:
-                PlaySound(1);
+                ChangeGearSound(1);
                 _leverValue = 0.5f;
                 return -30;
             case 0:
-                PlaySound(0);
+                ChangeGearSound(0);
                 _leverValue = 0;
                 return 0;
             case -1:
-                PlaySound(-1);
+                ChangeGearSound(-1);
                 _leverValue = -0.5f;
                 return 30;
             default:
+
+                _leverValue = 0;
                 return 0;
         }
     }
 
-    private void PlaySound(int gear)
+    private void ChangeGearSound(int gear)
     {
         // check if its not the same gear, only when changing to a new gear will it generate a sound
         if (gear != _currentGear)
         {
             AudioManager.Instance.Play(_audioName);
-            _currentGear = gear;
         }
+        _currentGear = gear;
     }
 }

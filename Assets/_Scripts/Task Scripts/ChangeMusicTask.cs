@@ -10,8 +10,9 @@ public class ChangeMusicTask : Task
     {
         //Check for preference in the future
         Debug.Log("Start task, music pref is " + musicPref);
+        return PromptType.Main;
 
-        if (musicPref == MusicPreference.Jazz) {
+        /*if (musicPref == MusicPreference.Jazz) {
             return PromptType.Main;
         }
 
@@ -23,14 +24,18 @@ public class ChangeMusicTask : Task
             return PromptType.Tertiary;
         }
 
-        /*else if (gameManager.currentCustomer.musicPreference == MusicPreference.House) {
+        else if (musicPref == MusicPreference.Rock) {
+            return PromptType
+        }
+
+        else if (gameManager.currentCustomer.musicPreference == MusicPreference.House) {
             return PromptType.AddAnotherPromptTypePls;
-        }*/
+        }
 
         else {
             Debug.Log("didn't get music pref?");
             return PromptType.Main;
-        }
+        }*/
     }
 
     public override void UpdateTask(GameManager gameManager)
@@ -45,6 +50,10 @@ public class ChangeMusicTask : Task
         }
 
         else if (gameManager.taskReferences.cassettePlayer.audioGenre == "FUNK" && musicPref == MusicPreference.Funk) {
+            completedTaskEvent.Invoke();
+        }
+
+        else if (gameManager.taskReferences.cassettePlayer.audioGenre == "ROCK" && musicPref == MusicPreference.Rock) {
             completedTaskEvent.Invoke();
         }
     }
@@ -74,6 +83,11 @@ public class ChangeMusicTask : Task
         else if (CheckMusicPlayer(gameManager) == "HOUSE" && musicPref == MusicPreference.Funk) {
             return false;
         }
+
+        else if (CheckMusicPlayer(gameManager) == "ROCK" && musicPref == MusicPreference.Rock) {
+            return false;
+        }
+
 
         else {
             return true;

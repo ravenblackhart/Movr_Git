@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb1aa1639cddd14a8cc8207b0af67cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateSpeed: 90
+  _rotateSpeed: 120
 --- !u!1 &4757526650415716172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,6 +3589,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   _useY: 0
   _invert: 0
+  _minVol: -60
+  _maxVol: 5
+  _radioMixer: {fileID: 24100000, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
 --- !u!1 &6055873033312185464
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,7 +4164,7 @@ AudioSource:
   m_GameObject: {fileID: 6758072278553304144}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 976740188088130744, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
   m_audioClip: {fileID: 8300000, guid: 31b0f7acb9638e44d88b0d2c27ea0054, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.373

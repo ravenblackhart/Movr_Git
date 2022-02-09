@@ -10,7 +10,9 @@ public class Gearstick : MonoBehaviour
 
     private LeverGearstick _gearLever;
 
-    private bool _forward = true;
+    private enum Direction { Forward, Stopped, Reverse};
+
+    private Direction _direction = Direction.Stopped;
     private bool _stopped = true;
 
     private readonly string _carControllerTag = "CarDriving";
@@ -31,35 +33,37 @@ public class Gearstick : MonoBehaviour
         
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        _carController.speed = _gearLever.LeverValue;
-        if (_gearLever.CurrentGear > 0 && !_forward)
+        //_carController.maxVelocity *= Mathf.Abs(_gearLever.LeverValue);
+        if (_gearLever.CurrentGear > 0 && _direction != Direction.Forward)
         {
-            ChangeDirectionSpeed();
+            ChangeDirectionSpeed(Direction.Forward);
         }
-        else if (_forward && _gearLever.CurrentGear < 0)
+        else if (_gearLever.CurrentGear < 0 && _direction != Direction.Reverse)
         {
-            ChangeDirectionSpeed();
+            ChangeDirectionSpeed(Direction.Reverse);
         }
         else if (_gearLever.CurrentGear == 0 && !_stopped)
         {
-            GoNeutral();
+            StopCar();
         }
     }
 
-    private void GoNeutral()
+    private void StopCar()
     {
+        _direction = Direction.Stopped;
+        _carController.Braking(0.2f);
         _stopped = true;
         _carController.speed = 0;
-        _carController.Braking(0.3f);
     }
 
-    private void ChangeDirectionSpeed()
+    private void ChangeDirectionSpeed(Direction newDirection)
     {
+        _carController.speed = _gearLever.LeverValue;
         _stopped = false;
         _carController.Braking(0.2f);
-        _forward = !_forward;
+        _direction = newDirection;
         _carController.isReversing = !_carController.isReversing;
     }
 }
