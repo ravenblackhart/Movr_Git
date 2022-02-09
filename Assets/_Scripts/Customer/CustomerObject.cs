@@ -5,11 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CustomerObject", menuName = "ScriptableObjects/Customers", order = 1)]
 public class CustomerObject : ScriptableObject
 {
-    public Material bodyMaterial;
+    public CustomerIdentity identity;
 
-    public bool
-        hasHat,
-        hasGlasses;
+    public bool hasKids;
 
     public CustomerTask[] taskPool;
 
@@ -86,4 +84,11 @@ public enum SettingPreference
     High,
     Mid,
     Low,
+}
+
+public enum CustomerIdentity
+{
+    Tom,
+    Max,
+    Wendy,
 }

@@ -52,8 +52,6 @@ public class WindowCranker : MonoBehaviour
         _zAngle = -_maxCrankAngle;
 
         
-        //AudioManager.Instance.Play(_windowCrank);
-        //_crankingSound.source.Pause();
     }
 
     void Start()
@@ -64,11 +62,6 @@ public class WindowCranker : MonoBehaviour
 
     void Update()
     {
-        if (_crankingSound == null)
-        {
-            Debug.LogWarning("Höpp");
-            _crankingSound = FindCrankingSound(_windowCrank);
-        }
         // Find mouse movement
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>().normalized;
     }
@@ -83,11 +76,6 @@ public class WindowCranker : MonoBehaviour
     {
         _mouseClick.performed -= MousePressed;
         _mouseClick.Disable();
-    }
-
-    private Sound FindCrankingSound(string name)
-    {
-        return Array.Find(AudioManager.Instance.sounds, sound => sound.name == name);
     }
 
     private void MousePressed(InputAction.CallbackContext context)

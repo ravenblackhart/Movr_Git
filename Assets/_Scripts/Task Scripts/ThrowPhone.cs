@@ -20,7 +20,7 @@ public class ThrowPhone : MonoBehaviour
     }
 
     IEnumerator TriggerOff(GameObject phone) {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         phone.GetComponent<BoxCollider>().isTrigger = false;
     }
 }

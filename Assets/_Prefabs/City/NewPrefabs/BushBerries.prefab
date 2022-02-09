@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3791484254706321273}
   - component: {fileID: 3791484254706321272}
   m_Layer: 0
-  m_Name: Cube.188 (4)
+  m_Name: BushBerries
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,8 +59,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5717476372448401703, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
-  - {fileID: 2454198648251394455, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
+  - {fileID: 2100000, guid: 5a3afb45044c0fb4bb585ce0e1f541e7, type: 2}
+  - {fileID: 2100000, guid: 7c09f9a6397881649961f7c1296296cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -337,15 +337,15 @@ public class GameManager : MonoBehaviour
                             switch (currentTask.StartTask(this))
                             {
                                 default:
-                                    PlayDialog(currentCustomerTask.mainTaskPrompt);
+                                    PlayDialog(currentCustomerTask.mainTaskPrompt, false);
                                     break;
 
                                 case PromptType.Secondary:
-                                    PlayDialog(currentCustomerTask.secondaryTaskPrompt);
+                                    PlayDialog(currentCustomerTask.secondaryTaskPrompt, false);
                                     break;
 
                                 case PromptType.Tertiary:
-                                    PlayDialog(currentCustomerTask.tertiaryTaskPrompt);
+                                    PlayDialog(currentCustomerTask.tertiaryTaskPrompt, false);
                                     break;
                             }
 
@@ -442,7 +442,7 @@ public class GameManager : MonoBehaviour
                     {
                         var maxInterval = taskIntervalTime - EstimateReadTime(currentCustomer.generalDialog[nextDialogIndex], dialogRenderer) - 2f;
 
-                        dialogIntervalTime = Random.Range(3f, Mathf.Clamp(maxInterval, 3f, 9f));
+                        dialogIntervalTime = Random.Range(3f, Mathf.Min(maxInterval, 9f));
 
                         if (dialogIntervalTime < 3f)
                         {
@@ -598,7 +598,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void PlayDialog(string dialog, DialogAnimationType animationType = DialogAnimationType.Neutral)
+    void PlayDialog(string dialog, DialogAnimationType animationType = DialogAnimationType.Neutral, bool canExpire = true)
+    {
+        dialogRenderer.StartDialog(dialog);
+        isPlayingDialog = true;
+
+        StopCoroutine("PlayDialogCoroutine");
+
+        if (canExpire)
+            StartCoroutine("PlayDialogCoroutine", dialog);
+    }
+
+    void PlayDialog(string dialog, bool canExpire)
+    {
+        dialogRenderer.StartDialog(dialog);
+        isPlayingDialog = true;
+
+        StopCoroutine("PlayDialogCoroutine");
+
+        if (canExpire)
+            StartCoroutine("PlayDialogCoroutine", dialog);
+    }
+
+    void PlayDialog(string dialog)
     {
         dialogRenderer.StartDialog(dialog);
         isPlayingDialog = true;
@@ -630,7 +652,7 @@ public class GameManager : MonoBehaviour
 
             if (scoreTicking && currentCustomer != null)
             {
-                potentialRideScore -= Time.deltaTime / currentCustomer.starTimeLimit;
+                potentialRideScore = Mathf.Max(0f, potentialRideScore - Time.deltaTime / currentCustomer.starTimeLimit);
             }
 
             ratingCountdown.UpdateRating(potentialRideScore, progress);
@@ -656,20 +678,43 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        for (float f = 0; f < 1f; f += Time.deltaTime / potentialRideScore)
+        if (potentialRideScore > 0f)
         {
-            float fScaled = 1f - Mathf.Pow(1f - f, 2f);
+            for (float f = 0; f < 1f; f += Time.deltaTime / potentialRideScore)
+            {
+                float fScaled = 1f - Mathf.Pow(1f - f, 2f);
 
-            scoreText.text = "$" + Mathf.FloorToInt(Mathf.Lerp(lastScore, totalScore, fScaled)).ToString();
+                scoreText.text = "$" + Mathf.FloorToInt(Mathf.Lerp(lastScore, totalScore, fScaled)).ToString();
 
-            ratingCountdown.UpdateRating(potentialRideScore * (1f - fScaled), false);
+                ratingCountdown.UpdateRating(potentialRideScore * (1f - fScaled), false);
+
+                radialTimer.UpdateRadialTimer();
+
+                yield return null;
+            }
+        }
+        else
+        {
+            for (float f = 0; f < 1f; f += Time.deltaTime)
+            {
+                ratingCountdown.UpdateRating(0f, false);
+
+                radialTimer.UpdateRadialTimer();
+
+                yield return null;
+            }
+        }
+
+        scoreText.text = "$" + totalScore.ToString();
+
+        for (float f = 0; f < 1f; f += Time.deltaTime)
+        {
+            ratingCountdown.UpdateRating(0f, false);
 
             radialTimer.UpdateRadialTimer();
 
             yield return null;
         }
-
-        scoreText.text = "$" + totalScore.ToString();
 
         while (progress < 2f)
         {

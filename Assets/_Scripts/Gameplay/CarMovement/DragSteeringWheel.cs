@@ -49,7 +49,7 @@ public class DragSteeringWheel : MonoBehaviour
     [SerializeField]
     private int _rotationOffset = 90;
 
-    private readonly float _maxTurn = 4f;
+    private readonly float _maxTurn = 3f;
 
     private void Awake()
     {
@@ -109,6 +109,7 @@ public class DragSteeringWheel : MonoBehaviour
     private IEnumerator DragUpdate()
     {
         _cameraSwitcher.ToggleLock();
+        // _cameraSwitcher.ToggleSteering();
         
         while (_mouseClick.ReadValue<float>() != 0)
         {
@@ -146,6 +147,7 @@ public class DragSteeringWheel : MonoBehaviour
             yield return _waitForFixedUpdate;
         }
         _cameraSwitcher.ToggleLock();
+        // _cameraSwitcher.ToggleSteering();
         _currentlySteering = false;
     }
 

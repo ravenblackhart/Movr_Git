@@ -1,26 +1,24 @@
+using System.Collections;
 using UnityEngine;
 using Cinemachine;
 
 public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _cameraFront;
-    [SerializeField] private CinemachineVirtualCamera _cameraBack;
+    [SerializeField] private CinemachineVirtualCamera _cameraSteering;
     [SerializeField] private CinemachineVirtualCamera _cameraLocked;
     
     private CinemachineBrain _cmBrain;
     private CinemachinePOV _activePov;
     private View _currentView;
     private View _previousView;
-    
-    //Tillfälligt
-    private CinemachineVirtualCamera _previousCamera;
-    
     private bool _lockedView = false;
-
+    private bool _steeringView = false;
+    
     private enum View
     {
         Front,
-        Back,
+        Steering,
         Locked
     }
     
@@ -56,18 +54,15 @@ public class CameraSwitcher : MonoBehaviour
             //         }
             //     break;
             //
-            // case View.Back :
-            //     //Back to front transition condition
-            //     if (_activePov != null)
-            //         if (_activePov.m_HorizontalAxis.Value <= _activePov.m_HorizontalAxis.m_MinValue)
-            //         {
-            //             _currentView = View.Front;
-            //             return true;
-            //         }
-            //     break;
-            //
             case View.Locked :
                 if (_lockedView)
+                {
+                    return true;
+                }
+                break;
+            
+            case View.Steering :
+                if (_steeringView)
                 {
                     return true;
                 }
@@ -88,8 +83,8 @@ public class CameraSwitcher : MonoBehaviour
                     vCam = _cameraFront;
                     break;
                 
-                case View.Back :
-                    vCam = _cameraBack;
+                case View.Steering :
+                    vCam = _cameraSteering;
                     break;
                 
                 case View.Locked :
@@ -120,19 +115,19 @@ public class CameraSwitcher : MonoBehaviour
         }
         _lockedView = !_lockedView;
     }
-    
-    //To be deleted
-    public void UseMeTemporarily(bool sendTrueIfYouWantLockedView )
+
+    public void ToggleSteering()
     {
-        if (sendTrueIfYouWantLockedView)
+        if (!_steeringView)
         {
-            _previousCamera = _cmBrain.ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
-            _cameraLocked.MoveToTopOfPrioritySubqueue();
+            _previousView = _currentView;
+            _currentView = View.Steering;
         }
         else
         {
-            if (_previousCamera != null)
-                _previousCamera.MoveToTopOfPrioritySubqueue();
+            _currentView = _previousView;
+            SetCamera();
         }
+        _steeringView = !_steeringView;
     }
 }

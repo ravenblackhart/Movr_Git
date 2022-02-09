@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1853356532232773465}
   - component: {fileID: 6958805069362909163}
   m_Layer: 0
-  m_Name: Cube.185
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,9 +59,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4576068083109919760, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
-  - {fileID: 752492319262309027, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
-  - {fileID: 145615223514590520, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
+  - {fileID: 2100000, guid: 3acbcf9fcf08ff44b99543f61dcfae6e, type: 2}
+  - {fileID: 2100000, guid: be639ed17e213d94fb4c1243a8b29931, type: 2}
+  - {fileID: 2100000, guid: 58d36f08b3c50f445812faf60dfc3b06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

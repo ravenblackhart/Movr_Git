@@ -10,13 +10,9 @@ public class Gearstick : MonoBehaviour
 
     private LeverGearstick _gearLever;
 
-    private enum Direction { Forward, Stopped, Reverse};
-
-    private Direction _direction = Direction.Stopped;
     private bool _stopped = true;
 
     private readonly string _carControllerTag = "CarDriving";
-
 
     // Start is called before the first frame update
     void Awake()
@@ -28,21 +24,20 @@ public class Gearstick : MonoBehaviour
         }
         else
         {
-            Debug.LogError("error: gearstick cant find its lever!!! chaos!!!!");
+            Debug.LogError("error: gearstick cant find its lever!!! chaos!!! PANIC NOWW!!!!1!!!!1!");
         }
         
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        //_carController.maxVelocity *= Mathf.Abs(_gearLever.LeverValue);
-        if (_gearLever.CurrentGear > 0 && _direction != Direction.Forward)
+        if (_gearLever.CurrentGear > 0 && _carController._direction != CarController.Direction.Forward)
         {
-            ChangeDirectionSpeed(Direction.Forward);
+            ChangeDirectionSpeed(CarController.Direction.Forward);
         }
-        else if (_gearLever.CurrentGear < 0 && _direction != Direction.Reverse)
+        else if (_gearLever.CurrentGear < 0 && _carController._direction != CarController.Direction.Reverse)
         {
-            ChangeDirectionSpeed(Direction.Reverse);
+            ChangeDirectionSpeed(CarController.Direction.Reverse);
         }
         else if (_gearLever.CurrentGear == 0 && !_stopped)
         {
@@ -52,18 +47,18 @@ public class Gearstick : MonoBehaviour
 
     private void StopCar()
     {
-        _direction = Direction.Stopped;
+        _carController._direction = CarController.Direction.Stopped;
         _carController.Braking(0.2f);
         _stopped = true;
         _carController.speed = 0;
     }
 
-    private void ChangeDirectionSpeed(Direction newDirection)
+    private void ChangeDirectionSpeed(CarController.Direction newDirection)
     {
         _carController.speed = _gearLever.LeverValue;
+        //Debug.LogWarning(newDirection + " " + _carController.speed);
         _stopped = false;
         _carController.Braking(0.2f);
-        _direction = newDirection;
-        _carController.isReversing = !_carController.isReversing;
+        _carController._direction = newDirection;
     }
 }

@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: Wendy1
   m_EditorClassIdentifier: 
-  bodyMaterial: {fileID: 0}
-  hasHat: 1
-  hasGlasses: 0
+  identity: 2
   taskPool:
   - taskType: 7
     timeLimit: 8

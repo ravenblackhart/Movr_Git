@@ -19,11 +19,9 @@ public class RadioController : MonoBehaviour
         radioAudioSource = GetComponent<AudioSource>();
         UnregisterTape();
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        RegisterTape(other.gameObject);
-    }*/
+    
+    
+    
     
 
     public void RegisterTape(GameObject tape)
@@ -31,18 +29,16 @@ public class RadioController : MonoBehaviour
         audioTracks = tape.GetComponent<Cassette>().TrackList; 
         trackIndex = Random.Range(0, audioTracks.Length);
         radioAudioSource.clip = audioTracks[trackIndex];
-        //trackNameField.text = audioTracks[trackIndex].name;
     }
 
     public void UnregisterTape()
     {
-        audioTracks = null; 
-        //trackNameField.text = $"Insert Cassette";
+        audioTracks = null;
     }
     
     public void PlayAudio()
     {
-        radioAudioSource.Play();
+        StartCoroutine(PlayTape());
     }
 
     public void PauseAudio()
@@ -57,13 +53,15 @@ public class RadioController : MonoBehaviour
 
     public void NextTrack()
     {
-        trackIndex++; 
+        trackIndex++;
+        if (trackIndex > audioTracks.Length - 1) trackIndex = 0; 
         UpdateTrack(trackIndex);
     }
     
     public void PrevTrack()
     {
         trackIndex--; 
+        if (trackIndex < 0 ) trackIndex = audioTracks.Length - 1 ;
         UpdateTrack(trackIndex);
     }
 
@@ -71,6 +69,15 @@ public class RadioController : MonoBehaviour
     {
         radioAudioSource.clip = audioTracks[index];
         trackNameField.text = audioTracks[index].name;
+    }
+
+    private IEnumerator PlayTape()
+    {
+        radioAudioSource.time = Random.Range(0f, audioTracks[trackIndex].length);
+        radioAudioSource.Play();
+        yield return new WaitForSeconds(audioTracks[trackIndex].length + 0.15f); 
+        NextTrack();
+        radioAudioSource.Play();
     }
 
 }

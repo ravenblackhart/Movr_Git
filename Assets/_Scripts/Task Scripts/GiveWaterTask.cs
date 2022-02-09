@@ -1,6 +1,9 @@
+using UnityEngine;
+
 public class GiveWaterTask : Task
 {
-    private float _goalValue = 10f;
+    private float _goalValue = 100f;
+    private CustomerThirst _thirst;
     
     public override PromptType StartTask(GameManager gameManager)
     {
@@ -11,19 +14,10 @@ public class GiveWaterTask : Task
 
     public override void UpdateTask(GameManager gameManager)
     {
-        foreach (WaterCup cup in gameManager.taskReferences.waterCups)
+        _thirst = gameManager.customer.GetComponent<CustomerThirst>();
+        if (_thirst.FillAmount >= _goalValue)
         {
-            if (cup.TouchedCustomer)
-            {
-                if (cup.FillAmount >= _goalValue)
-                {
-                    completedTaskEvent.Invoke();
-                }
-                else
-                {
-                    failedTaskEvent.Invoke();
-                }
-            }
+            completedTaskEvent.Invoke();
         }
     }
 }

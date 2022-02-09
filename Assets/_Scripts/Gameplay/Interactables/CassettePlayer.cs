@@ -61,7 +61,6 @@ public class CassettePlayer : SnapTrigger
         }
 
         if (cassetteInPlayer != null && !playingMusic) {
-            print("cassetteInPlayer = " + cassetteInPlayer.name);
             _radioController.RegisterTape(cassetteInPlayer.gameObject);
             _radioController.PlayAudio();
             audioGenre = cassetteInPlayer.GetComponent<Cassette>()._musicGenre;

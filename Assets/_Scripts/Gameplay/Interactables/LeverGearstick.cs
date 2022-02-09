@@ -53,9 +53,8 @@ public class LeverGearstick : Lever
             _orgin.transform.localEulerAngles.y,  SetStickAngle( -_zAngle));
     }
 
-    float resetSpeed = 5;
     /// <summary>
-    /// Gives the stick four (or three) gears: full speed, half speed, 
+    /// Gives the stick three gears: full speed, half speed, 
     /// park(brake) and reverse
     /// </summary>
     /// <param name="curAngle"></param>
@@ -76,56 +75,14 @@ public class LeverGearstick : Lever
         }
         else
         {
+            //_carController.midGear = true;
             return curAngle;
         }
-        //if (curValue < -55)
-        //{
-        //    return ChangeGearValues(2);
-        //}
-        //else if (curValue < -45 && curValue > -55)
-        //{
-        //    return curValue -= Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue < -35 && curValue > -45)
-        //{
-        //    return curValue += Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue < -25 && curValue > -35)
-        //{
-        //    return ChangeGearValues(1);
-        //}
-        //else if (curValue < -15 && curValue > -25)
-        //{
-        //    return curValue -= Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue < -10 && curValue > -15)
-        //{
-        //    return curValue += Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue < 10 && curValue > -10)
-        //{
-        //    return ChangeGearValues(0);
-        //}
-        //else if (curValue < 15 && curValue > 10)
-        //{
-        //    return curValue -= Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue < 25 && curValue > 15)
-        //{
-        //    return curValue += Time.deltaTime * resetSpeed;
-        //}
-        //else if (curValue > 25)
-        //{
-        //    return ChangeGearValues(-1);
-        //}
-        //else
-        //{
-        //    return curValue;
-        //}
     }
 
     private int ChangeGearValues(int gear)
     {
+        //_carController.midGear = false;
         switch (gear)
         {
             case 2:
@@ -133,7 +90,6 @@ public class LeverGearstick : Lever
                 _leverValue = 1;
                 return -60;
             case 1:
-                // not used right now:
                 ChangeGearSound(1);
                 _leverValue = 0.5f;
                 return -30;

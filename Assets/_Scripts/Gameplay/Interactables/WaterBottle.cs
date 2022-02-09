@@ -7,17 +7,15 @@ public class WaterBottle : PhysicsObject
     
     private void Update()
     {
-        if (Vector3.Dot(transform.up, Vector3.up) < -0.5f)
+        if (!beingHeld)
         {
-            if (_particleSystem != null && !_particleSystem.isPlaying)
-                _particleSystem.Play();
-        }
-        else
-        {
-            if (_particleSystem.isPlaying)
-            {
+            if (_particleSystem.isPlaying) 
                 _particleSystem.Stop();
-            }
+            
+            return;
         }
+
+        if (!_particleSystem.isPlaying) 
+                _particleSystem.Play();
     }
 }

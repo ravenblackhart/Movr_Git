@@ -34,7 +34,7 @@ public class CrossHair : MonoBehaviour
 
     public void UpdateCrosshair(GameObject other)
     {
-        if (other.TryGetComponent(out PhysicsObject phys) || other.TryGetComponent(out Lever lev))
+        if (other.TryGetComponent(out PhysicsObject phys) || other.TryGetComponent(out Lever lev) ||  other.CompareTag("WindowCrank"))
         {
             imageRenderer.sprite = PickupsCrosshair;
             imageRenderer.preserveAspect = true;
@@ -45,7 +45,7 @@ public class CrossHair : MonoBehaviour
             imageRenderer.preserveAspect = true;
         }       
         
-        else if (other.TryGetComponent(out SteeringWheelInteactable steer))
+        else if (other.CompareTag("SteeringWheel"))
         {
             imageRenderer.sprite = SteeringCrosshair;
             imageRenderer.preserveAspect = true;

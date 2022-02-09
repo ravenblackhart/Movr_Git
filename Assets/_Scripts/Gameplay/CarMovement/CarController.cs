@@ -7,7 +7,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
-    public bool isReversing = false;
+
+    public enum Direction { Forward, Stopped, Reverse };
+
+    public Direction _direction = Direction.Stopped;
+
 
     [Range(-1, -0.1f)]
     [SerializeField]
@@ -34,70 +38,56 @@ public class CarController : MonoBehaviour
 
     private Rigidbody _rigidbody;
     public float maxVelocity = 50; // Maximum speed allowed
+    [Header("Change Velocity Multiplier for max speed, change Max Motor Torque for acceleration")]
+    [SerializeField] private float _velocityMultiplier = 1;
     private readonly float _recoverytime = 30;
 
-    //private bool motorSound = false;
     private Sound _motorSound;
     private readonly string _driving = "Driving";
+    [SerializeField]
+    private bool _slowingDown = false;
 
     // Start is called before the first frame update
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _motorSound = FindMotorSound(_driving);
-        _motorSound.loop = true;
-        AudioManager.Instance.Play(_driving);
-        _motorSound.source.Pause();
-    }
-    
-    private Sound FindMotorSound(string name)
-    {
-        return Array.Find(AudioManager.Instance.sounds, sound => sound.name == name);
+        _motorSound = AudioManager.Instance.GetSound(_driving);
+        _motorSound.source.Play();
     }
 
     void FixedUpdate()
     {
         // prevent the car from moving to quickly
-        float maxSpeed = maxVelocity;
-        if (isReversing)
+        float maxSpeed = maxVelocity * _velocityMultiplier;
+        if (_direction == Direction.Reverse)
         {
             // Change the top speed depending on how quickly the car can go in reverse
             maxSpeed *= Mathf.Abs(_reverseSpeed);
         }
-        if (_rigidbody.velocity.sqrMagnitude > maxSpeed)
+        if (_rigidbody.velocity.sqrMagnitude > maxSpeed && _direction == Direction.Forward)
         {
             // Slow down the car
-            speed = GetSpeed(true, isReversing);
+            speed = GetSpeed(true, _direction == Direction.Reverse);
+            _slowingDown = true;
         }
-        
+        else if (_rigidbody.velocity.sqrMagnitude < maxSpeed && _direction == Direction.Forward)// _slowingDown)
+        {
+            // keep the car under the speed limit
+            speed = GetSpeed(false, _direction == Direction.Reverse);
+            //_slowingDown = true;
+            //Debug.LogWarning(speed + " " + isReversing + " " + _rigidbody.velocity.sqrMagnitude);
+        }
+
         // Move and steer the car
         float motor = _maxMotorTorque * speed * Time.deltaTime;
         float steering = _maxSteeringAngle * turn;
 
         // sound if car is moving
-        //if ((motor > 0.5f || motor < -0.5f) && !_motorSound.source.isPlaying)
-        //{
-        //    AudioManager.Instance.Play("Driving");
-        //}
-        //else 
-        if ((motor > 0.5f || motor < -0.5f) && !_motorSound.source.isPlaying)
-        {
-            _motorSound.source.UnPause();
-        }
-        else if (motor < 0.5f && motor > -0.5f)
-        {
-            //_motorSound.source.Pause();
-        }
+        _motorSound.source.pitch = 1 + Mathf.Abs(_rigidbody.velocity.sqrMagnitude / 50) * 0.5f;
+        _motorSound.source.volume = Mathf.Abs(_rigidbody.velocity.sqrMagnitude / 50) * 0.5f;
+            //Debug.LogWarning(_rigidbody.velocity.sqrMagnitude / 50 + " " + _motorSound.source.pitch + " " +
+            //    _motorSound.source.volume);
 
-        //if (!motorSound && (int)speed != 0)
-        //{
-        //    AudioManager.Instance.Play("Driving");
-        //    motorSound = true;
-        //}
-        //else if ((int)speed == 0)
-        //{
-        //    motorSound = false;
-        //}
         foreach (AxleInfo axleInfo in _axleInfos)
         {
             if (axleInfo.steering)
@@ -121,7 +111,7 @@ public class CarController : MonoBehaviour
 
     private float GetSpeed(bool decrease, bool reversing)
     {
-        float speed = 0;
+        //float speed = 0;
         float minTarget = 0;
         float maxTarget = 1;
         // Changing these values if its reversing 
@@ -184,6 +174,5 @@ public class CarController : MonoBehaviour
         [Header("Will this axle be steerable?")]
         public bool steering; 
     }
-
 }
 

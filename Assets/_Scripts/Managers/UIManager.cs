@@ -77,7 +77,9 @@ public class UIManager : MonoBehaviour
     public Color EnabledColor = new Color32(56, 56, 56, 255); 
     public Color DisabledColor = new Color32(120, 120, 120, 255);
 
-    private bool tutorialOn = true; 
+    private bool tutorialOn = true;
+
+    private CameraSwitcher camSwitch; 
     
     
     
@@ -103,7 +105,9 @@ public class UIManager : MonoBehaviour
         else if (PlayerPrefs.GetInt("TutorialState") == 0)
         {
             tutorialOn = false;
-        } 
+        }
+
+        camSwitch = FindObjectOfType<CameraSwitcher>(); 
     }
     
 
@@ -141,6 +145,7 @@ public class UIManager : MonoBehaviour
                 readyPanel.enabled = true;
                 tutorialCanvas.enabled = true;
                 Time.timeScale = 0f; 
+                camSwitch.ToggleLock();
             }
             
             else if (tutorialOn == false)
@@ -186,13 +191,14 @@ public class UIManager : MonoBehaviour
         {
             pauseMenu.enabled = true; 
             Time.timeScale = 0f;
+            camSwitch.ToggleLock();
         }
 
         else
         {
             Time.timeScale = 1f; 
             pauseMenu.enabled = false; 
-            
+            camSwitch.ToggleLock();
         }
         
     }

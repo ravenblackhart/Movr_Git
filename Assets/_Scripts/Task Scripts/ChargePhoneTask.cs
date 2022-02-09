@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ChargePhoneTask : Task
 {
-    private float _goalValue = 10f;
+    private float _goalValue = 5f;
     private float _timer = 0;
 
     public override PromptType StartTask(GameManager gameManager)

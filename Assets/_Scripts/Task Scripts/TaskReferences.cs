@@ -9,7 +9,7 @@ public class TaskReferences
     public Lever volumeLever;
     public List<SnackBar> snackBars = new List<SnackBar>();
     public List<Phone> phones = new List<Phone>();
-    public List<WaterCup> waterCups = new List<WaterCup>();
+    public CustomerThirst thirst;
     public Lever leverAC;
     public WindowCranker windowsLever;
     public CassettePlayer cassettePlayer;

@@ -55,7 +55,7 @@ namespace _Scripts.UI
                 ratingDisplays[i].fillAmount = fill;
 
                 if (canFall)
-                    if (i > newRating)
+                    if (i >= newRating)
                     {
                         starFallProgs[i] += Time.deltaTime * 30f;
                     }

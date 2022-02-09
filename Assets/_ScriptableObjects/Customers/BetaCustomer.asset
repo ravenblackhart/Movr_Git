@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: BetaCustomer
   m_EditorClassIdentifier: 
-  bodyMaterial: {fileID: 0}
-  hasHat: 0
-  hasGlasses: 0
+  identity: 0
+  hasKids: 0
   taskPool:
   - taskType: 6
     timeLimit: 15
@@ -34,10 +33,10 @@ MonoBehaviour:
     taskFailureResponse: Thanks for nothing.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 3
+  - taskType: 2
     timeLimit: 20
-    mainTaskPrompt: How about some [c0]funk music[c]?
-    secondaryTaskPrompt: How about some [c0]jazz[c]?
+    mainTaskPrompt: How about some [c0]jazz music[c]?
+    secondaryTaskPrompt: How about some [c0]funk[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: Groovy.
     taskFailureResponse: '[w]Booo[w].'
@@ -52,12 +51,40 @@ MonoBehaviour:
     taskFailureResponse: Thirst unquenched.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
+  - taskType: 9
+    timeLimit: 20
+    mainTaskPrompt: Charge phone
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: "charged\t"
+    taskFailureResponse: uncharged
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 20
+    mainTaskPrompt: open window
+    secondaryTaskPrompt: close window
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: bravo
+    taskFailureResponse: nope
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 3
+    timeLimit: 20
+    mainTaskPrompt: high volume
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: bravo
+    taskFailureResponse: nope
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 40
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 3
   volumePreference: 1
   musicPreference: 2
-  musicPreferenceOther: 1
+  musicPreferenceOther: 3
   startRideDialogHappy: Hello! I'm Mr. Beta, take me to a totally [s]NOT[s] random
     location please!
   startRideDialogAngry: 

@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: Max2
   m_EditorClassIdentifier: 
-  bodyMaterial: {fileID: 0}
-  hasHat: 1
-  hasGlasses: 1
+  identity: 1
   taskPool:
   - taskType: 2
     timeLimit: 15

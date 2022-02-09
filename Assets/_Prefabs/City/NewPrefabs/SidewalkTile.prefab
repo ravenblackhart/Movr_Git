@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8915132581555231884}
   - component: {fileID: 1547780075585294384}
   m_Layer: 0
-  m_Name: Cube.054
+  m_Name: SidewalkTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 880774007180850119, guid: 3cab1f2acea46fe49bc240e242670f25, type: 3}
+  - {fileID: 880774007180850119, guid: 2ea081b410469f04ebd56ea6dacefc94, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
