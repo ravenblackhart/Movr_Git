@@ -14,65 +14,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identity: 2
   hasKids: 1
-  skipBeforeEnd: 1
+  skipBeforeEnd: 0
   taskPool:
   - taskType: 6
     timeLimit: 6
     mainTaskPrompt: The kids are hungry, give them something to [c2]eat[c].
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
-    taskCompletionResponse: Mh..
+    taskCompletionResponse: Say thanks kiddos..
     taskFailureResponse: '[w]Uuuuhm[w]?'
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
-  - taskType: 5
-    timeLimit: 10
-    mainTaskPrompt: Hello? They're also [s][c2]thirsty[c][s]?? Obviously?
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Took you long enough.
-    taskFailureResponse: Your water's probably rancid anyway. [s]Ugh[s].
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 2
     timeLimit: 10
-    mainTaskPrompt: The kids like [c4]funk[c] [c2]music[c]!
-    secondaryTaskPrompt: 
+    mainTaskPrompt: The kids like [c3]jazz music[c]!
+    secondaryTaskPrompt: The kids like [c4]funk music[c]!
     tertiaryTaskPrompt: 
     taskCompletionResponse: Your favorite!
     taskFailureResponse: You need to refresh your library..
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 7
-    timeLimit: 4
+    timeLimit: 6
     mainTaskPrompt: They're gonna get cold, turn up the [c2]temperature[c]!
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
+    secondaryTaskPrompt: Medium [c2]temperature[c]!!
+    tertiaryTaskPrompt: It's getting warm, turn down the [c2]temperature[c]!
     taskCompletionResponse: There you go..
     taskFailureResponse: You're [s]EnDanGeRinG[s] my kids!
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 3
-    timeLimit: 5
-    mainTaskPrompt: More [c2]volume[c]!!
+  - taskType: 5
+    timeLimit: 10
+    mainTaskPrompt: Hello? I'm [s][c2]thirsty[c][s]?? Obviously?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
+    taskCompletionResponse: Took you long enough.
+    taskFailureResponse: Your water's probably rancid anyway. [s]Ugh[s].
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 3
+    timeLimit: 6
+    mainTaskPrompt: '[s]Max[s] [c2]volume[c]!!'
+    secondaryTaskPrompt: Medium [c2]volume[c]!!
+    tertiaryTaskPrompt: Low [c2]volume[c]!!
     taskCompletionResponse: Alright!
     taskFailureResponse: '[w]zzzzzzzz[w]'
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
-  taskTimeMin: 5
-  taskTimeMax: 12
-  tempPreference: 1
-  volumePreference: 1
-  musicPreference: 3
-  musicPreferenceOther: 4
+  - taskType: 9
+    timeLimit: 15
+    mainTaskPrompt: You need to [c2]charge[c] my kids phones!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Great now they can play their stupid games!
+    taskFailureResponse: We'll just buy them a new one then..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 4
+    timeLimit: 10
+    mainTaskPrompt: Open the [c2]window[c] please!
+    secondaryTaskPrompt: Close the [c2]window[c] please!
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Great now they can play their stupid games!
+    taskFailureResponse: We'll just buy them a new one then..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 110
+  taskTimeMin: 4
+  taskTimeMax: 6
+  tempPreference: 0
+  volumePreference: 0
+  musicPreference: 2
+  musicPreferenceOther: 3
   startRideDialogHappy: Oh [w]heeeey[w], take us home please.
   startRideDialogAngry: You [s]AGAIN[s], unbelievable, i'm gonna have a talk with
     your customer service, just take us home.
-  endRideDialogHappy: 
-  endRideDialogAngry: 
+  endRideDialogHappy: 'Good job you finished the game, you want a medal or something? '
+  endRideDialogAngry: You may have finished the game. but don't ever come close to
+    my children again!
   specialEventDialog: 
   generalDialog:
   - I see you still haven't done anything about the smell..
@@ -80,3 +99,5 @@ MonoBehaviour:
   crashDialog:
   - NO PLEASE
   - MY [s]CHILDREN[s]
+  - Mommy why are they such a bad driver?
+  - pls stop

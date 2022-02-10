@@ -14,7 +14,8 @@ public class CameraSwitcher : MonoBehaviour
     private View _previousView;
     private bool _lockedView = false;
     private bool _steeringView = false;
-    
+
+    public bool LockedView => _lockedView;
     private enum View
     {
         Front,
@@ -129,5 +130,15 @@ public class CameraSwitcher : MonoBehaviour
             SetCamera();
         }
         _steeringView = !_steeringView;
+    }
+
+    public void SetToLockedCamera()
+    {
+        _cameraLocked.MoveToTopOfPrioritySubqueue();
+    }
+
+    public void SetToFrontCamera()
+    {
+        _cameraFront.MoveToTopOfPrioritySubqueue();
     }
 }

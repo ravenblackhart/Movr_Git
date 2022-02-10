@@ -30,6 +30,8 @@ public class Lever : MonoBehaviour, IInteractable
     public float LeverValue => _leverValue;
     public bool UseY => _useY;
     public bool Invert => _invert;
+
+    public bool lookingAtLever = false;
     
     public float MoveDirection
     {
@@ -60,6 +62,7 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void OnStartHover()
     {
+        lookingAtLever = true;
         CrossHair.Instance.UpdateCrosshair(gameObject);
     }
 
@@ -70,7 +73,11 @@ public class Lever : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
-        CrossHair.Instance.ResetCrosshair();
+        lookingAtLever = false;
+
+        if (!OnDrag) {
+            CrossHair.Instance.ResetCrosshair();
+        }
     }
 
     public virtual void UpdateLeverValue()

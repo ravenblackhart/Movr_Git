@@ -8,7 +8,7 @@ public class Phone : PhysicsObject
     private Color _color;
     private MeshRenderer _renderer;
     
-    private Transform _worldParent;
+    private Transform _parent;
     private Transform _snapPosition;
     private Vector3 _velocity = Vector3.zero;
     
@@ -23,7 +23,7 @@ public class Phone : PhysicsObject
         set
         {
             _chargeAmount = value;
-            if (_chargeAmount >= 10)
+            if (_chargeAmount >= 8f)
             {
                 OverHeated = true;
             }
@@ -37,7 +37,7 @@ public class Phone : PhysicsObject
         _renderer.sharedMaterial = Instantiate(_renderer.sharedMaterial);
         _color = _renderer.sharedMaterial.GetColor("_BaseColor");
         
-        _worldParent = transform.parent;
+        _parent = transform.parent;
         _chargeAmount = 0;
         
         //Tested value ok result
@@ -50,15 +50,23 @@ public class Phone : PhysicsObject
     
     private void Update()
     {
-        if (Charging)
-        {
-            LerpColor(_color,Color.green, _colorLerpSpeed);
-        }
-        else if (Charging && OverHeated)
-        {
-            LerpColor(_color,Color.red, _colorLerpSpeed * 2);
-        }
-        
+        //var t = (Mathf.Sin(Time.time * _colorLerpSpeed) + 1) / 2.0;
+
+        //if (Charging)
+        //{
+        //    LerpColor(_color,Color.green, _colorLerpSpeed, (float)t);
+        //}
+        //else if (Charging && OverHeated)
+        //{
+        //    LerpColor(_color,Color.red, _colorLerpSpeed* 2,(float)t);
+        //}
+        //else
+        //{
+        //    _renderer.sharedMaterial.SetColor("_BaseColor", _color);
+        //}
+
+        _renderer.sharedMaterial.SetColor("_BaseColor", CustomClasses.RemapLerp(_color, Color.green, 0f, 5f, _chargeAmount));
+
         //For snapping to dock
         if (!beingHeld) return;
         _snapPosition = RayCastForSnap();
@@ -108,7 +116,7 @@ public class Phone : PhysicsObject
     
     public void SetToWorldParent()
     {
-        transform.parent = _worldParent;
+        transform.parent = _parent;
     }
     
     private Transform RayCastForSnap()
@@ -131,11 +139,9 @@ public class Phone : PhysicsObject
         return null;
     }
     
-    private void LerpColor(Color a, Color b, float speed)
+    private void LerpColor(Color a, Color b, float speed, float t)
     {
         var rend = GetComponent<MeshRenderer>();
-        var t = (Mathf.Sin(Time.time * speed) + 1) / 2.0;
-        
         if (rend != null)
             rend.sharedMaterial.SetColor("_BaseColor", Color.Lerp(a ,b ,(float)t));
     }

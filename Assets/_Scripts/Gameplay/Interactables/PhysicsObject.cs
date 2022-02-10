@@ -64,7 +64,9 @@ public class PhysicsObject : MonoBehaviour, IInteractable
 
     public void OnEndHover()
     {
-        CrossHair.Instance.ResetCrosshair();
+        if (!beingHeld) {
+            CrossHair.Instance.ResetCrosshair();
+        }
     }
 
     private void Update()

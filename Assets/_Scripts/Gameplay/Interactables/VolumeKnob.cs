@@ -28,7 +28,6 @@ public class VolumeKnob : Lever
     private void ChangeVolume()
     {
         var radioVolume = Mathf.Lerp(_minVol, _maxVol, _leverValue);
-        print(radioVolume);
         _radioMixer.SetFloat("MusicVol", radioVolume); 
         
     }

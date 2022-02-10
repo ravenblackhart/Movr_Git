@@ -66,9 +66,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(string name) {
+    public AudioSource PlayWithReturn(string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s != null) {
+            s.source.Play();
+
+            return s.source;
+        }
+
+        return null;
+    }
+
+    public void Play(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null)
+        {
             s.source.Play();
         }
     }
@@ -129,7 +142,6 @@ public class AudioSetting
 
     [SerializeField][Range(-80f, 0f)] private float audioVolume; 
     public Toggle soundToggle;
-    private Image audioStrength; 
 
     public void Initialize()
     {
@@ -150,17 +162,15 @@ public class AudioSetting
     {
         if (soundToggle.isOn == true)
         {
+            slider.interactable = true; 
             slider.value = PlayerPrefs.GetFloat(exposedParam);
             SetExposedParamNoWrite(slider.value);
-            slider.interactable = true; 
-
         }
         
         if (soundToggle.isOn == false)
         {
-            slider.interactable = false;
-            SetExposedParamNoWrite(-80);
-            
+            slider.interactable = false; 
+            SetExposedParamNoWrite(-80f);
         }
     }
     

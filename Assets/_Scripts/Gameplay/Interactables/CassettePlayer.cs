@@ -15,6 +15,9 @@ public class CassettePlayer : SnapTrigger
 
     [SerializeField] private Button _button;
 
+    [SerializeField] private float _forwardForce = 100;
+    [SerializeField] private float _upwardsForce = 50;
+
     public string audioGenre;
     private bool playingMusic;
 
@@ -78,7 +81,7 @@ public class CassettePlayer : SnapTrigger
             _cassetteRb.isKinematic = false;
             _cassetteRb.useGravity = true;
             _cassetteRb.drag = 0;
-            _cassetteRb.AddForce(-transform.forward * 100 + transform.right * 50);
+            _cassetteRb.AddForce(-transform.forward * _forwardForce + transform.up * _upwardsForce);
             occupied = false;
 
             _radioController.StopAudio();

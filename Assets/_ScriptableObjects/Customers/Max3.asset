@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Max3
   m_EditorClassIdentifier: 
   identity: 1
+  hasKids: 0
+  skipBeforeEnd: 0
   taskPool:
   - taskType: 2
     timeLimit: 8
-    mainTaskPrompt: Let's get the party started, put on some [c5]house[c] [c2]music[c]
-    secondaryTaskPrompt: Let's get the party started, put on some [c4]funk[c] [c2]music[c]
+    mainTaskPrompt: Let's get the party started, put on some [c5]house music[c]
+    secondaryTaskPrompt: Let's get the party started, put on some [c4]funk music[c]
     tertiaryTaskPrompt: 
-    taskCompletionResponse: '[w]GROOVY[w]'
+    taskCompletionResponse: '[w]GROOOOOVY[w]'
     taskFailureResponse: You suck.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
@@ -34,29 +36,48 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 4
     timeLimit: 8
-    mainTaskPrompt: Open the window I want everyone to hear this!
-    secondaryTaskPrompt: 
+    mainTaskPrompt: Open the [c2]window[c] I want everyone to hear this!
+    secondaryTaskPrompt: 'Close the [c2]window[c], time to hotbox this car. '
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Hell yeaaaah[w]'
     taskFailureResponse: Are you trying to ruin my day??
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  - taskType: 7
+    timeLimit: 6
+    mainTaskPrompt: Turn the [c2]temperature[c] up!
+    secondaryTaskPrompt: Can I get a medium [c2]temperature[c]?
+    tertiaryTaskPrompt: Lower the [c2]temperature[c].
+    taskCompletionResponse: '[w]Peeerfect[w]'
+    taskFailureResponse: So mean.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 6
+    mainTaskPrompt: Need to hydrate before partying, give me [c2]water[c]!
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: You know how water is just so yummy sometimes??
+    taskFailureResponse: Guess I'll wait for the bar..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 120
   taskTimeMin: 6
-  taskTimeMax: 15
-  tempPreference: 2
+  taskTimeMax: 10
+  tempPreference: 0
   volumePreference: 1
   musicPreference: 4
   musicPreferenceOther: 3
-  startRideDialogHappy: You know what? I wanna celebrate, forget my flight, take
-    me to the [c2]bar[c]!
-  startRideDialogAngry: 
+  startRideDialogHappy: You know what? I wanna celebrate, forget my train, take me
+    to the [c2]bar[c]!
+  startRideDialogAngry: You know what? I wanna celebrate, forget my train, take me
+    to the [c2]bar[c]!
   endRideDialogHappy: Thanks for the ride! Why don't you come join me after the shift!
   endRideDialogAngry: Say bye to your job [w]asshat[w].
   specialEventDialog: 
   generalDialog:
   - You wouldn't happen to have a plug my friend?
-  - I'm gonna buy this [w]whooole[w] town
+  - I'm gonna buy this [w]whooole[w] town.
   crashDialog:
   - Stay on the [s]damn[s] road!
   - You know what? Yeah, keep crashing[s]!![s]

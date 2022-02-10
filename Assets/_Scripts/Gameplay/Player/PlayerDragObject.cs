@@ -46,6 +46,9 @@ public class PlayerDragObject : MonoBehaviour
             yield return null;
         }
         _clickedLever.OnDrag = false;
+        if (!_clickedLever.lookingAtLever) {
+            CrossHair.Instance.ResetCrosshair();
+        }
         _cameraSwitcher.ToggleLock();
     }
 

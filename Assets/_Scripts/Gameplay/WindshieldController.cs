@@ -84,13 +84,15 @@ public class WindshieldController : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(60f, 75f));
 
-        dirtyness = 1f;
-
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(45f, 75f));
+            GameManager.instance.audioManager.Play("BirdPoop");
+
+            yield return new WaitForSeconds(0.5f);
 
             dirtyness = 1f;
+
+            yield return new WaitForSeconds(Random.Range(45f, 75f));
         }
     }
 }

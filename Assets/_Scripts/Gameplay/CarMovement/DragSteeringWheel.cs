@@ -51,6 +51,8 @@ public class DragSteeringWheel : MonoBehaviour
 
     private readonly float _maxTurn = 3f;
 
+    private ChangeCrossHairOnRayCast crosshairScript;
+
     private void Awake()
     {
         _playerInput = FindObjectOfType<PlayerInput>();
@@ -62,13 +64,23 @@ public class DragSteeringWheel : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         
         _mouseClick = _playerInput.actions["PrimaryAction"];
+
+        crosshairScript = _steeringWheel.GetComponent<ChangeCrossHairOnRayCast>();
     }
 
     void Update()
     {
         // Find mouse movement
         _mouseDelta = _playerInput.actions["MouseLook"].ReadValue<Vector2>();
-        
+
+        if (_currentlySteering) {
+            crosshairScript.draggingWheel = true;
+        }
+
+        else {
+            crosshairScript.draggingWheel = false;
+        }
+
         // Resets Steering Wheel
         if (!_currentlySteering && _steering != SteerDirection.Straight)
         {
@@ -148,6 +160,10 @@ public class DragSteeringWheel : MonoBehaviour
         }
         _cameraSwitcher.ToggleLock();
         // _cameraSwitcher.ToggleSteering();
+        if (!crosshairScript.lookingAtWheel) {
+            CrossHair.Instance.ResetCrosshair();
+        }
+
         _currentlySteering = false;
     }
 

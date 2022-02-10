@@ -27,10 +27,9 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 2
     timeLimit: 15
-    mainTaskPrompt: I need some [c4]funk[c] [c2]music[c] in here, let's switch it
-      up!
-    secondaryTaskPrompt: I need something more lively back here, got any [c6]rock[c]
-      [c2]music[c]?
+    mainTaskPrompt: I need some [c4]funk music[c] in here, let's switch it up!
+    secondaryTaskPrompt: I need something more lively back here, got any [c6]rock
+      music[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Thaaaaaaaanks[w]'
     taskFailureResponse: Gee okay, guess customer service is not your thing.
@@ -48,8 +47,8 @@ MonoBehaviour:
   - taskType: 4
     timeLimit: 16
     mainTaskPrompt: I need some [c2]air[c] in here, it stinks..
-    secondaryTaskPrompt: I've just been to the gym, I'm all sweaty, do you want me
-      to get sick?? Close the [c2]window[c]!
+    secondaryTaskPrompt: I've just been to the gym, do you want me to get sick??
+      Close the [c2]window[c]!
     tertiaryTaskPrompt: 
     taskCompletionResponse: Finally..
     taskFailureResponse: Ew.
@@ -57,7 +56,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 5
     timeLimit: 25
-    mainTaskPrompt: '[c2]Water[c] [w]please[w].'
+    mainTaskPrompt: '[c2]Water[c] [w]pleeease[w].'
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: This is mineral right?
@@ -65,23 +64,23 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   starTimeLimit: 70
-  taskTimeMin: 10
-  taskTimeMax: 15
+  taskTimeMin: 8
+  taskTimeMax: 14
   tempPreference: 3
   volumePreference: 1
   musicPreference: 3
   musicPreferenceOther: 4
-  startRideDialogHappy: Hello, take me to the [c2]park[c] please.
+  startRideDialogHappy: '[w]Hello[w], take me to the [c2]park[c] please.'
   startRideDialogAngry: 
   endRideDialogHappy: Thanks, I'll give you a good rating but you better do the same.
   endRideDialogAngry: Well that was the worst car ride of my life, by[w]eeeee[w].
   specialEventDialog: 
   generalDialog:
+  - Have you considered getting an air freshener?
   - The nanny has some family emergency or whatever, guess I have to look after the
     kids.
-  - Have you considered getting an air freshener?
-  - Don't you wanna do something more exciting with your life than this?
   - All my kids wanna do is play videogames, I bet you're the same aren't you? [w]Loser[w].
+  - Don't you wanna do something more exciting with your life than this?
   crashDialog:
   - What is your [s]problem[s]??
   - Are you dumb?? Watch the road!

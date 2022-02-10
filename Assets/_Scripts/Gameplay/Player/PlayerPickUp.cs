@@ -92,8 +92,9 @@ public class PlayerPickUp : MonoBehaviour {
         if (_gameObjectInHand != null && _gameObjectInHand.TryGetComponent(out Phone phone))
         {
             if (!phone.OnSnapTrigger) return;
-            
-            phone.beingHeld = false;
+
+            CrossHair.Instance.ResetCrosshair();
+            // phone.beingHeld = false;
             phone.SetToWorldParent();
             
             
@@ -115,8 +116,9 @@ public class PlayerPickUp : MonoBehaviour {
         // }
 
         if (_gameObjectInHand != null && _physicsObjectInHand.GetComponent<Cassette>() != null && _physicsObjectInHand.OnSnapTrigger) {
-            _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();          
+            _physicsObjectInHand.GetComponent<Cassette>().SlideInCassette();
 
+            CrossHair.Instance.ResetCrosshair();
             //_physicsObjectInHand.beingHeld = false;
             _rbInHand = null;
             _gameObjectInHand = null;
@@ -158,6 +160,7 @@ public class PlayerPickUp : MonoBehaviour {
 
     public void ThrowObject() 
     {
+        CrossHair.Instance.ResetCrosshair();
         _rbInHand.useGravity = true;
         _rbInHand.isKinematic = false;
         _rbInHand.drag = 0;

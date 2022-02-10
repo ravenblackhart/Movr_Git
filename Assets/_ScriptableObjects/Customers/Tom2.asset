@@ -43,15 +43,24 @@ MonoBehaviour:
     taskFailureResponse: Figured.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  - taskType: 5
+    timeLimit: 8
+    mainTaskPrompt: Give me some water, pronto.
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Is that backwash?
+    taskFailureResponse: Unbelievable..
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 150
   taskTimeMin: 5
   taskTimeMax: 10
   tempPreference: 2
   volumePreference: 3
   musicPreference: 0
   musicPreferenceOther: 0
-  startRideDialogHappy: What a shit day, take me [c2]home[c], have to get there in
-    time for dinner
+  startRideDialogHappy: What a terrible day, take me [c2]home[c], have to get there
+    in time for dinner
   startRideDialogAngry: Oh great, last thing I needed after that meeting was seeing
     your face again.. take me [c2]home[c].
   endRideDialogHappy: 

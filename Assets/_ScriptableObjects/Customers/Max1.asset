@@ -18,8 +18,8 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 15
-    mainTaskPrompt: You're really killing my vibe, got any [c6]rock[c] [c2]music[c]?
-    secondaryTaskPrompt: How about some [c4]funk[c] [c2]music[c]?
+    mainTaskPrompt: You're really killing my vibe, got any [c6]rock music[c]?
+    secondaryTaskPrompt: How about some [c4]funk music[c]?
     tertiaryTaskPrompt: 
     taskCompletionResponse: '[w]Niiice[w].'
     taskFailureResponse: Fine, forget it.. jerk.
@@ -27,7 +27,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 7
     timeLimit: 8
-    mainTaskPrompt: Yo is it too much to ask for a more even [c2]temperature[c]??
+    mainTaskPrompt: Yo is it too much to ask for a warmer [c2]temperature[c]??
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
     taskCompletionResponse: Yeah that's fine whatever.
@@ -35,7 +35,7 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 9
-    timeLimit: 15
+    timeLimit: 20
     mainTaskPrompt: Hey driver, can you put my travel phone on [c2]charge[c]?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -45,7 +45,7 @@ MonoBehaviour:
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 6
-    timeLimit: 15
+    timeLimit: 10
     mainTaskPrompt: Can I get something to [c2]eat[c] back here, make it vegan.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -56,14 +56,14 @@ MonoBehaviour:
   starTimeLimit: 70
   taskTimeMin: 10
   taskTimeMax: 20
-  tempPreference: 2
+  tempPreference: 1
   volumePreference: 2
   musicPreference: 1
   musicPreferenceOther: 3
   startRideDialogHappy: Big Corp [c2]offices[c].
   startRideDialogAngry: 
   endRideDialogHappy: Nice one, take it easy.
-  endRideDialogAngry: This was AWFUL you better not accept my requests anymore.
+  endRideDialogAngry: This was [s]AWFUL[s] you better not accept my requests anymore.
   specialEventDialog: 
   generalDialog:
   - Am I allowed to vape?

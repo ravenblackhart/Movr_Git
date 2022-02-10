@@ -18,15 +18,15 @@ MonoBehaviour:
   taskPool:
   - taskType: 2
     timeLimit: 15
-    mainTaskPrompt: 'Can you put on some [c3]jazz[c] [c2]music[c]? '
-    secondaryTaskPrompt: What's this shit? Go back to the [c6]rock[c] [c2]music[c].
+    mainTaskPrompt: 'Can you put on some [c3]jazz music[c]? '
+    secondaryTaskPrompt: What's this s#@&? Go back to the [c6]rock music[c].
     tertiaryTaskPrompt: 
     taskCompletionResponse: Decent..
     taskFailureResponse: 'Uhm.. maybe you should label your cassettes?  '
     taskFailureResponseAlternate: 
     specialTaskDialog: []
   - taskType: 3
-    timeLimit: 10
+    timeLimit: 8
     mainTaskPrompt: Just keep the [c2]volume[c] on medium yeah?
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -39,7 +39,7 @@ MonoBehaviour:
     mainTaskPrompt: I'm gonna need you to [c2]charge[c] my gym phone now.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
-    taskCompletionResponse: '[w]...[w]'
+    taskCompletionResponse: '[w]Thanks...[w]'
     taskFailureResponse: Why are you incapable of simple tasks?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
@@ -52,22 +52,22 @@ MonoBehaviour:
     taskFailureResponse: Hello???
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
-  taskTimeMin: 10
-  taskTimeMax: 20
+  starTimeLimit: 120
+  taskTimeMin: 8
+  taskTimeMax: 16
   tempPreference: 2
   volumePreference: 2
   musicPreference: 2
   musicPreferenceOther: 1
-  startRideDialogHappy: Hey! Take me back to the [c2]airport[c] please.
+  startRideDialogHappy: Hey! Take me to the [c2]train station[c] please.
   startRideDialogAngry: Are you serious, is there really no other driver available?
-    [c2]Airport[c].
+    [c2]Train station[c].
   endRideDialogHappy: 
   endRideDialogAngry: 
   specialEventDialog: 
   generalDialog:
+  - Who's responsible for city planning? I'd like to have a word.
   - Guess who's twice as rich now.
-  - 
   crashDialog:
   - Do you need to borrow my glasses?
   - Do you work for Big Corp or something??

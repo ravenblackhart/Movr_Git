@@ -31,7 +31,7 @@ public class CarController : MonoBehaviour
     private float _curBrakeTorque = 0;
 
     [Range(-1, 1)]
-    public float speed = 0;
+    private float speed = 0;
     [Range(-1, 1)]
     public float turn = 0;
 
@@ -59,10 +59,11 @@ public class CarController : MonoBehaviour
         float maxSpeed = maxVelocity * _velocityMultiplier;
         if (_direction == Direction.Reverse)
         {
+            speed = -0.5f;
             // Change the top speed depending on how quickly the car can go in reverse
             maxSpeed *= Mathf.Abs(_reverseSpeed);
         }
-        if (_rigidbody.velocity.sqrMagnitude > maxSpeed && _direction == Direction.Forward)
+        if (_rigidbody.velocity.sqrMagnitude > maxSpeed && _direction != Direction.Stopped)
         {
             // Slow down the car
             speed = GetSpeed(true, _direction == Direction.Reverse);
@@ -71,23 +72,15 @@ public class CarController : MonoBehaviour
         {
             // keep the car under the speed limit
             speed = GetSpeed(false, _direction == Direction.Reverse);
-            //Debug.LogWarning(speed + " " + isReversing + " " + _rigidbody.velocity.sqrMagnitude);
-        }
-
-        if (!GameManager.instance.carDriving)
-        {
-            Braking(0.2f);
         }
 
         // Move and steer the car
         float motor = _maxMotorTorque * speed * Time.deltaTime;
         float steering = _maxSteeringAngle * turn;
-
+        //Debug.LogWarning(motor + " " + _rigidbody.velocity.sqrMagnitude + " " + _direction);
         // sound if car is moving
         _motorSound.source.pitch = 1 + Mathf.Abs(_rigidbody.velocity.sqrMagnitude / 50) * 0.5f;
         _motorSound.source.volume = Mathf.Abs(_rigidbody.velocity.sqrMagnitude / 50) * 0.5f;
-            //Debug.LogWarning(_rigidbody.velocity.sqrMagnitude / 50 + " " + _motorSound.source.pitch + " " +
-            //    _motorSound.source.volume);
 
         foreach (AxleInfo axleInfo in _axleInfos)
         {
@@ -133,11 +126,15 @@ public class CarController : MonoBehaviour
         return speed;
     }
 
-    public void Braking(float time)
+    public void Braking(float time, float newSpeed, bool sound)
     {
+        // Very ugly fix
+        if (sound)
+        {
+            AudioManager.Instance.Play("CarBrake");
+        }
         StartCoroutine(StartBraking(time));
-        Debug.LogWarning("brake" + time);
-        speed = 0;
+        speed = newSpeed;
     }
 
     private IEnumerator StartBraking(float time)
@@ -149,7 +146,7 @@ public class CarController : MonoBehaviour
         _curBrakeTorque = 0;
     }
 
-    // Finds the corresponding visual wheel and, behövs detta?
+    // Finds the corresponding visual wheel and
     // correctly turns them
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {

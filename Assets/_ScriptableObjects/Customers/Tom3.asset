@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: Tom3
   m_EditorClassIdentifier: 
-  bodyMaterial: {fileID: 0}
-  hasHat: 1
-  hasGlasses: 0
+  identity: 0
+  hasKids: 0
+  skipBeforeEnd: 0
   taskPool:
   - taskType: 2
     timeLimit: 10
-    mainTaskPrompt: Actually, put on some easy [c3]jazz[c] [c2]music[c] yeah?
-    secondaryTaskPrompt: Actually, put on some easy [c3]funk[c] [c2]music[c] yeah?
+    mainTaskPrompt: Actually, put on some easy [c3]jazz music[c] yeah?
+    secondaryTaskPrompt: Actually, put on some [c3]funk music[c] yeah?
     tertiaryTaskPrompt: 
     taskCompletionResponse: Much better.
     taskFailureResponse: Don't worry one day you might just figure out how to be
@@ -35,17 +35,8 @@ MonoBehaviour:
     taskFailureResponse: I guess that was really hard for you huh?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  - taskType: 5
-    timeLimit: 9
-    mainTaskPrompt: Can I get some [c2]water[c]?
-    secondaryTaskPrompt: 
-    tertiaryTaskPrompt: 
-    taskCompletionResponse: Thirst quenched.
-    taskFailureResponse: Thirst unquenched.
-    taskFailureResponseAlternate: 
-    specialTaskDialog: []
   - taskType: 6
-    timeLimit: 5
+    timeLimit: 6
     mainTaskPrompt: Some [c2]food[c] would be nice too.
     secondaryTaskPrompt: 
     tertiaryTaskPrompt: 
@@ -53,19 +44,46 @@ MonoBehaviour:
     taskFailureResponse: Keeping it all to yourself are you?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  - taskType: 3
+    timeLimit: 6
+    mainTaskPrompt: Can't hear, high [c2]volume[c] please.
+    secondaryTaskPrompt: A medium music [c2]volume[c] would do.
+    tertiaryTaskPrompt: Keep the [c2]volume[c] low please.
+    taskCompletionResponse: Keep it up and you might get a tip.
+    taskFailureResponse: Did you see that falling star??
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 5
+    timeLimit: 12
+    mainTaskPrompt: Can I get some more [c2]water[c]?
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Thirst quenched.
+    taskFailureResponse: Thirst unquenched.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  - taskType: 7
+    timeLimit: 8
+    mainTaskPrompt: I'd like a higher [c2]temperature[c] please.
+    secondaryTaskPrompt: Medium [c2]temperature[c] please.
+    tertiaryTaskPrompt: Ok let's cool it down, low [c2]temperature[c].
+    taskCompletionResponse: Good job, proud of you.
+    taskFailureResponse: You dissapoint me.
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
+  starTimeLimit: 120
   taskTimeMin: 5
-  taskTimeMax: 12
+  taskTimeMax: 10
   tempPreference: 0
   volumePreference: 0
   musicPreference: 2
   musicPreferenceOther: 3
   startRideDialogHappy: You know what. I need to see someone, take me to the [c2]hotel[c]
     instead.
-  startRideDialogAngry: 
+  startRideDialogAngry: You know what. I need to see someone, take me to the [c2]hotel[c]
+    instead.
   endRideDialogHappy: Thanks, and please.. don't tell my wife.
-  endRideDialogAngry: You better not say a word to anyone about this, and I'm never
-    getting in this car again.
+  endRideDialogAngry: I'm never getting in this car again.
   specialEventDialog: 
   generalDialog:
   - That deal might've just ruined my life, so don't judge me.
@@ -73,3 +91,4 @@ MonoBehaviour:
   crashDialog:
   - How do you still have this job?
   - '[s]NO[s]!'
+  - '[s]BASTA[s]!'

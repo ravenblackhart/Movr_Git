@@ -64,16 +64,16 @@ MonoBehaviour:
   sounds:
   - name: Click
     clip: {fileID: 8300000, guid: 348bc3c144058aa4d92ea4a166eb564e, type: 3}
-    MixerGroup: {fileID: 0}
-    volume: 0.6
-    pitch: 2.28
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.604
+    pitch: 2.26
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
   - name: Music
     clip: {fileID: 8300000, guid: 31b0f7acb9638e44d88b0d2c27ea0054, type: 3}
-    MixerGroup: {fileID: 0}
-    volume: 0.6
+    MixerGroup: {fileID: 976740188088130744, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.501
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   - name: CarButton
     clip: {fileID: 8300000, guid: 47e7c4b9856f25b4d88007ebb0aa3ee9, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.6
+    volume: 0.793
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   - name: CarHonk
     clip: {fileID: 8300000, guid: 566296cfd24efd747854791c2a0a033f, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.6
+    volume: 0.5
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -142,8 +142,8 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: Cassette
-    clip: {fileID: 8300000, guid: 649b8700be8612e45b8d73b27ce607db, type: 3}
+  - name: OpeningCassetteBox
+    clip: {fileID: 8300000, guid: ca8b0bf9b21297b48ae69d0fa4f79a08, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
     volume: 0.6
     pitch: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   - name: Driving
     clip: {fileID: 8300000, guid: f36e5ef414428cb42a768c4350d43dbf, type: 3}
     MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.6
+    volume: 0.705
     pitch: 1
     loop: 1
     playOnAwake: 0
@@ -161,13 +161,13 @@ MonoBehaviour:
   - name: Gearstick
     clip: {fileID: 8300000, guid: 8b97aaea278803141a32b7864d0b8393, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.6
+    volume: 0.65
     pitch: 1
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: GloveBox
-    clip: {fileID: 8300000, guid: 6532647c80afde5498edfa646d61b3ad, type: 3}
+  - name: OpenGloveBox
+    clip: {fileID: 8300000, guid: fd888e0b93f23ee47b8a9f39d51b2e68, type: 3}
     MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
     volume: 0.6
     pitch: 1
@@ -209,7 +209,7 @@ MonoBehaviour:
   - name: MediumImpact
     clip: {fileID: 8300000, guid: ee25c9b3a180379458a9abd98f1df120, type: 3}
     MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
-    volume: 0.6
+    volume: 0.55
     pitch: 1
     loop: 0
     playOnAwake: 0
@@ -249,6 +249,70 @@ MonoBehaviour:
   - name: WindshieldWipers
     clip: {fileID: 8300000, guid: 0ce1a44de1ce7074fa2c7ae5f28d7460, type: 3}
     MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CarStop
+    clip: {fileID: 8300000, guid: 12eccb1c87935524595f4f2c336a5f2d, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: BirdPoop
+    clip: {fileID: 8300000, guid: 5b74525961952f3418470319357e2af7, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: BirdPooping
+    clip: {fileID: 8300000, guid: 5b74525961952f3418470319357e2af7, type: 3}
+    MixerGroup: {fileID: 5212592271543813757, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: NPCWalking
+    clip: {fileID: 8300000, guid: 5b74525961952f3418470319357e2af7, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: NPCDiging
+    clip: {fileID: 8300000, guid: 5b74525961952f3418470319357e2af7, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: CrowChirping
+    clip: {fileID: 8300000, guid: 5b74525961952f3418470319357e2af7, type: 3}
+    MixerGroup: {fileID: 336334483540221675, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ClosingGloveBox
+    clip: {fileID: 8300000, guid: b348c512d16e34f4ca8eb4167d4677f0, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
+    volume: 0.6
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ClosingCassetteBox
+    clip: {fileID: 8300000, guid: 56b740f849b66fa43b9ff82b6342709f, type: 3}
+    MixerGroup: {fileID: -6175866629642168362, guid: af3d58a23b8766e4fbf2ed4dde01b186, type: 2}
     volume: 0.6
     pitch: 1
     loop: 0

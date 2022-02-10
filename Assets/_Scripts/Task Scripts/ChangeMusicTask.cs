@@ -76,11 +76,11 @@ public class ChangeMusicTask : Task
             return false;
         }
 
-        else if (CheckMusicPlayer(gameManager) == "FUNK" && musicPref == MusicPreference.House) {
+        else if (CheckMusicPlayer(gameManager) == "HOUSE" && musicPref == MusicPreference.House) {
             return false;
         }
 
-        else if (CheckMusicPlayer(gameManager) == "HOUSE" && musicPref == MusicPreference.Funk) {
+        else if (CheckMusicPlayer(gameManager) == "FUNK" && musicPref == MusicPreference.Funk) {
             return false;
         }
 

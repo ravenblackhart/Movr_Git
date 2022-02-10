@@ -10,7 +10,6 @@ public class PhoneDock : MonoBehaviour
         {
             _phone = phone;
             _phone.OnSnapTrigger = true;
-            _phone.Charging = true;
             _phone.transform.rotation = transform.rotation;
             
         }
@@ -26,8 +25,9 @@ public class PhoneDock : MonoBehaviour
                 _phone.transform.rotation = transform.rotation;
                 
                 //Charge Phone
-                if (!(_phone.ChargeAmount >= 15))
-                    _phone.ChargeAmount += Time.deltaTime;
+                _phone.Charging = true;
+
+                _phone.ChargeAmount = Mathf.Min(_phone.ChargeAmount + Time.deltaTime, 8f);
             }
     }
     

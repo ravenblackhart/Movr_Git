@@ -10,7 +10,8 @@ public class MainMenuAudio : MonoBehaviour
 {
    [SerializeField] private Mixtape MainMenuMusic;
    private AudioSource audioSource; 
-   private int trackIndex; 
+   private int trackIndex;
+   private int playlistLength; 
 
    private void Awake()
    {
@@ -21,14 +22,16 @@ public class MainMenuAudio : MonoBehaviour
    {
       trackIndex = Random.Range(0, MainMenuMusic.PlaylistTracks.Length);
       audioSource.clip = MainMenuMusic.PlaylistTracks[trackIndex];
+      playlistLength = MainMenuMusic.PlaylistTracks.Length; 
       StartCoroutine(PlayTape()); 
    }
    
    public void NextTrack()
    {
       trackIndex++;
-      if (trackIndex > MainMenuMusic.PlaylistTracks.Length - 1) trackIndex = 0; 
+      if (trackIndex > playlistLength - 1) trackIndex = 0; 
       UpdateTrack(trackIndex);
+      StartCoroutine(PlayTape()); 
    }
    
    private void UpdateTrack(int index)
@@ -41,6 +44,5 @@ public class MainMenuAudio : MonoBehaviour
       audioSource.Play();
       yield return new WaitForSeconds(MainMenuMusic.PlaylistTracks[trackIndex].length + 0.15f); 
       NextTrack();
-      audioSource.Play();
    }
 }

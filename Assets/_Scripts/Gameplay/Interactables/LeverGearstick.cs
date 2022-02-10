@@ -25,6 +25,7 @@ public class LeverGearstick : Lever
         _playerDrag = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDragObject>();
         _carController = GameObject.FindGameObjectWithTag(_carControllerTag).GetComponent<CarController>();
         _maxSpeed = _carController.maxVelocity;
+        _dragSpeed = 2f;
     }
 
     public override void UpdateLeverValue()
@@ -51,6 +52,14 @@ public class LeverGearstick : Lever
         // rotate the stick correctly
         _orgin.transform.localEulerAngles = new Vector3(_orgin.transform.localEulerAngles.x,
             _orgin.transform.localEulerAngles.y,  SetStickAngle( -_zAngle));
+        if (-_zAngle < -5 && -_zAngle > -55 && _currentGear != 1)
+        {
+            _currentGear = 1;
+        }
+        else if (-_zAngle > 5 && -_zAngle < 25)
+        {
+            _currentGear = -1;
+        }
     }
 
     /// <summary>
@@ -75,14 +84,12 @@ public class LeverGearstick : Lever
         }
         else
         {
-            //_carController.midGear = true;
             return curAngle;
         }
     }
 
     private int ChangeGearValues(int gear)
     {
-        //_carController.midGear = false;
         switch (gear)
         {
             case 2:

@@ -48,16 +48,22 @@ public class Gearstick : MonoBehaviour
     private void StopCar()
     {
         _carController._direction = CarController.Direction.Stopped;
-        _carController.Braking(0.2f);
+        _carController.Braking(0.2f, 0, true);
         _stopped = true;
     }
 
     private void ChangeDirectionSpeed(CarController.Direction newDirection)
     {
-        _carController.speed = _gearLever.LeverValue;
-        //Debug.LogWarning(newDirection + " " + _carController.speed);
         _stopped = false;
-        _carController.Braking(0.2f);
         _carController._direction = newDirection;
+        // ugly fixes are allowed now (15.35, 10/2)
+        if (newDirection == CarController.Direction.Forward)
+        {
+            _carController.Braking(0.2f, _gearLever.LeverValue, false);
+        }
+        else
+        {
+            _carController.Braking(0.2f, -0.5f, false);
+        }
     }
 }

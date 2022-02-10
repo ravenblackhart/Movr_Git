@@ -25,8 +25,9 @@ public class GameManager : MonoBehaviour
 
     int customerIndex = 0;
 
-    [System.NonSerialized]
-    public bool carDriving = true;
+    //[System.NonSerialized]
+    //public bool carDriving = true;
+    CarController carController;
 
     bool isPlayingDialog = false;
 
@@ -49,12 +50,13 @@ public class GameManager : MonoBehaviour
 
     int rideCount;
 
+    bool[] customerMemories = new bool[] { true, true, true };
+
     #region References
 
     [Header("References")]
 
-    [SerializeField]
-    UIManager uiManager;
+    public UIManager uiManager;
 
     public Transform car;
 
@@ -103,6 +105,7 @@ public class GameManager : MonoBehaviour
         }
 
         instance = this;
+        carController = GameObject.FindGameObjectWithTag("CarDriving").GetComponent<CarController>();
     }
 
     void Start()
@@ -128,7 +131,13 @@ public class GameManager : MonoBehaviour
         }
 
         tasksCompleted = new bool[taskTutorialObjects.Length];
+
+        dialogRenderer.DialogCharPrintedEvent.AddListener(PlayDialogSound);
+
+        audioManager.Play("CrowChirping");
     }
+
+    float dialogBoxProgress = 0f;
 
     // Update
     void Update()
@@ -145,6 +154,10 @@ public class GameManager : MonoBehaviour
 
         Cursor.visible = uiManager.pauseLockEnabled;
         Cursor.lockState = uiManager.pauseLockEnabled ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+        dialogBoxProgress = Mathf.MoveTowards(dialogBoxProgress, isPlayingDialog ? 1f : 0f, Time.deltaTime * 4f);
+
+        dialogRenderer.transform.parent.localPosition = Vector3.down * (1f - Mathf.Pow(dialogBoxProgress, 2f)) * 5f;
     }
 
     void StartNewCustomer(bool skipStart = false)
@@ -194,7 +207,8 @@ public class GameManager : MonoBehaviour
             displayPickup = false;
             displayDropoff = false;
 
-            carDriving = false;
+            carController.Braking(2.5f, 0, true);
+            //carDriving = false;
 
             yield return new WaitForSeconds(1f);
 
@@ -203,15 +217,13 @@ public class GameManager : MonoBehaviour
 
             customer.UpdateAnimations(0);
 
-            for (float t = 0f; t < 1f; t += Time.deltaTime * 1.2f)
+            for (float t = 0f; t < 1f; t += Time.deltaTime * 0.5f)
             {
                 yield return null;
 
                 customer.transform.position = Vector3.Lerp(customerStartPos, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
 
-                customer.transform.rotation = Quaternion.LerpUnclamped(customerStartRot, customerSitGoal.rotation, t)
-                    * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (customerSitGoal.position - customerStartPos).RemoveY().normalized)
-                    * Quaternion.AngleAxis(t * 360f, Vector3.up);
+                customer.transform.rotation = Quaternion.LerpUnclamped(customerStartRot, customerSitGoal.rotation, t) * Quaternion.AngleAxis(t * 360f * 2f, Vector3.up);
             }
 
             customer.transform.position = customerSitGoal.position;
@@ -234,7 +246,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        if (true) // Implement check for if customer was satisfied during your last ride with them
+        if (customerMemories[(int)currentCustomer.identity]) // Implement check for if customer was satisfied during your last ride with them
         {
             PlayDialog(currentCustomer.startRideDialogHappy, DialogAnimationType.Happy);
         }
@@ -243,7 +255,7 @@ public class GameManager : MonoBehaviour
             PlayDialog(currentCustomer.startRideDialogAngry, DialogAnimationType.Angry);
         }
 
-        carDriving = true;
+        //carDriving = true;
 
         displayPickup = false;
         displayDropoff = true;
@@ -284,7 +296,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Dropoff Customer
-        carDriving = false;
+        carController.Braking(3.0f, 0, true);
+        //carDriving = false;
 
         displayPickup = false;
         displayDropoff = false;
@@ -292,10 +305,14 @@ public class GameManager : MonoBehaviour
         if (potentialRideScore >= 2f)
         {
             PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
+
+            customerMemories[(int)currentCustomer.identity] = true;
         }
         else
         {
             PlayDialog(currentCustomer.endRideDialogAngry, DialogAnimationType.Angry);
+
+            customerMemories[(int)currentCustomer.identity] = false;
         }
 
         inRide = false;
@@ -304,15 +321,13 @@ public class GameManager : MonoBehaviour
 
         customer.UpdateAnimations(-1);
 
-        for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
+        for (float t = 1f; t > 0f; t -= Time.deltaTime * 0.5f)
         {
             yield return null;
 
             customer.transform.position = Vector3.Lerp(currentDropoff.transform.position, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
 
-            customer.transform.rotation = Quaternion.LerpUnclamped(currentDropoff.transform.rotation, customerSitGoal.rotation, t)
-                * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (currentDropoff.transform.position - customerSitGoal.position).RemoveY().normalized)
-                * Quaternion.AngleAxis(t * 360f, Vector3.up);
+            customer.transform.rotation = Quaternion.LerpUnclamped(currentDropoff.transform.rotation, customerSitGoal.rotation, t) * Quaternion.AngleAxis(t * 360f, Vector3.up);
         }
 
         rideEndEvent.Invoke();
@@ -320,15 +335,31 @@ public class GameManager : MonoBehaviour
         customer.transform.position = currentDropoff.transform.position;
         customer.transform.rotation = currentDropoff.transform.rotation;
 
+        var lastPos = currentDropoff.transform.position;
+        var lastRot = currentDropoff.transform.rotation;
+
+        var lastCustomer = customer;
+
         customer.transform.parent = null;
 
-        carDriving = true;
+        //carDriving = true;
 
         customer = null;
 
         currentCustomer = null;
 
         StartNewCustomer();
+
+        yield return new WaitForSeconds(3f);
+
+        for (float t = 0f; t < 1f; t += Time.deltaTime * 0.5f)
+        {
+            yield return null;
+
+            lastCustomer.transform.position = Vector3.Lerp(lastPos, lastPos - Vector3.up * 5f, t);
+
+            lastCustomer.transform.rotation = lastRot * Quaternion.AngleAxis(t * 360f * 5f, Vector3.up);
+        }
     }
 
     IEnumerator TaskLoopCoroutine()
@@ -497,6 +528,8 @@ public class GameManager : MonoBehaviour
                     taskCompletionEvent.Invoke();
 
                     radialTimer.UpdateRadialTimerGoal(false);
+
+                    audioManager.Play("CompleteTask");
                 }
                 else if (currentTask.failedTaskEvent.Query() || taskTimer <= 0f)
                 {
@@ -523,6 +556,8 @@ public class GameManager : MonoBehaviour
                     radialTimer.UpdateRadialTimerGoal(false);
 
                     ScoreLoseStar();
+
+                    audioManager.Play("FailingTask");
                 }
 
                 canPlayDialog = false;
@@ -759,6 +794,83 @@ public class GameManager : MonoBehaviour
         StopCoroutine("PlayDialogCoroutine");
 
         StartCoroutine("PlayDialogCoroutine", dialog);
+    }
+
+    AudioSource currentSourcePrim;
+    AudioSource currentSourceSec;
+
+    List<int> intPool = new List<int>();
+
+    int lastPoolPicked;
+
+    public void PlayDialogSound()
+    {
+        if (intPool.Count == 0)
+        {
+            intPool.AddRange(new int[] { 0, 1, 2, 3 });
+
+            intPool.Remove(lastPoolPicked);
+        }
+
+        bool canPlayPrimary = currentSourcePrim == null;
+        if (!canPlayPrimary)
+        {
+            canPlayPrimary = !currentSourcePrim.isPlaying;
+        }
+
+        var random = intPool[Random.Range(0, intPool.Count)];
+
+        if (canPlayPrimary)
+        {
+            switch (random)
+            {
+                case 0:
+                    currentSourcePrim = audioManager.PlayWithReturn("Dialog 1");
+                    break;
+                case 1:
+                    currentSourcePrim = audioManager.PlayWithReturn("Dialog 2");
+                    break;
+                case 2:
+                    currentSourcePrim = audioManager.PlayWithReturn("Dialog 3");
+                    break;
+                case 3:
+                    currentSourcePrim = audioManager.PlayWithReturn("Dialog 4");
+                    break;
+            }
+
+            lastPoolPicked = random;
+
+            return;
+        }
+
+        ////////
+
+        bool canPlaySecondary = currentSourceSec == null;
+        if (!canPlaySecondary)
+        {
+            canPlaySecondary = !currentSourceSec.isPlaying;
+        }
+
+        if (canPlaySecondary)
+        {
+            switch (random)
+            {
+                case 0:
+                    currentSourceSec = audioManager.PlayWithReturn("Dialog 1");
+                    break;
+                case 1:
+                    currentSourceSec = audioManager.PlayWithReturn("Dialog 2");
+                    break;
+                case 2:
+                    currentSourceSec = audioManager.PlayWithReturn("Dialog 3");
+                    break;
+                case 3:
+                    currentSourceSec = audioManager.PlayWithReturn("Dialog 4");
+                    break;
+            }
+
+            lastPoolPicked = random;
+        }
     }
 
     IEnumerator PlayDialogCoroutine(string dialog)

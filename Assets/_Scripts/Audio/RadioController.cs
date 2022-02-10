@@ -12,6 +12,7 @@ public class RadioController : MonoBehaviour
 
     private int trackIndex; 
     private AudioSource radioAudioSource;
+    private float timeStamp = 0f; 
 
     private void Start()
     {
@@ -28,6 +29,9 @@ public class RadioController : MonoBehaviour
         audioTracks = tape.GetComponent<Cassette>().TrackList; 
         trackIndex = Random.Range(0, audioTracks.Length);
         radioAudioSource.clip = audioTracks[trackIndex];
+        radioAudioSource.time = Random.Range(0f, audioTracks[trackIndex].length);
+        timeStamp = radioAudioSource.time; 
+
     }
 
     public void UnregisterTape()
@@ -56,31 +60,28 @@ public class RadioController : MonoBehaviour
         if (audioTracks != null)
         {
             trackIndex++;
-            if (trackIndex > audioTracks.Length - 1) trackIndex = 0; 
+            if (trackIndex > audioTracks.Length - 1)
+            {
+                trackIndex = 0;
+            } 
             UpdateTrack(trackIndex);
         }
         
-    }
-    
-    public void PrevTrack()
-    {
-        trackIndex--; 
-        if (trackIndex < 0 ) trackIndex = audioTracks.Length - 1 ;
-        UpdateTrack(trackIndex);
+        PlayAudio();
     }
 
     private void UpdateTrack(int index)
     {
         radioAudioSource.clip = audioTracks[index];
+        timeStamp = 0f;
+        radioAudioSource.time = timeStamp; 
     }
 
     private IEnumerator PlayTape()
     {
-        radioAudioSource.time = Random.Range(0f, audioTracks[trackIndex].length);
         radioAudioSource.Play();
-        yield return new WaitForSeconds(audioTracks[trackIndex].length + 0.15f); 
+        yield return new WaitForSeconds(audioTracks[trackIndex].length - timeStamp); 
         NextTrack();
-        radioAudioSource.Play();
     }
 
 }

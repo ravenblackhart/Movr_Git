@@ -60,11 +60,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] [CanBeNull] private TextMeshProUGUI scoreText;
     [SerializeField] [CanBeNull] private TextMeshProUGUI gameOverScoreText; 
 
-    [Header("Audio Toggle")]
-    [SerializeField] public Sprite AudioStrength1;
-    [SerializeField] public Sprite AudioStrength2;
-    [SerializeField] public Sprite AudioStrength3;
-    
+
     [Header("Data")] 
     [SerializeField] [CanBeNull] private int score;
 
@@ -83,12 +79,7 @@ public class UIManager : MonoBehaviour
     public Color DisabledColor = new Color32(120, 120, 120, 255);
 
     private bool tutorialOn = true;
-
-    private CameraSwitcher camSwitch; 
     
-    
-    
-
     #endregion
     #region Defaults
     private void Awake()
@@ -116,8 +107,7 @@ public class UIManager : MonoBehaviour
         {
             tutorialOn = false;
         }
-
-        camSwitch = FindObjectOfType<CameraSwitcher>(); 
+        
     }
     
 
@@ -169,14 +159,19 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if ((Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed) && readyPanel.enabled == true)
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            tutorialLockEnabled = false;
+            if ((Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed) && readyPanel.enabled == true)
+            {
+                tutorialLockEnabled = false;
 
-            readyPanel.enabled = false;
-            Time.timeScale = 1f; 
-        } 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
+                readyPanel.enabled = false;
+                Time.timeScale = 1f; 
+            } 
+            if (Keyboard.current.escapeKey.wasPressedThisFrame) PauseGame();
+        }
+        
+        
 
     }
 
@@ -199,17 +194,21 @@ public class UIManager : MonoBehaviour
     
     public void PauseGame()
     {
+        var cameraSwitcher = FindObjectOfType<CameraSwitcher>();
+        
         if (pauseMenu.enabled == false)
         {
             pauseMenu.enabled = true; 
             Time.timeScale = 0f;
-            
+            cameraSwitcher.SetToLockedCamera();
+
         }
 
         else
         {
-            Time.timeScale = 1f; 
-            pauseMenu.enabled = false; 
+            Time.timeScale = 1f;
+            pauseMenu.enabled = false;
+            cameraSwitcher.SetToFrontCamera();
             
         }
 

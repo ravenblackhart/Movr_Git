@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8399297830306103364}
   - component: {fileID: 8399297830306103362}
   - component: {fileID: 8399297830306103365}
-  m_Layer: 4
+  m_Layer: 7
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4817,7 +4817,7 @@ GameObject:
   - component: {fileID: 8975490028182812292}
   - component: {fileID: 8868786709762311152}
   - component: {fileID: 7386141017167608201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WaterBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4956,7 +4956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 950e67c3a767fd24ea727af1f7445b5c, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 950e67c3a767fd24ea727af1f7445b5c, type: 3}
