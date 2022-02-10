@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Wendy1
   m_EditorClassIdentifier: 
   identity: 2
+  hasKids: 0
+  skipBeforeEnd: 0
   taskPool:
   - taskType: 7
     timeLimit: 8
@@ -62,7 +64,7 @@ MonoBehaviour:
     taskFailureResponse: Can I speak just speak to your boss?
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  starTimeLimit: 70
   taskTimeMin: 10
   taskTimeMax: 15
   tempPreference: 3

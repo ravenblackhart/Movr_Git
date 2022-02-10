@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Max1
   m_EditorClassIdentifier: 
   identity: 1
+  hasKids: 0
+  skipBeforeEnd: 0
   taskPool:
   - taskType: 2
     timeLimit: 15
@@ -51,7 +53,7 @@ MonoBehaviour:
     taskFailureResponse: Alright stupid.
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  starTimeLimit: 70
   taskTimeMin: 10
   taskTimeMax: 20
   tempPreference: 2
@@ -64,7 +66,7 @@ MonoBehaviour:
   endRideDialogAngry: This was AWFUL you better not accept my requests anymore.
   specialEventDialog: 
   generalDialog:
-  - Can I vape?
+  - Am I allowed to vape?
   - Can't believe they think they can buy us, they're in for a surprise.
   - Sure am glad I don't live here anymore.
   crashDialog:

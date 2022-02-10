@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Max2
   m_EditorClassIdentifier: 
   identity: 1
+  hasKids: 0
+  skipBeforeEnd: 1
   taskPool:
   - taskType: 2
     timeLimit: 15

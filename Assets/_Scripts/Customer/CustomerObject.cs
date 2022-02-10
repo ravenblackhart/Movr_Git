@@ -9,6 +9,8 @@ public class CustomerObject : ScriptableObject
 
     public bool hasKids;
 
+    public bool skipBeforeEnd;
+
     public CustomerTask[] taskPool;
 
     public float starTimeLimit = 40f;

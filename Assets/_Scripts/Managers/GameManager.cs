@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [System.NonSerialized]
     public CustomerController customer;
 
-    int customerIndex;
+    int customerIndex = 0;
 
     [System.NonSerialized]
     public bool carDriving = true;
@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
 
     [System.NonSerialized]
     public bool inRide;
+
+    [System.NonSerialized]
+    public bool 
+        displayPickup,
+        displayDropoff;
 
     [HideInInspector]
     public TaskType currentTaskType;
@@ -42,9 +47,14 @@ public class GameManager : MonoBehaviour
 
     bool scoreTicking;
 
+    int rideCount;
+
     #region References
 
     [Header("References")]
+
+    [SerializeField]
+    UIManager uiManager;
 
     public Transform car;
 
@@ -76,6 +86,8 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent taskCompletionEvent;
     public UnityEvent taskFailureEvent;
+
+    public CustomClasses.QueryEvent carCollisionEvent;
 
     #endregion Callbacks
 
@@ -126,71 +138,101 @@ public class GameManager : MonoBehaviour
             StartNewCustomer();
         }
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        var temp = Random.value;
+
+        //Cursor.visible = uiManager.tutorialLockEnabled || uiManager.pauseLockEnabled;
+        //Cursor.lockState = uiManager.tutorialLockEnabled || uiManager.pauseLockEnabled ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+        Cursor.visible = uiManager.pauseLockEnabled;
+        Cursor.lockState = uiManager.pauseLockEnabled ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
 
-    void StartNewCustomer()
+    void StartNewCustomer(bool skipStart = false)
     {
+        rideCount++;
+
         currentPickup = pickupPool[customerIndex];
 
         currentDropoff = dropoffPool[customerIndex];
 
         currentCustomer = customerPool[customerIndex];
 
-        customerIndex = Mathf.Min(customerIndex + 1, customerPool.Length - 1, customerPool.Length - 1, dropoffPool.Length - 1);
+        StartCoroutine(CustomerCoroutine(skipStart));
 
-        StartCoroutine(CustomerCoroutine());
+        customerIndex++;
+        if (customerIndex >= customerPool.Length || customerIndex >= pickupPool.Length || customerIndex >= dropoffPool.Length)
+        {
+            customerIndex = 0;
+        }
+        
+        //Mathf.Min(customerIndex + 1, customerPool.Length - 1, pickupPool.Length - 1, dropoffPool.Length - 1);
     }
 
-    IEnumerator CustomerCoroutine()
+    IEnumerator CustomerCoroutine(bool skipStart)
     {
-        // Innitialization
-        customer = Instantiate(customerPrefab, currentPickup.transform.position, currentPickup.transform.rotation).GetComponent<CustomerController>();
+        int lastRideCount = rideCount;
 
-        scoreTicking = false;
-
-        // Pickup Customer
-        currentPickup.trigger.EnableTrigger();
-
-        yield return CustomClasses.WaitUntilEvent(currentPickup.trigger.triggerEvent);
-
-        carDriving = false;
-
-        yield return new WaitForSeconds(1f);
-
-        Vector3 customerStartPos = customer.transform.position;
-        Quaternion customerStartRot = customer.transform.rotation;
-
-        for (float t = 0f; t < 1f; t += Time.deltaTime * 1.2f)
+        if (!skipStart)
         {
-            yield return null;
+            // Innitialization
+            customer = Instantiate(customerPrefab, currentPickup.transform.position, currentPickup.transform.rotation).GetComponent<CustomerController>();
 
-            customer.transform.position = Vector3.Lerp(customerStartPos, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
+            customer.Initialize(currentCustomer.identity, currentCustomer.hasKids);
 
-            customer.transform.rotation = Quaternion.LerpUnclamped(customerStartRot, customerSitGoal.rotation, t) 
-                * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (customerSitGoal.position - customerStartPos).RemoveY().normalized)
-                * Quaternion.AngleAxis(t * 360f, Vector3.up);
+            customer.UpdateAnimations(-1);
+
+            scoreTicking = false;
+
+            displayPickup = true;
+            displayDropoff = false;
+
+            // Pickup Customer
+            currentPickup.trigger.EnableTrigger();
+
+            yield return CustomClasses.WaitUntilEvent(currentPickup.trigger.triggerEvent);
+
+            displayPickup = false;
+            displayDropoff = false;
+
+            carDriving = false;
+
+            yield return new WaitForSeconds(1f);
+
+            Vector3 customerStartPos = customer.transform.position;
+            Quaternion customerStartRot = customer.transform.rotation;
+
+            customer.UpdateAnimations(0);
+
+            for (float t = 0f; t < 1f; t += Time.deltaTime * 1.2f)
+            {
+                yield return null;
+
+                customer.transform.position = Vector3.Lerp(customerStartPos, customerSitGoal.position, t) + Vector3.up * (1f - Mathf.Pow(t * 2f - 1f, 2f)) * 5f;
+
+                customer.transform.rotation = Quaternion.LerpUnclamped(customerStartRot, customerSitGoal.rotation, t)
+                    * Quaternion.AngleAxis(t * 360f * 3f, Quaternion.Euler(Vector3.up * 90f) * (customerSitGoal.position - customerStartPos).RemoveY().normalized)
+                    * Quaternion.AngleAxis(t * 360f, Vector3.up);
+            }
+
+            customer.transform.position = customerSitGoal.position;
+            customer.transform.rotation = customerSitGoal.rotation;
+
+            customer.transform.parent = customerSitGoal;
+
+            rideStartEvent.Invoke();
+
+            potentialRideScore = 5f;
+
+            ratingCountdown.UpdateRating(potentialRideScore, 0f);
+
+            radialTimer.UpdateRadialTimer(1f);
+
+            inRide = true;
+
+            StartCoroutine(ScoreUpdateLoopCoroutine());
+
+            yield return new WaitForSeconds(1f);
         }
-
-        customer.transform.position = customerSitGoal.position;
-        customer.transform.rotation = customerSitGoal.rotation;
-
-        customer.transform.parent = customerSitGoal;
-
-        rideStartEvent.Invoke();
-
-        potentialRideScore = 5f;
-
-        ratingCountdown.UpdateRating(potentialRideScore, 0f);
-
-        radialTimer.UpdateRadialTimer(1f);
-
-        inRide = true;
-
-        StartCoroutine(ScoreUpdateLoopCoroutine());
-
-        yield return new WaitForSeconds(1f);
 
         if (true) // Implement check for if customer was satisfied during your last ride with them
         {
@@ -202,6 +244,9 @@ public class GameManager : MonoBehaviour
         }
 
         carDriving = true;
+
+        displayPickup = false;
+        displayDropoff = true;
 
         currentDropoff.trigger.EnableTrigger();
 
@@ -215,6 +260,11 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return TaskLoopCoroutine();
+        }
+
+        if (lastRideCount != rideCount)
+        {
+            yield break;
         }
 
         scoreTicking = false;
@@ -236,7 +286,10 @@ public class GameManager : MonoBehaviour
         // Dropoff Customer
         carDriving = false;
 
-        if (potentialRideScore >= 3f)
+        displayPickup = false;
+        displayDropoff = false;
+
+        if (potentialRideScore >= 2f)
         {
             PlayDialog(currentCustomer.endRideDialogHappy, DialogAnimationType.Happy);
         }
@@ -248,7 +301,9 @@ public class GameManager : MonoBehaviour
         inRide = false;
 
         yield return new WaitForSeconds(3f);
-        
+
+        customer.UpdateAnimations(-1);
+
         for (float t = 1f; t > 0f; t -= Time.deltaTime * 1.2f)
         {
             yield return null;
@@ -296,11 +351,43 @@ public class GameManager : MonoBehaviour
 
         while (true)
         {
-            if (currentDropoff.trigger.queryEvent.Query())
+            if (currentCustomer.skipBeforeEnd)
             {
-                currentTask?.EndTask(this);
+                if (Vector3.Distance(GameManager.instance.car.position.RemoveY(), currentDropoff.transform.position.RemoveY()) < 50f)
+                {
+                    currentTask?.EndTask(this);
 
-                break;
+                    currentTask = null;
+                    currentTaskType = TaskType.Null;
+
+                    radialTimer.UpdateRadialTimerGoal(false);
+
+                    currentDropoff.trigger.DisableTrigger();
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length && (int)currentTaskType >= 2)
+                        if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                            taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
+
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length && (int)currentTaskType >= 2)
+                        if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                            taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
+
+                    StartNewCustomer(true);
+
+                    yield break;
+                }
+            }
+            else
+            {
+                if (currentDropoff.trigger.queryEvent.Query())
+                {
+                    currentTask?.EndTask(this);
+
+                    currentTask = null;
+                    currentTaskType = TaskType.Null;
+
+                    break;
+                }
             }
 
             taskTimer -= Time.deltaTime;
@@ -318,6 +405,11 @@ public class GameManager : MonoBehaviour
                 {
                     currentCustomerTask = tasksPool[taskIndex];
                     tasksPool.RemoveAt(taskIndex);
+
+                    if (taskIndex >= tasksPool.Count)
+                    {
+                        taskIndex = Random.Range(0, tasksPool.Count);
+                    }
 
                     currentTask = Task.CreateTask(currentCustomerTask.taskType);
                     currentTaskType = currentCustomerTask.taskType;
@@ -351,15 +443,17 @@ public class GameManager : MonoBehaviour
 
                             taskStartEvent.Invoke();
 
+                            Debug.Log(currentTask);
+
                             radialTimer.UpdateRadialTimerGoal(true);
 
                             if (!tasksCompleted[(int)currentTaskType - 2])
                             {
-                                if ((int)currentTaskType - 2 < taskTutorialObjects.Length) 
+                                if ((int)currentTaskType - 2 < taskTutorialObjects.Length && (int)currentTaskType >= 2) 
                                     if (taskTutorialObjects[(int)currentTaskType - 2] != null)
                                         taskTutorialObjects[(int)currentTaskType - 2].SetActive(true);
 
-                                if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                                if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length && (int)currentTaskType >= 2)
                                     if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
                                         taskTutorialObjectsOther[(int)currentTaskType - 2].SetActive(true);
                             }
@@ -375,7 +469,6 @@ public class GameManager : MonoBehaviour
             if (currentTask != null)
             {
                 currentTask.UpdateTask(this);
-                Debug.Log(currentTask);
 
                 radialTimer.UpdateRadialTimer(taskTimer / taskTimerTotal);
 
@@ -383,11 +476,11 @@ public class GameManager : MonoBehaviour
                 {
                     currentTask.EndTask(this);
 
-                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length && (int)currentTaskType >= 2)
                         if (taskTutorialObjects[(int)currentTaskType - 2] != null)
                             taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
 
-                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length && (int)currentTaskType >= 2)
                         if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
                             taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
 
@@ -409,11 +502,11 @@ public class GameManager : MonoBehaviour
                 {
                     currentTask.EndTask(this);
 
-                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length)
+                    if ((int)currentTaskType - 2 < taskTutorialObjects.Length && (int)currentTaskType >= 2)
                         if (taskTutorialObjects[(int)currentTaskType - 2] != null)
                             taskTutorialObjects[(int)currentTaskType - 2].SetActive(false);
 
-                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length)
+                    if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length && (int)currentTaskType >= 2)
                         if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
                             taskTutorialObjectsOther[(int)currentTaskType - 2].SetActive(false);
 
@@ -468,6 +561,39 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
+            }
+
+            if (carCollisionEvent.Query(Time.frameCount, true))
+            {
+                currentTask?.EndTask(this);
+
+                if ((int)currentTaskType - 2 < taskTutorialObjects.Length && (int)currentTaskType >= 2)
+                    if (taskTutorialObjects[(int)currentTaskType - 2] != null)
+                        taskTutorialObjects[(int)currentTaskType - 2]?.SetActive(false);
+
+                if ((int)currentTaskType - 2 < taskTutorialObjectsOther.Length && (int)currentTaskType >= 2)
+                    if (taskTutorialObjectsOther[(int)currentTaskType - 2] != null)
+                        taskTutorialObjectsOther[(int)currentTaskType - 2]?.SetActive(false);
+
+                string crashDialog = currentCustomer.crashDialog[Random.Range(0, currentCustomer.crashDialog.Length)];
+
+                if (currentTask != null)
+                {
+                    taskIntervalTime = Random.Range(currentCustomer.taskTimeMin, currentCustomer.taskTimeMax);
+                }
+                else
+                {
+                    taskIntervalTime = Mathf.Max(taskIntervalTime, EstimateReadTime(crashDialog, dialogRenderer)) + 3f;
+                }
+
+                currentTask = null;
+                currentTaskType = TaskType.Null;
+
+                PlayDialog(crashDialog, DialogAnimationType.Angry);
+
+                radialTimer.UpdateRadialTimerGoal(false);
+
+                ScoreLoseStar();
             }
 
             yield return null;
@@ -600,8 +726,13 @@ public class GameManager : MonoBehaviour
 
     void PlayDialog(string dialog, DialogAnimationType animationType = DialogAnimationType.Neutral, bool canExpire = true)
     {
+        if (dialog == "")
+            return;
+
         dialogRenderer.StartDialog(dialog);
         isPlayingDialog = true;
+
+        customer?.UpdateAnimations((int)animationType);
 
         StopCoroutine("PlayDialogCoroutine");
 
@@ -636,6 +767,11 @@ public class GameManager : MonoBehaviour
 
         dialogRenderer.EraseDialog();
         isPlayingDialog = false;
+
+        if (customer != null)
+        {
+            customer.UpdateAnimations(0);
+        }
     }
 
     IEnumerator ScoreUpdateLoopCoroutine()
@@ -734,7 +870,9 @@ public class GameManager : MonoBehaviour
 
     void ScoreLoseStar()
     {
-        potentialRideScore = Mathf.Floor(potentialRideScore) == potentialRideScore ? potentialRideScore - 1f : Mathf.Floor(potentialRideScore);
+        //potentialRideScore = Mathf.Floor(potentialRideScore) == potentialRideScore ? potentialRideScore - 1f : Mathf.Floor(potentialRideScore);
+
+        potentialRideScore = Mathf.Max(0f, potentialRideScore - 1);
 
         ratingCountdown.UpdateRating(potentialRideScore);
     }

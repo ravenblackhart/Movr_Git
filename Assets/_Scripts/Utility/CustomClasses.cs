@@ -300,16 +300,23 @@ public static class CustomClasses
             return false;
         }
 
-        public bool Query(int frameCount)
+        public bool Query(int frameCount, bool canDisable = false)
         {
             if (frameCount == triggeredFrame || frameCount - 1 == triggeredFrame)
             {
-                triggered = false;
+                if (canDisable)
+                {
+                    return Query();
+                }
+                else
+                {
+                    triggered = false;
 
-                return true;
+                    return true;
+                }
             }
 
-            return Query();
+            return false;
         }
 
         public void Invoke()

@@ -42,10 +42,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private float _velocityMultiplier = 1;
     private readonly float _recoverytime = 30;
 
-    private Sound _motorSound;
     private readonly string _driving = "Driving";
-    [SerializeField]
-    private bool _slowingDown = false;
+    private Sound _motorSound;
 
     // Start is called before the first frame update
     void Start()
@@ -68,14 +66,17 @@ public class CarController : MonoBehaviour
         {
             // Slow down the car
             speed = GetSpeed(true, _direction == Direction.Reverse);
-            _slowingDown = true;
         }
         else if (_rigidbody.velocity.sqrMagnitude < maxSpeed && _direction == Direction.Forward)// _slowingDown)
         {
             // keep the car under the speed limit
             speed = GetSpeed(false, _direction == Direction.Reverse);
-            //_slowingDown = true;
             //Debug.LogWarning(speed + " " + isReversing + " " + _rigidbody.velocity.sqrMagnitude);
+        }
+
+        if (!GameManager.instance.carDriving)
+        {
+            Braking(0.2f);
         }
 
         // Move and steer the car
@@ -135,11 +136,14 @@ public class CarController : MonoBehaviour
     public void Braking(float time)
     {
         StartCoroutine(StartBraking(time));
+        Debug.LogWarning("brake" + time);
+        speed = 0;
     }
 
     private IEnumerator StartBraking(float time)
     {
         _curBrakeTorque = _maxBrakeTorque;
+
         // The shorter time the better, pretty much determines braking time
         yield return new WaitForSeconds(time);
         _curBrakeTorque = 0;

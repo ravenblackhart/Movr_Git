@@ -10,6 +10,7 @@ public class CarCollisionHandler : MonoBehaviour
     private int _index = 0;
 
     private bool landed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,8 @@ public class CarCollisionHandler : MonoBehaviour
         // If collides with object with the Default layer
         if (other.gameObject.layer == 0 && landed)
         {
+            GameManager.instance.carCollisionEvent.Invoke(Time.frameCount);
+
             if (_randomBinaryNumbers[_index] == 0)
             {
             //Debug.LogWarning("se dig för: " + other.gameObject.name);

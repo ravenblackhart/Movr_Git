@@ -27,7 +27,7 @@ public class MinimapScript : MonoBehaviour
 
     if (targetLocation != null)
     {
-      driverMarker.color = activeWaypointColor;
+      //driverMarker.color = activeWaypointColor;
       
     }
     

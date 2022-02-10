@@ -53,10 +53,9 @@ public class Lever : MonoBehaviour, IInteractable
         _playerDrag = FindObjectOfType<PlayerDragObject>();
     }
 
-    private void Start()
+    public virtual void Start()
     {
         _leverValue = 0;
-        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void OnStartHover()

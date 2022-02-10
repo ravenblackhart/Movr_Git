@@ -8,8 +8,15 @@ public class VolumeKnob : Lever
     [SerializeField] private float _maxVol;
 
     [SerializeField] private AudioMixer _radioMixer;
-    
-    
+
+    public override void Start()
+    {
+        var musicVol = Mathf.Clamp(GetMusicVol(), _minVol, _maxVol);
+        _leverValue = Mathf.Abs(musicVol - _minVol) / Mathf.Abs(_maxVol - _minVol); 
+        _orgin.rotation = LongLerp(_start.rotation, _end.rotation, _curve.Evaluate(_leverValue));
+        
+    }
+
     public override void UpdateLeverTransform()
     {
         _orgin.rotation = LongLerp(_start.rotation, _end.rotation, _curve.Evaluate(_leverValue));
@@ -34,5 +41,16 @@ public class VolumeKnob : Lever
         r.z = p.z * (1f - t) + q.z * (t);
         r.w = p.w * (1f - t) + q.w * (t);
         return r;
+    }
+
+    public float GetMusicVol()
+    {
+        float startVolume; 
+        bool result = _radioMixer.GetFloat("MusicVol", out startVolume );
+        if (result)
+        {
+            return startVolume;
+        } 
+        else return 0f; 
     }
 }

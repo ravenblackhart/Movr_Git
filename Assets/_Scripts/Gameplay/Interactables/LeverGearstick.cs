@@ -65,7 +65,7 @@ public class LeverGearstick : Lever
         {
             return ChangeGearValues(2);
         }
-        else if (curAngle < 10 && curAngle > -15)
+        else if (curAngle < 5 && curAngle > -5)
         {
             return ChangeGearValues(0);
         }

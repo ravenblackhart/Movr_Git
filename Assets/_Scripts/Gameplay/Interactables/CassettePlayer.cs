@@ -66,12 +66,6 @@ public class CassettePlayer : SnapTrigger
             audioGenre = cassetteInPlayer.GetComponent<Cassette>()._musicGenre;
             playingMusic = true;
         }
-
-        else {
-
-        }
-
-        print("Current audio genre = " + audioGenre);
     }
 
     private void Eject() {

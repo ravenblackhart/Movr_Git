@@ -17,14 +17,9 @@ public class ChargePhoneTask : Task
         {
             if (phone.touchCustomerQueryEvent.Query(Time.frameCount))
             {
-
                 if (!phone.OverHeated && phone.ChargeAmount >= _goalValue)
                 {                                       
                     completedTaskEvent.Invoke();
-                }
-                else
-                {
-                    failedTaskEvent.Invoke();
                 }
             }
         }

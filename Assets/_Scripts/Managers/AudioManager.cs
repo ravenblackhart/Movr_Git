@@ -30,7 +30,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
         
-        DontDestroyOnLoad(gameObject);
 
         foreach (Sound s in sounds) {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -152,13 +151,16 @@ public class AudioSetting
         if (soundToggle.isOn == true)
         {
             slider.value = PlayerPrefs.GetFloat(exposedParam);
-            
+            SetExposedParamNoWrite(slider.value);
+            slider.interactable = true; 
+
         }
         
         if (soundToggle.isOn == false)
         {
-            slider.value = slider.minValue;
-            soundToggle.image.color = UIManager.Instance.DisabledColor; 
+            slider.interactable = false;
+            SetExposedParamNoWrite(-80);
+            
         }
     }
     

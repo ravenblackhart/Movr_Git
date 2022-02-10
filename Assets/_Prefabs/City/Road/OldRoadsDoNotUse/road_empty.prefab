@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1820030913002088317}
   - component: {fileID: 4927935922248662649}
   m_Layer: 0
-  m_Name: Plane.050
+  m_Name: road_empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 2e6e528bfbe8e8b40acb74aeb07253f9, type: 3}
+  - {fileID: 2100000, guid: 11e66de87e0c9d54fa094fbe2cc89d60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

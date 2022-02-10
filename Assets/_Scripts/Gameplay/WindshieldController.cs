@@ -17,13 +17,15 @@ public class WindshieldController : MonoBehaviour
     [SerializeField]
     MeshRenderer windshieldRenderer;
 
+    Sound soundWindshield;
+
     // Start
     void Start()
     {
         windshieldMaterial = Instantiate(windshieldRenderer.sharedMaterial);
 
         windshieldRenderer.sharedMaterial = windshieldMaterial;
-
+        soundWindshield = AudioManager.Instance.GetSound("WindshieldWipers");
         StartCoroutine(DirtyWindshield());
     }
 
@@ -32,8 +34,6 @@ public class WindshieldController : MonoBehaviour
     {
         if (dirtyness != lastDirtyness)
         {
-            Debug.Log("Windshield Dirtied");
-
             windshieldMaterial.SetFloat("_Dirtyness", dirtyness);
 
             lastDirtyness = dirtyness;
@@ -51,7 +51,7 @@ public class WindshieldController : MonoBehaviour
     IEnumerator RunWipers()
     {
         wiping = true;
-
+        soundWindshield.source.Play();
         AnimationCurve animationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
         for (float f = 0f; f < 5f; f = Mathf.Min(f + Time.deltaTime, 5f))
@@ -67,7 +67,7 @@ public class WindshieldController : MonoBehaviour
                 progress = -animationCurve.Evaluate(5f - f);
             }
 
-            dirtyness = Mathf.Clamp01(dirtyness - Time.deltaTime / 3f);
+            dirtyness = Mathf.Clamp01(dirtyness - Time.deltaTime / 4f);
 
             wiper.localEulerAngles = Vector3.up * progress * 30f;
 
@@ -77,6 +77,7 @@ public class WindshieldController : MonoBehaviour
         wiper.localEulerAngles = Vector3.zero;
 
         wiping = false;
+        soundWindshield.source.Stop();
     }
 
     IEnumerator DirtyWindshield()

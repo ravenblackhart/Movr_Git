@@ -10,6 +10,7 @@ public class PhoneDock : MonoBehaviour
         {
             _phone = phone;
             _phone.OnSnapTrigger = true;
+            _phone.Charging = true;
             _phone.transform.rotation = transform.rotation;
             
         }
@@ -35,6 +36,7 @@ public class PhoneDock : MonoBehaviour
         if (_phone != null)
         {
             _phone.OnSnapTrigger = false;
+            _phone.Charging = false;
             _phone = null;
         }
     }

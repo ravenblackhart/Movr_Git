@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5863123811038194079}
   - component: {fileID: 5863123811038194078}
   m_Layer: 0
-  m_Name: Straight_road_1 (15)
+  m_Name: road_straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,10 +59,10 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 3b8fda92d4d79dd46b8cee62bcfc6c80, type: 3}
-  - {fileID: -5605289326131794027, guid: 3b8fda92d4d79dd46b8cee62bcfc6c80, type: 3}
-  - {fileID: 637949407474519127, guid: 3b8fda92d4d79dd46b8cee62bcfc6c80, type: 3}
-  - {fileID: 99656467281103303, guid: 3b8fda92d4d79dd46b8cee62bcfc6c80, type: 3}
+  - {fileID: 2100000, guid: 1d5577feea1a70f48957dfbbafe32d16, type: 2}
+  - {fileID: 2100000, guid: 9e58c2b8c14ec7a44b4b44d663416084, type: 2}
+  - {fileID: 2100000, guid: e0ee5c24939c055418d1208b8fdf7ea1, type: 2}
+  - {fileID: 2100000, guid: 9e58c2b8c14ec7a44b4b44d663416084, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

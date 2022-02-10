@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: BetaCustomer
   m_EditorClassIdentifier: 
-  identity: 0
-  hasKids: 0
+  identity: 2
+  hasKids: 1
+  skipBeforeEnd: 1
   taskPool:
   - taskType: 6
     timeLimit: 15

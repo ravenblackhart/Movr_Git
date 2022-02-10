@@ -50,7 +50,6 @@ public class Gearstick : MonoBehaviour
         _carController._direction = CarController.Direction.Stopped;
         _carController.Braking(0.2f);
         _stopped = true;
-        _carController.speed = 0;
     }
 
     private void ChangeDirectionSpeed(CarController.Direction newDirection)

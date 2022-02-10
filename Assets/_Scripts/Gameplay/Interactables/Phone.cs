@@ -3,13 +3,18 @@
 public class Phone : PhysicsObject
 {
     [SerializeField] private LayerMask _raycastOnLayer;
+    [SerializeField] private float _colorLerpSpeed;
+    
+    private Color _color;
+    private MeshRenderer _renderer;
     
     private Transform _worldParent;
     private Transform _snapPosition;
     private Vector3 _velocity = Vector3.zero;
-
+    
     private float _chargeAmount;
-
+    
+    public bool Charging { get; set; }
     public bool OverHeated { get; private set; }
 
     public float ChargeAmount
@@ -18,12 +23,19 @@ public class Phone : PhysicsObject
         set
         {
             _chargeAmount = value;
-            CheckValue();
+            if (_chargeAmount >= 10)
+            {
+                OverHeated = true;
+            }
         }
     }
     private void Start()
     {
         GameManager.instance.taskReferences.phones.Add(this);
+        
+        _renderer = GetComponent<MeshRenderer>();
+        _renderer.sharedMaterial = Instantiate(_renderer.sharedMaterial);
+        _color = _renderer.sharedMaterial.GetColor("_BaseColor");
         
         _worldParent = transform.parent;
         _chargeAmount = 0;
@@ -38,6 +50,16 @@ public class Phone : PhysicsObject
     
     private void Update()
     {
+        if (Charging)
+        {
+            LerpColor(_color,Color.green, _colorLerpSpeed);
+        }
+        else if (Charging && OverHeated)
+        {
+            LerpColor(_color,Color.red, _colorLerpSpeed * 2);
+        }
+        
+        //For snapping to dock
         if (!beingHeld) return;
         _snapPosition = RayCastForSnap();
         
@@ -83,19 +105,6 @@ public class Phone : PhysicsObject
     //     }
     //     base.FixedUpdate();
     // }
-
-    private void LerpColour()
-    {
-        
-    }
-
-    private void CheckValue()
-    {
-        if (_chargeAmount >= 10)
-        {
-            OverHeated = true;
-        }
-    }
     
     public void SetToWorldParent()
     {
@@ -120,5 +129,14 @@ public class Phone : PhysicsObject
             }
         }
         return null;
+    }
+    
+    private void LerpColor(Color a, Color b, float speed)
+    {
+        var rend = GetComponent<MeshRenderer>();
+        var t = (Mathf.Sin(Time.time * speed) + 1) / 2.0;
+        
+        if (rend != null)
+            rend.sharedMaterial.SetColor("_BaseColor", Color.Lerp(a ,b ,(float)t));
     }
 }

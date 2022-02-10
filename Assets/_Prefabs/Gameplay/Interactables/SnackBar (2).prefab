@@ -38,6 +38,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9063415509252320531}
     m_Modifications:
+    - target: {fileID: 778478822655862907, guid: 2124ab3beeedacf4f80d449bea4bd556, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4859341202534057957, guid: 2124ab3beeedacf4f80d449bea4bd556, type: 3}
       propertyPath: m_Name
       value: candybar_2

@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shouldRoam: 1
   blockManager: {fileID: 0}
+  walkSpeed: 4
   hopHeight: 1
   hopCurve:
     serializedVersion: 2
@@ -171,6 +172,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   nodeIndex: 0
+  timeMultiplier: 1.5
 --- !u!54 &-2638698271903400506
 Rigidbody:
   m_ObjectHideFlags: 0

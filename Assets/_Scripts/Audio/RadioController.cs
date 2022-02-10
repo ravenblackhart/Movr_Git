@@ -48,13 +48,18 @@ public class RadioController : MonoBehaviour
     public void StopAudio()
     {
         radioAudioSource.Stop();
+        UnregisterTape();
     }
 
     public void NextTrack()
     {
-        trackIndex++;
-        if (trackIndex > audioTracks.Length - 1) trackIndex = 0; 
-        UpdateTrack(trackIndex);
+        if (audioTracks != null)
+        {
+            trackIndex++;
+            if (trackIndex > audioTracks.Length - 1) trackIndex = 0; 
+            UpdateTrack(trackIndex);
+        }
+        
     }
     
     public void PrevTrack()

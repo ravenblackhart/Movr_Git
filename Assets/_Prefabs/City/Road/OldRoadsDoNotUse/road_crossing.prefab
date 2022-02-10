@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2351431464667536888}
   - component: {fileID: 5416062671886608668}
   m_Layer: 0
-  m_Name: Plane.051 (1)
+  m_Name: road_crossing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,9 +59,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 2e6e528bfbe8e8b40acb74aeb07253f9, type: 3}
-  - {fileID: -3846018093981099296, guid: 2e6e528bfbe8e8b40acb74aeb07253f9, type: 3}
-  - {fileID: -6478536213147159724, guid: 2e6e528bfbe8e8b40acb74aeb07253f9, type: 3}
+  - {fileID: 2100000, guid: 11e66de87e0c9d54fa094fbe2cc89d60, type: 2}
+  - {fileID: 2100000, guid: e3d3f57c671afcf488d8fe1b8a9036fc, type: 2}
+  - {fileID: 2100000, guid: 2f34f30ab0f209949871ba7d9affba19, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc6971878df7b5498e68a3e96a24695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _direction: 1
   isReversing: 0
   _reverseSpeed: -0.5
   _axleInfos:
@@ -341,7 +342,8 @@ MonoBehaviour:
   _maxBrakeTorque: 800000
   speed: 0
   turn: 0
-  _maxVelocity: 50
+  maxVelocity: 50
+  _slowingDown: 0
 --- !u!114 &8605300377419416784
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -64,7 +64,7 @@ public class Pedestrian : MonoBehaviour
             time = 0f;
             if (shouldHide)
             {
-                Debug.Log("Go Underground");
+                //Debug.Log("Go Underground");
                 StartCoroutine(ToggleUnderground(true));
                 shouldHide = false;
             }
@@ -106,7 +106,7 @@ public class Pedestrian : MonoBehaviour
         nodeIndex = clockWise ? nodeB.GetSiblingIndex() : nodeA.GetSiblingIndex();
         transform.LookAt(targetPos);
     }
-    private bool HideCheck() => new Vector2(transform.position.x - car.position.x, transform.position.z - car.position.z).magnitude < 20f ? true : false;
+    private bool HideCheck() => new Vector2(transform.position.x - car.position.x, transform.position.z - car.position.z).magnitude < 12f ? true : false;
     private bool EnableDisableCheck() => (transform.position - car.position).magnitude < 200f ? true : false;
     private void TogglePedestrianVisibility(bool state)
     {

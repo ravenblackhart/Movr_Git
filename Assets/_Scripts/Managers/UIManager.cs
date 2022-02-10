@@ -68,11 +68,16 @@ public class UIManager : MonoBehaviour
     [Header("Data")] 
     [SerializeField] [CanBeNull] private int score;
 
+    [System.NonSerialized]
+    public bool tutorialLockEnabled = true;
+
+    [System.NonSerialized]
+    public bool pauseLockEnabled;
 
     #endregion
 
     #region Other Declarations
-    
+
     //Settings
     public Color EnabledColor = new Color32(56, 56, 56, 255); 
     public Color DisabledColor = new Color32(120, 120, 120, 255);
@@ -95,6 +100,11 @@ public class UIManager : MonoBehaviour
         else
         {
             instance = this; 
+        }
+
+        if (!PlayerPrefs.HasKey("TutorialState"))
+        {
+            PlayerPrefs.SetInt("TutorialState", 1);
         }
 
         if (PlayerPrefs.GetInt("TutorialState") == 1)
@@ -145,7 +155,7 @@ public class UIManager : MonoBehaviour
                 readyPanel.enabled = true;
                 tutorialCanvas.enabled = true;
                 Time.timeScale = 0f; 
-                camSwitch.ToggleLock();
+               
             }
             
             else if (tutorialOn == false)
@@ -161,6 +171,8 @@ public class UIManager : MonoBehaviour
     {
         if ((Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed) && readyPanel.enabled == true)
         {
+            tutorialLockEnabled = false;
+
             readyPanel.enabled = false;
             Time.timeScale = 1f; 
         } 
@@ -191,16 +203,17 @@ public class UIManager : MonoBehaviour
         {
             pauseMenu.enabled = true; 
             Time.timeScale = 0f;
-            camSwitch.ToggleLock();
+            
         }
 
         else
         {
             Time.timeScale = 1f; 
             pauseMenu.enabled = false; 
-            camSwitch.ToggleLock();
+            
         }
-        
+
+        pauseLockEnabled = pauseMenu.enabled;
     }
 
     public void GameOver()

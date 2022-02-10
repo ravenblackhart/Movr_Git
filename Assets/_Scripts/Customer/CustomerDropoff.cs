@@ -9,9 +9,6 @@ public class CustomerDropoff : MonoBehaviour
     [SerializeField]
     GameObject testCylinder;
 
-    [SerializeField]
-    Canvas canvas;
-
     void Start()
     {
         trigger.triggerEvent.AddListener(OnCarExitTrigger);
@@ -19,10 +16,8 @@ public class CustomerDropoff : MonoBehaviour
 
     void Update()
     {
-        canvas.enabled = GameManager.instance.currentDropoff == this;
-
         if (testCylinder != null)
-            testCylinder.SetActive(GameManager.instance.currentDropoff == this);
+            testCylinder.SetActive(GameManager.instance.currentDropoff == this && GameManager.instance.displayDropoff);
     }
 
     void OnCarExitTrigger()

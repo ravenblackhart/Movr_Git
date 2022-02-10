@@ -12,14 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c16a4981ae3c40bff9882b6323b05, type: 3}
   m_Name: Tom1
   m_EditorClassIdentifier: 
-  bodyMaterial: {fileID: 0}
-  hasHat: 1
-  hasGlasses: 0
+  identity: 0
+  hasKids: 0
+  skipBeforeEnd: 0
   taskPool:
+  - taskType: 2
+    timeLimit: 12
+    mainTaskPrompt: 'Could you put on some [c3]jazz[c] [c2]music[c]?
+
+
+
+'
+    secondaryTaskPrompt: 
+    tertiaryTaskPrompt: 
+    taskCompletionResponse: Perfect thank you..
+    taskFailureResponse: That's alright must be your first time
+    taskFailureResponseAlternate: 
+    specialTaskDialog: []
   - taskType: 3
     timeLimit: 12
-    mainTaskPrompt: 'Far too early in the morning for this, could you turn the [c2]volume[c]
-      down?
+    mainTaskPrompt: 'Could you turn the [c2]volume[c] down?
 
 '
     secondaryTaskPrompt: 
@@ -43,8 +55,7 @@ MonoBehaviour:
     specialTaskDialog: []
   - taskType: 6
     timeLimit: 12
-    mainTaskPrompt: 'I always forget to eat breakfast before big meetings. You wouldn''t
-      happen to have something to [c2]eat[c] up there?
+    mainTaskPrompt: 'You wouldn''t happen to have something to [c2]eat[c] up there?
 
 
 
@@ -55,13 +66,13 @@ MonoBehaviour:
     taskFailureResponse: I'm not asking for much here..
     taskFailureResponseAlternate: 
     specialTaskDialog: []
-  starTimeLimit: 40
+  starTimeLimit: 70
   taskTimeMin: 15
   taskTimeMax: 25
   tempPreference: 2
   volumePreference: 3
-  musicPreference: 0
-  musicPreferenceOther: 1
+  musicPreference: 2
+  musicPreferenceOther: 0
   startRideDialogHappy: Take me to the Big Corp [c2]offices[c] please.
   startRideDialogAngry: 
   endRideDialogHappy: Nice driving much appreciated.
