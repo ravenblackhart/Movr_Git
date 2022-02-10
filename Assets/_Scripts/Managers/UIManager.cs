@@ -223,7 +223,7 @@ public class UIManager : MonoBehaviour
     
     private void SetScoreText(string text)
     {
-        scoreText.text = text; 
+        //scoreText.text = text; 
     } 
 
     public void TutorialState()

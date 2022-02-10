@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class RadioController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI trackNameField;
     [SerializeField] private AudioClip[] audioTracks;
 
     private int trackIndex; 
@@ -68,7 +67,6 @@ public class RadioController : MonoBehaviour
     private void UpdateTrack(int index)
     {
         radioAudioSource.clip = audioTracks[index];
-        trackNameField.text = audioTracks[index].name;
     }
 
     private IEnumerator PlayTape()
